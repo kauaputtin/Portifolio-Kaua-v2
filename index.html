@@ -262,7 +262,8 @@
       <div
         class="project-card fade-up"
         data-prototype-title="Jogo Ping-Pong"
-        data-prototype-src="projetos/jogo/index.html"
+        data-prototype-src="projetos/jogo/pingpong.html"
+        data-prototype-src-mobile="projetos/jogo/ping_pong_mobile.html"
       >
         <div
           class="project-thumb js-open-prototype"
@@ -271,6 +272,7 @@
           aria-label="Abrir demo do jogo"
           data-prototype-title="Jogo Ping-Pong"
           data-prototype-src="projetos/jogo/pingpong.html"
+          data-prototype-src-mobile="projetos/jogo/ping_pong_mobile.html"
         >
           <img src="imagens/pingpong.png" alt="Jogo Ping-Pong" class="project-thumb-image" />
           <span class="project-thumb-cta">Jogar agora</span>
@@ -291,7 +293,8 @@
               href="#"
               class="project-link js-open-prototype"
               data-prototype-title="Jogo Ping-Pong"
-              data-prototype-src="projetos/jogo/index.html"
+              data-prototype-src-mobile="projetos/jogo/ping_pong_mobile.html"
+              data-prototype-src="projetos/jogo/pingpong.html"
             >↗ Jogar</a>
             <a href="#" class="project-link">⌥ GitHub</a>
           </div>
@@ -597,6 +600,7 @@
           id="prototypeFrame"
           title="Protótipo interativo"
           loading="lazy"
+          allow="fullscreen"
           allowfullscreen
         ></iframe>
       </div>
@@ -761,6 +765,17 @@
 
     let lastFocused = null;
 
+    function isMobileView() {
+      return !!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
+    }
+
+    function getPrototypeSrc(el) {
+      if (!el || typeof el.getAttribute !== 'function') return null;
+      const mobileSrc = el.getAttribute('data-prototype-src-mobile');
+      const src = el.getAttribute('data-prototype-src');
+      return mobileSrc && isMobileView() ? mobileSrc : src;
+    }
+
     function openPrototypeModal(src, title) {
       if (!prototypeModal || !prototypeFrame) return;
 
@@ -795,7 +810,7 @@
     document.querySelectorAll('.js-open-prototype[data-prototype-src]').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
-        const src = el.getAttribute('data-prototype-src');
+        const src = getPrototypeSrc(el);
         const title = el.getAttribute('data-prototype-title') || 'Protótipo (Figma)';
         if (src) openPrototypeModal(src, title);
       });
@@ -805,7 +820,7 @@
         el.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            const src = el.getAttribute('data-prototype-src');
+            const src = getPrototypeSrc(el);
             const title = el.getAttribute('data-prototype-title') || 'Protótipo (Figma)';
             if (src) openPrototypeModal(src, title);
           }
@@ -820,7 +835,7 @@
         if (!target || !target.closest) return;
         if (target.closest('.js-open-prototype') || target.closest('a,button')) return;
 
-        const src = card.getAttribute('data-prototype-src');
+        const src = getPrototypeSrc(card);
         const title = card.getAttribute('data-prototype-title') || 'Protótipo (Figma)';
         if (src) openPrototypeModal(src, title);
       });

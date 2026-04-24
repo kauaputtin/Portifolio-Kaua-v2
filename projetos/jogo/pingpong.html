@@ -100,6 +100,7 @@
     <button id="btn-start"  onclick="Game.start()">Iniciar ▶</button>
     <button id="btn-pause"  onclick="Game.togglePause()" disabled>Pausar ⏸</button>
     <button id="btn-reset"  onclick="Game.reset()">Reiniciar ↺</button>
+    <button id="btn-fullscreen" onclick="Game.toggleFullscreen()">Tela cheia ⛶</button>
   </div>
 
   <p class="hint">W / S  —  mover raquete</p>
@@ -347,11 +348,59 @@
         setMsg('Pressione Iniciar para jogar');
       }
 
+      function canUseFullscreen() {
+        const target = document.documentElement;
+        return !!(
+          document.fullscreenEnabled ||
+          document.webkitFullscreenEnabled ||
+          target.requestFullscreen ||
+          target.webkitRequestFullscreen
+        );
+      }
+
+      function isFullscreenActive() {
+        return !!(document.fullscreenElement || document.webkitFullscreenElement);
+      }
+
+      function updateFullscreenBtn() {
+        const btn = document.getElementById('btn-fullscreen');
+        if (!btn) return;
+        btn.textContent = isFullscreenActive() ? 'Sair da tela cheia ⤢' : 'Tela cheia ⛶';
+      }
+
+      async function toggleFullscreen() {
+        if (!canUseFullscreen()) {
+          setMsg('Seu navegador não suporta tela cheia.');
+          return;
+        }
+
+        const target = document.documentElement;
+
+        try {
+          if (isFullscreenActive()) {
+            if (document.exitFullscreen) await document.exitFullscreen();
+            else if (document.webkitExitFullscreen) await document.webkitExitFullscreen();
+          } else {
+            if (target.requestFullscreen) await target.requestFullscreen();
+            else if (target.webkitRequestFullscreen) await target.webkitRequestFullscreen();
+          }
+        } catch (err) {
+          console.error(err);
+          setMsg('Não foi possível ativar a tela cheia.');
+        }
+      }
+
       // ── Boot ─────────────────────────────────────────────
       initState();
       draw();
 
-      return { start, togglePause, reset };
+      updateFullscreenBtn();
+      const fullscreenBtn = document.getElementById('btn-fullscreen');
+      if (fullscreenBtn) fullscreenBtn.disabled = !canUseFullscreen();
+      document.addEventListener('fullscreenchange', updateFullscreenBtn);
+      document.addEventListener('webkitfullscreenchange', updateFullscreenBtn);
+
+      return { start, togglePause, reset, toggleFullscreen };
 
     })();
   </script>
