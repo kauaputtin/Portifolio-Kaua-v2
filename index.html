@@ -32,7 +32,7 @@
 
     <ul class="nav-links">
       <li><a href="#about">Sobre</a></li>
-      <li><a href="#skills">Skills</a></li>
+      <li><a href="#skills">Habilidades</a></li>
       <li><a href="#projects">Projetos</a></li>
       <li><a href="#contact">Contato</a></li>
     </ul>
@@ -252,7 +252,7 @@
               class="project-link js-open-prototype"
               data-prototype-title="Site Fortes Engenharia — Protótipo (Figma)"
               data-prototype-src="https://embed.figma.com/proto/QJKg9TGAalgYTthWsZIJGu/PROJETO?content-scaling=fixed&amp;kind=proto&amp;node-id=56-675&amp;scaling=scale-down&amp;starting-point-node-id=250%3A226&amp;embed-host=share"
-            >↗ Demo ao vivo</a>
+            >↗ Abrir Protótipo</a>
             <a href="#" class="project-link">⌥ GitHub</a>
           </div>
         </div>
@@ -331,7 +331,7 @@
               class="project-link js-open-prototype"
               data-prototype-title="Protótipo APP NutriFit"
               data-prototype-src="https://embed.figma.com/proto/e3MvuA3z2FxpMyD8TU6orb/Nutrifit--c%C3%B3pia-?scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&node-id=1-2&starting-point-node-id=1%3A2&embed-host=share"
-            >↗ Demo ao vivo</a>
+            >↗ Abrir Protótipo</a>
             <a href="#" class="project-link">⌥ GitHub</a>
           </div>
         </div>
@@ -378,23 +378,24 @@
       </div>
 
       <!-- Projeto 5-->
-      <div class="project-card fade-up hidden-project">
+      <div class="project-card fade-up hidden-project" data-card-url="https://kauaputtin.github.io/Portifolio-Kaua-v2/">
         <div class="project-thumb">
-          <div class="project-thumb-icon"></div>
+          <img src="imagens/portifolio.png" alt="Portfólio Kauã" class="project-thumb-image" />
         </div>
+        
         <div class="project-body">
-          <h3 class="project-name">Titulo</h3>
+          <h3 class="project-name">Site Portifolio</h3>
           <p class="project-desc">
-            Descrição
+            Site de portfólio pessoal, criado para demonstrar projetos e habilidades profissionais.
           </p>
           <div class="project-techs">
-            <span class="project-tech">ferramentas</span>
-            <span class="project-tech"></span>
-            <span class="project-tech"></span>
+            <span class="project-tech">HTML</span>
+            <span class="project-tech">CSS</span>
+            <span class="project-tech">JavaScript</span>
           </div>
           <div class="project-links">
-            <a href="#" class="project-link">↗ Demo ao vivo</a>
-            <a href="#" class="project-link">⌥ GitHub</a>
+            <a href="https://kauaputtin.github.io/Portifolio-Kaua-v2/" target="_blank" rel="noopener" class="project-link">↗ Abrir site</a>
+            <a href="https://github.com/kauaputtin/Portifolio-Kaua-v2" target="_blank" rel="noopener" class="project-link">⌥ GitHub</a>
           </div>
         </div>
       </div>
@@ -570,7 +571,7 @@
   ============================ -->
   <footer>
     <p class="footer-copy">
-      © 2025 <span>Kauã</span> · Direitos reservados.
+      © 2025 <span>Kauã</span> · Todos os direitos reservados.
     </p>
     <div class="footer-links">
       <a href="#home">Topo</a>
@@ -822,6 +823,18 @@
         const src = card.getAttribute('data-prototype-src');
         const title = card.getAttribute('data-prototype-title') || 'Protótipo (Figma)';
         if (src) openPrototypeModal(src, title);
+      });
+    });
+
+    // Abre o site ao clicar em qualquer lugar do card de projeto com URL configurada
+    document.querySelectorAll('.project-card[data-card-url]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const target = e.target;
+        if (!target || !target.closest) return;
+        if (target.closest('a,button')) return;
+
+        const url = card.getAttribute('data-card-url');
+        if (url) window.open(url, '_blank');
       });
     });
 
