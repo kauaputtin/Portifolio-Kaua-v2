@@ -1,0 +1,258 @@
+
+<h2 class="sr-only">Gerenciador de pedidos e vendas — cadastre, liste e filtre pedidos por mês</h2>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.app { padding: 1.5rem 0; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+.tab { padding: 8px 18px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; cursor: pointer; font-size: 14px; color: var(--color-text-secondary); font-family: var(--font-sans); transition: all 0.15s; }
+.tab.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+.section { display: none; }
+.section.active { display: block; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.field-full { margin-bottom: 12px; }
+label { display: block; font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px; }
+input, select { width: 100%; }
+.product-row { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; margin-bottom: 8px; }
+.product-row input { min-width: 0; }
+.btn-remove { width: 32px; height: 36px; border: 0.5px solid var(--color-border-secondary); background: transparent; border-radius: var(--border-radius-md); cursor: pointer; font-size: 16px; color: var(--color-text-secondary); display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); }
+.btn-remove:hover { background: var(--color-background-danger); color: var(--color-text-danger); border-color: var(--color-border-danger); }
+.total-display { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+.total-label { font-size: 13px; color: var(--color-text-secondary); }
+.total-value { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+.btn-primary { padding: 10px 20px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); cursor: pointer; font-size: 14px; font-family: var(--font-sans); color: var(--color-text-primary); font-weight: 500; transition: all 0.15s; }
+.btn-primary:hover { background: var(--color-background-secondary); }
+.btn-small { padding: 6px 14px; font-size: 13px; }
+.error { font-size: 12px; color: var(--color-text-danger); margin-top: 6px; display: none; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; }
+.metric-label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; }
+.metric-value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.filter-row { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.filter-row .field-group { display: flex; flex-direction: column; gap: 4px; }
+.filter-row select { width: 130px; }
+.order-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; }
+.order-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.order-client { font-weight: 500; font-size: 15px; color: var(--color-text-primary); }
+.order-date { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+.order-amount { font-size: 17px; font-weight: 500; color: var(--color-text-primary); }
+.order-products { margin-top: 10px; padding-top: 10px; border-top: 0.5px solid var(--color-border-tertiary); display: none; }
+.product-item { display: flex; justify-content: space-between; font-size: 13px; color: var(--color-text-secondary); padding: 3px 0; }
+.order-expand { font-size: 12px; color: var(--color-text-secondary); cursor: pointer; margin-top: 6px; background: none; border: none; font-family: var(--font-sans); padding: 0; }
+.order-expand:hover { color: var(--color-text-primary); }
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--color-text-secondary); font-size: 14px; }
+.success-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--color-background-success); color: var(--color-text-success); border: 0.5px solid var(--color-border-success); border-radius: var(--border-radius-md); padding: 10px 20px; font-size: 14px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; }
+.success-toast.show { opacity: 1; }
+.section-title { font-size: 15px; font-weight: 500; margin-bottom: 1rem; color: var(--color-text-primary); }
+</style>
+
+<div class="app">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('novo')">+ Novo pedido</button>
+    <button class="tab" onclick="switchTab('pedidos')">Pedidos</button>
+  </div>
+
+  <div id="tab-novo" class="section active">
+    <div class="card">
+      <p class="section-title">Dados do pedido</p>
+      <div class="field-row">
+        <div>
+          <label>Nome do cliente *</label>
+          <input type="text" id="clientName" placeholder="Ex: João Silva" oninput="clearErr('errClient')">
+          <div class="error" id="errClient">Informe o nome do cliente</div>
+        </div>
+        <div>
+          <label>Data do pedido *</label>
+          <input type="date" id="orderDate" oninput="clearErr('errDate')">
+          <div class="error" id="errDate">Informe a data</div>
+        </div>
+      </div>
+
+      <p class="section-title" style="margin-top:8px;">Produtos</p>
+      <div id="productList"></div>
+      <div id="errProducts" class="error">Adicione ao menos um produto com valor</div>
+
+      <button class="btn-primary btn-small" onclick="addProduct()" style="margin-top:4px;">+ Produto</button>
+
+      <div class="total-display">
+        <span class="total-label">Total do pedido</span>
+        <span class="total-value" id="orderTotal">R$ 0,00</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="saveOrder()" style="width:100%;">Salvar pedido</button>
+  </div>
+
+  <div id="tab-pedidos" class="section">
+    <div class="filter-row">
+      <div class="field-group">
+        <label>Mês</label>
+        <select id="filterMonth" onchange="renderOrders()">
+          <option value="">Todos</option>
+          <option value="1">Janeiro</option><option value="2">Fevereiro</option>
+          <option value="3">Março</option><option value="4">Abril</option>
+          <option value="5">Maio</option><option value="6">Junho</option>
+          <option value="7">Julho</option><option value="8">Agosto</option>
+          <option value="9">Setembro</option><option value="10">Outubro</option>
+          <option value="11">Novembro</option><option value="12">Dezembro</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Ano</label>
+        <select id="filterYear" onchange="renderOrders()"></select>
+      </div>
+    </div>
+
+    <div class="metric-grid" id="metricsArea" style="display:none;">
+      <div class="metric">
+        <div class="metric-label">Pedidos no período</div>
+        <div class="metric-value" id="metricCount">0</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Faturamento total</div>
+        <div class="metric-value" id="metricRevenue">R$ 0,00</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Ticket médio</div>
+        <div class="metric-value" id="metricAvg">R$ 0,00</div>
+      </div>
+    </div>
+
+    <div id="ordersList"></div>
+  </div>
+</div>
+
+<div class="success-toast" id="toast">Pedido salvo com sucesso!</div>
+
+<script>
+let orders = JSON.parse(localStorage.getItem('loja_orders') || '[]');
+
+function save() { try { localStorage.setItem('loja_orders', JSON.stringify(orders)); } catch(e) {} }
+
+function fmt(v) { return 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  event.target.classList.add('active');
+  if (t === 'pedidos') renderOrders();
+}
+
+function clearErr(id) { document.getElementById(id).style.display = 'none'; }
+
+function addProduct(name='', value='') {
+  const list = document.getElementById('productList');
+  const row = document.createElement('div');
+  row.className = 'product-row';
+  row.innerHTML = `<input type="text" placeholder="Nome do produto" value="${name}" oninput="updateTotal()"><input type="number" placeholder="Valor (R$)" min="0" step="0.01" value="${value}" oninput="updateTotal()" style="width:110px;"><button class="btn-remove" onclick="this.parentElement.remove();updateTotal()">×</button>`;
+  list.appendChild(row);
+  updateTotal();
+}
+
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll('#productList .product-row').forEach(row => {
+    const val = parseFloat(row.querySelectorAll('input')[1].value) || 0;
+    total += val;
+  });
+  document.getElementById('orderTotal').textContent = fmt(total);
+}
+
+function saveOrder() {
+  let valid = true;
+  const name = document.getElementById('clientName').value.trim();
+  const date = document.getElementById('orderDate').value;
+  if (!name) { document.getElementById('errClient').style.display = 'block'; valid = false; }
+  if (!date) { document.getElementById('errDate').style.display = 'block'; valid = false; }
+  const products = [];
+  let total = 0;
+  document.querySelectorAll('#productList .product-row').forEach(row => {
+    const n = row.querySelectorAll('input')[0].value.trim();
+    const v = parseFloat(row.querySelectorAll('input')[1].value) || 0;
+    if (n || v) products.push({ name: n || '—', value: v });
+    total += v;
+  });
+  if (products.length === 0 || total <= 0) { document.getElementById('errProducts').style.display = 'block'; valid = false; }
+  else document.getElementById('errProducts').style.display = 'none';
+  if (!valid) return;
+  orders.unshift({ id: Date.now(), client: name, date, products, total });
+  save();
+  document.getElementById('clientName').value = '';
+  document.getElementById('orderDate').value = '';
+  document.getElementById('productList').innerHTML = '';
+  updateTotal();
+  showToast();
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function buildYearSelect() {
+  const sel = document.getElementById('filterYear');
+  const now = new Date().getFullYear();
+  sel.innerHTML = '<option value="">Todos</option>';
+  for (let y = now; y >= now - 4; y--) {
+    sel.innerHTML += `<option value="${y}" ${y === now ? 'selected' : ''}>${y}</option>`;
+  }
+}
+
+function renderOrders() {
+  const month = document.getElementById('filterMonth').value;
+  const year = document.getElementById('filterYear').value;
+  let filtered = orders;
+  if (month || year) {
+    filtered = orders.filter(o => {
+      const d = new Date(o.date + 'T12:00:00');
+      const mOk = !month || (d.getMonth() + 1) === parseInt(month);
+      const yOk = !year || d.getFullYear() === parseInt(year);
+      return mOk && yOk;
+    });
+  }
+  const metrics = document.getElementById('metricsArea');
+  if (month || year) {
+    const total = filtered.reduce((s, o) => s + o.total, 0);
+    const avg = filtered.length ? total / filtered.length : 0;
+    document.getElementById('metricCount').textContent = filtered.length;
+    document.getElementById('metricRevenue').textContent = fmt(total);
+    document.getElementById('metricAvg').textContent = fmt(avg);
+    metrics.style.display = 'grid';
+  } else {
+    metrics.style.display = 'none';
+  }
+  const list = document.getElementById('ordersList');
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state">Nenhum pedido encontrado para o período selecionado.</div>';
+    return;
+  }
+  list.innerHTML = filtered.map(o => {
+    const d = new Date(o.date + 'T12:00:00');
+    const dateStr = d.toLocaleDateString('pt-BR');
+    const prods = o.products.map(p => `<div class="product-item"><span>${p.name}</span><span>${fmt(p.value)}</span></div>`).join('');
+    return `<div class="order-card">
+      <div class="order-header">
+        <div><div class="order-client">${o.client}</div><div class="order-date">${dateStr}</div></div>
+        <div class="order-amount">${fmt(o.total)}</div>
+      </div>
+      <button class="order-expand" onclick="toggleProducts(this)">▾ ver produtos (${o.products.length})</button>
+      <div class="order-products">${prods}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleProducts(btn) {
+  const panel = btn.nextElementSibling;
+  const open = panel.style.display === 'block';
+  panel.style.display = open ? 'none' : 'block';
+  btn.textContent = (open ? '▾' : '▴') + btn.textContent.slice(1);
+}
+
+buildYearSelect();
+document.getElementById('orderDate').value = new Date().toISOString().slice(0, 10);
+addProduct();
+</script>

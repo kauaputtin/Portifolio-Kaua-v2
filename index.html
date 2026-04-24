@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfólio de Kauã — Desenvolvedor Web especializado em HTML, CSS, JavaScript e Python." />
+  <meta name="keywords" content="desenvolvedor web, frontend, backend, python, javascript, freelance, portfólio" />
+  <meta name="author" content="Kauã" />
+  <meta property="og:title" content="Portfólio de Kauã" />
+  <meta property="og:description" content="Criando experiências digitais modernas com código limpo e design intencional." />
+  <meta property="og:type" content="website" />
+  <title>Portfólio de Kauã</title>
+  <link rel="icon" type="image/png" href="imagens/logo.png" />
+  <link rel="shortcut icon" type="image/png" href="imagens/logo.png" />
+  <link rel="apple-touch-icon" href="imagens/logo.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ============================
+       NAVIGATION
+  ============================ -->
+  <nav>
+    <a href="#home" class="nav-logo"><span>PORTIFÓLIO</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#about">Sobre</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projetos</a></li>
+      <li><a href="#contact">Contato</a></li>
+    </ul>
+
+    <div style="display:flex;gap:0.75rem;align-items:center;">
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <span id="themeIcon">☀️</span>
+        <span id="themeText">Claro</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="closeMobileNav()">Sobre</a>
+    <a href="#skills" onclick="closeMobileNav()">Habilidades</a>
+    <a href="#projects" onclick="closeMobileNav()">Projetos</a>
+    <a href="#contact" onclick="closeMobileNav()">Contato</a>
+    <p>Tema:</p>
+    <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" aria-label="Alternar tema">
+      <span id="mobileThemeIcon">☀️</span>
+      <span id="mobileThemeText">Claro</span>
+    </button>
+  </div>
+
+  <!-- ============================
+       HERO
+  ============================ -->
+  <section id="home">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Disponível para projetos freelance
+      </div>
+
+      <h1 class="hero-title">
+        Olá, sou o<br />
+        <span class="accent">Kauã</span>
+      </h1>
+
+      <p class="hero-subtitle">Desenvolvedor Web · Frontend & Backend</p>
+
+      <p class="hero-desc">
+        Desenvolvo interfaces digitais e soluções web focadas em otimizar processos, fortalecer a presença digital e 
+        criar sistemas que aumentam a eficiência, organização e resultados das empresas.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">
+          Ver projetos &rarr;
+        </a>
+        <a href="curriculo.pdf" download class="btn-secondary">
+          ⬇ Download CV
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="imagens/kauaSemfundo.png" alt="Foto de Kauã" class="hero-photo" />
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll para explorar
+    </div>
+  </section>
+
+  
+
+  <!-- ============================
+       SKILLS
+  ============================ -->
+  <section id="skills">
+    <span class="section-label">Tecnologias</span>
+    <h2 class="section-title">Minhas habilidades</h2>
+    <p class="section-subtitle">
+      Ferramentas e tecnologias que uso para construir projetos do início ao fim.
+    </p>
+
+    <div class="skills-grid">
+
+      <!-- Frontend -->
+      <div class="skill-category fade-up">
+        <div class="skill-cat-label">Frontend</div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">HTML & CSS</span>
+            <span class="skill-pct">8/10</span>
+          </div>
+          <div class="skill-levels" data-level="8"></div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">JavaScript</span>
+            <span class="skill-pct">5/10</span>
+          </div>
+          <div class="skill-levels" data-level="5"></div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">Design Responsivo</span>
+            <span class="skill-pct">8/10</span>
+          </div>
+          <div class="skill-levels" data-level="8"></div>
+        </div>
+      </div>
+
+      <!-- Backend -->
+      <div class="skill-category fade-up">
+        <div class="skill-cat-label">Backend</div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">Python</span>
+            <span class="skill-pct">6/10</span>
+          </div>
+          <div class="skill-levels" data-level="6"></div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">Node.js</span>
+            <span class="skill-pct">5/10</span>
+          </div>
+          <div class="skill-levels" data-level="5"></div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">Java</span>
+            <span class="skill-pct">5/10</span>
+          </div>
+          <div class="skill-levels" data-level="5"></div>
+        </div>
+      </div>
+
+      <!-- Ferramentas -->
+      <div class="skill-category fade-up">
+        <div class="skill-cat-label">Ferramentas</div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">Git & GitHub</span>
+            <span class="skill-pct">7/10</span>
+          </div>
+          <div class="skill-levels" data-level="7"></div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">Canva</span>
+            <span class="skill-pct">10/10</span>
+          </div>
+          <div class="skill-levels" data-level="10"></div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">VS Code</span>
+            <span class="skill-pct">9/10</span>
+          </div>
+          <div class="skill-levels" data-level="9"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================
+       PROJECTS
+  ============================ -->
+  <section id="projects">
+    <span class="section-label">Portfólio</span>
+    <h2 class="section-title">Projetos em destaque</h2>
+    <p class="section-subtitle">
+      Uma seleção de projetos que mostram minha evolução como desenvolvedor.
+    </p>
+
+    <div class="projects-grid">
+
+      <!-- Projeto 1 -->
+      <div
+        class="project-card fade-up"
+        data-prototype-title="Site Fortes Engenharia — Protótipo (Figma)"
+        data-prototype-src="https://embed.figma.com/proto/QJKg9TGAalgYTthWsZIJGu/PROJETO?content-scaling=fixed&amp;kind=proto&amp;node-id=56-675&amp;scaling=scale-down&amp;starting-point-node-id=250%3A226&amp;embed-host=share"
+      >
+        <div
+          class="project-thumb js-open-prototype"
+          role="button"
+          tabindex="0"
+          aria-label="Abrir protótipo do Site Fortes Engenharia"
+          data-prototype-title="Site Fortes Engenharia — Protótipo (Figma)"
+          data-prototype-src="https://embed.figma.com/proto/QJKg9TGAalgYTthWsZIJGu/PROJETO?content-scaling=fixed&amp;kind=proto&amp;node-id=56-675&amp;scaling=scale-down&amp;starting-point-node-id=250%3A226&amp;embed-host=share"
+        >
+          <img src="imagens/fortes.png" alt="prototipo fortes" class="project-thumb-image" />
+          <span class="project-thumb-cta">Abrir protótipo</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-name">Protótipo Fortes Engenharia</h3>
+          <p class="project-desc">
+            Prototipagem de site institucional para empresa de engenharia, com design responsivo, seções de serviços, 
+            gestão de projetos e contato, utilizando o Figma para o desenvolvimento do protótipo e o Canva para a criação dos elementos visuais.
+          </p>
+          <div class="project-techs">
+            <span class="project-tech">Figma</span>
+            <span class="project-tech">Canva</span>
+          </div>
+          <div class="project-links">
+            <a
+              href="#"
+              class="project-link js-open-prototype"
+              data-prototype-title="Site Fortes Engenharia — Protótipo (Figma)"
+              data-prototype-src="https://embed.figma.com/proto/QJKg9TGAalgYTthWsZIJGu/PROJETO?content-scaling=fixed&amp;kind=proto&amp;node-id=56-675&amp;scaling=scale-down&amp;starting-point-node-id=250%3A226&amp;embed-host=share"
+            >↗ Demo ao vivo</a>
+            <a href="#" class="project-link">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 2 -->
+      <div
+        class="project-card fade-up"
+        data-prototype-title="Jogo Ping-Pong"
+        data-prototype-src="projetos/jogo/index.html"
+      >
+        <div
+          class="project-thumb js-open-prototype"
+          role="button"
+          tabindex="0"
+          aria-label="Abrir demo do jogo"
+          data-prototype-title="Jogo Ping-Pong"
+          data-prototype-src="projetos/jogo/pingpong.html"
+        >
+          <img src="imagens/pingpong.png" alt="Jogo Ping-Pong" class="project-thumb-image" />
+          <span class="project-thumb-cta">Jogar agora</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-name">Jogo Ping-Pong</h3>
+          <p class="project-desc">
+            Um jogo de ping-pong simples desenvolvido com HTML, CSS e JavaScript, onde o jogador controla uma raquete para 
+            rebater a bola e marcar pontos contra um adversário controlado por IA. Projeto para fins de aprendizado.
+          </p>
+          <div class="project-techs">
+            <span class="project-tech">HTML</span>
+            <span class="project-tech">CSS</span>
+            <span class="project-tech">JavaScript</span>
+          </div>
+          <div class="project-links">
+            <a
+              href="#"
+              class="project-link js-open-prototype"
+              data-prototype-title="Jogo Ping-Pong"
+              data-prototype-src="projetos/jogo/index.html"
+            >↗ Jogar</a>
+            <a href="#" class="project-link">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 3 -->
+      <div
+        class="project-card fade-up"
+        data-prototype-title="Protótipo APP NutriFit"
+        data-prototype-src="https://embed.figma.com/proto/e3MvuA3z2FxpMyD8TU6orb/Nutrifit--c%C3%B3pia-?scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&node-id=1-2&starting-point-node-id=1%3A2&embed-host=share"
+      >
+        <div
+          class="project-thumb js-open-prototype"
+          role="button"
+          tabindex="0"
+          aria-label="Abrir protótipo do APP NutriFit"
+          data-prototype-title="Protótipo APP NutriFit"
+          data-prototype-src="https://embed.figma.com/proto/e3MvuA3z2FxpMyD8TU6orb/Nutrifit--c%C3%B3pia-?scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&node-id=1-2&starting-point-node-id=1%3A2&embed-host=share"
+        >
+          <img src="imagens/nutrifit.png" alt="prototipo nutrifit" class="project-thumb-image" />
+          <span class="project-thumb-cta">Abrir protótipo</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-name">Protótipo APP NutriFit</h3>
+          <p class="project-desc">
+            Protótipo de aplicativo móvel para monitoramento de dieta e nutrição, com funcionalidades para registro de refeições, 
+            acompanhamento de macros e metas nutricionais, utilizando o Figma para o desenvolvimento do protótipo e o Canva para a criação dos elementos visuais.
+          </p>
+          <div class="project-techs">
+            <span class="project-tech">Figma</span>
+            <span class="project-tech">Canva</span>
+          </div>
+          <div class="project-links">
+            <a
+              href="#"
+              class="project-link js-open-prototype"
+              data-prototype-title="Protótipo APP NutriFit"
+              data-prototype-src="https://embed.figma.com/proto/e3MvuA3z2FxpMyD8TU6orb/Nutrifit--c%C3%B3pia-?scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&node-id=1-2&starting-point-node-id=1%3A2&embed-host=share"
+            >↗ Demo ao vivo</a>
+            <a href="#" class="project-link">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 4-->
+      <div
+        class="project-card fade-up"
+        data-prototype-title="Jogo Ping-Pong"
+        data-prototype-src="projetos/jogo/index.html"
+      >
+        <div
+          class="project-thumb js-open-prototype"
+          role="button"
+          tabindex="0"
+          aria-label="Abrir App"
+          data-prototype-title="Gerenciador de Pedidos"
+          data-prototype-src="projetos/jogo/gerenciador_pedidos.html"
+        >
+          <img src="imagens/gerencpedidos.png" alt="Gerenciador de Pedidos" class="project-thumb-image" />
+          <span class="project-thumb-cta">Abrir App</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-name">Gerenciador de Pedidos</h3>
+          <p class="project-desc">
+            Aplicação web para gerenciamento de pedidos, permitindo cadastro de clientes, produtos e controle de estoque, 
+            desenvolvida com HTML, CSS e JavaScript para fins de aprendizado e prática de desenvolvimento frontend.
+          </p>
+          <div class="project-techs">
+            <span class="project-tech">HTML</span>
+            <span class="project-tech">CSS</span>
+            <span class="project-tech">JavaScript</span>
+          </div>
+          <div class="project-links">
+            <a
+              href="#"
+              class="project-link js-open-prototype"
+              data-prototype-title="Gerenciador de Pedidos"
+              data-prototype-src="projetos/jogo/gerenciador_pedidos.html"
+            >↗ Abrir App</a>
+            <a href="#" class="project-link">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 5-->
+      <div class="project-card fade-up hidden-project">
+        <div class="project-thumb">
+          <div class="project-thumb-icon"></div>
+        </div>
+        <div class="project-body">
+          <h3 class="project-name">Titulo</h3>
+          <p class="project-desc">
+            Descrição
+          </p>
+          <div class="project-techs">
+            <span class="project-tech">ferramentas</span>
+            <span class="project-tech"></span>
+            <span class="project-tech"></span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link">↗ Demo ao vivo</a>
+            <a href="#" class="project-link">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projeto 6-->
+      <div class="project-card fade-up hidden-project">
+        <div class="project-thumb">
+          <div class="project-thumb-icon"></div>
+        </div>
+        <div class="project-body">
+          <h3 class="project-name">Chatbot de Suporte</h3>
+          <p class="project-desc">
+            Chatbot inteligente para atendimento ao cliente com integração a APIs de IA e base de conhecimento.
+          </p>
+          <div class="project-techs">
+            <span class="project-tech">Python</span>
+            <span class="project-tech">Flask</span>
+            <span class="project-tech">Dialogflow</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link">↗ Demo ao vivo</a>
+            <a href="#" class="project-link">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Botão Ver Mais -->
+    <div class="load-more-container">
+      <button id="loadMoreBtn" class="btn-secondary load-more-btn">
+        Ver mais projetos →
+      </button>
+    </div>
+
+  <!-- ============================
+       ABOUT
+  ============================ -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <div>
+          <span class="section-label">Sobre mim</span>
+          <h2 class="section-title">Kauã Puttin</h2>
+
+        </div>
+
+      <div class="about-visual fade-up">
+        <div class="about-avatar">
+          <img src="imagens/kaua.png" alt="Foto de Kauã" />
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-num">+10</div>
+          <div class="stat-label">Projetos</div>
+        </div>
+      </div>
+
+      
+
+        <p>
+          Me chamo <strong>Kauã</strong>, estou cursando de Ciência da Computação na Universidade Vila Velha (UVV), 
+          com previa de conclusão para dezembro de 2027, tenho conhecimentos em <strong>HTML, CSS, JS, Python, MySQL e 
+          lógica de programação.</strong>
+          <br><br>
+          Possuo interesse em <strong>desenvolvimento de sistemas, design de interfaces e soluções tecnológicas</strong> 
+          que facilitem o dia a dia das pessoas. 
+          <br>
+          Tenho perfil proativo, facilidade de aprendizado e gosto de enfrentar novos 
+          desafios, sempre buscando evoluir tanto tecnicamente quanto profissionalmente. Também possuo experiência com
+          <strong>criação de conteúdo digital</strong> e <strong>atuação no comércio online</strong>, o que contribuiu para o desenvolvimento de habilidades 
+          como <strong>organização, comunicação e visão de negócio.</strong>
+          <br><br>
+          Busco oportunidades que me permitam aplicar meus conhecimentos na prática, adquirir experiência e crescer na área de tecnologia.
+        </p>
+
+        
+
+        <div class="about-tags">
+          <span class="tag">Inglês Básico</span>
+          <span class="tag">Vila Velha-ES</span>
+          <span class="tag">UX/UI</span>
+          <span class="tag">Freelancer</span>
+          <span class="tag">Open to Work</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       CONTACT
+  ============================ -->
+  <section id="contact">
+    <span class="section-label">Contato</span>
+    <h2 class="section-title">Vamos conversar?</h2>
+    <p class="section-subtitle">
+      Aberto a projetos freelance, oportunidades CLT e colaborações.
+    </p>
+
+    <div class="contact-wrapper">
+      <div class="contact-info fade-up">
+        <p class="contact-text">
+          Tem um projeto em mente ou está
+          procurando um dev para sua equipe? Entre em contato — será um prazer conversar.
+        </p>
+
+        <div class="contact-links">
+          <a href="mailto:kauaputtin@gmail.com" class="contact-link-item">
+            <div class="contact-link-icon">✉️</div>
+            <div class="contact-link-info">
+              <div class="link-label">E-mail</div>
+              <div class="link-value">kauaputtin@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="https://github.com/kauaputtin" target="_blank" rel="noopener" class="contact-link-item">
+            <div class="contact-link-icon">🐙</div>
+            <div class="contact-link-info">
+              <div class="link-label">GitHub</div>
+              <div class="link-value">https://github.com/kauaputtin</div>
+            </div>
+          </a>
+
+          <a href="https://linkedin.com/in/kauaputtin" target="_blank" rel="noopener" class="contact-link-item">
+            <div class="contact-link-icon">💼</div>
+            <div class="contact-link-info">
+              <div class="link-label">LinkedIn</div>
+              <div class="link-value">linkedin.com/in/kauaputtin/</div>
+            </div>
+          </a>
+
+          <a href="https://wa.me/5527981538302" target="_blank" rel="noopener" class="contact-link-item">
+            <div class="contact-link-icon">💬</div>
+            <div class="contact-link-info">
+              <div class="link-label">WhatsApp</div>
+              <div class="link-value">(27) 98153-8302</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Formulário -->
+      <form class="contact-form fade-up" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="name">Nome</label>
+          <input class="form-input" id="name" name="name" type="text" placeholder="Seu nome" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">E-mail</label>
+          <input class="form-input" id="email" name="email" type="email" placeholder="seuemail@exemplo.com" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="subject">Assunto</label>
+          <input class="form-input" id="subject" name="subject" type="text" placeholder="Ex: Projeto freelance, proposta de emprego..." />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">Mensagem</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="Conte um pouco sobre seu projeto ou oportunidade..." required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">Enviar mensagem →</button>
+        <div class="form-success" id="formSuccess">✓ Mensagem enviada! Entrarei em contato em breve.</div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ============================
+       FOOTER
+  ============================ -->
+  <footer>
+    <p class="footer-copy">
+      © 2025 <span>Kauã</span> · Direitos reservados.
+    </p>
+    <div class="footer-links">
+      <a href="#home">Topo</a>
+      <a href="#projects">Projetos</a>
+      <a href="#contact">Contato</a>
+    </div>
+  </footer>
+
+  <!-- ============================
+       PROTOTYPE MODAL (FIGMA)
+  ============================ -->
+  <div class="prototype-modal" id="prototypeModal" aria-hidden="true">
+    <div class="prototype-backdrop" data-modal-close></div>
+    <div class="prototype-dialog" role="dialog" aria-modal="true" aria-labelledby="prototypeTitle">
+      <div class="prototype-header">
+        <h3 class="prototype-title" id="prototypeTitle">Protótipo</h3>
+        <button class="prototype-close" id="prototypeClose" type="button" data-modal-close aria-label="Fechar interface do protótipo">
+          ×
+        </button>
+      </div>
+      <div class="prototype-body">
+        <iframe
+          id="prototypeFrame"
+          title="Protótipo interativo"
+          loading="lazy"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================
+       JAVASCRIPT
+  ============================ -->
+  <script>
+    /* ---- DARK/LIGHT MODE ---- */
+    const themeToggle = document.getElementById('themeToggle');
+    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+    const themeIcon   = document.getElementById('themeIcon');
+    const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+    const themeText   = document.getElementById('themeText');
+    const mobileThemeText = document.getElementById('mobileThemeText');
+    const html        = document.documentElement;
+
+    const themeButtons = [themeToggle, mobileThemeToggle].filter(Boolean);
+
+    // Inicia no dark (padrão), mas respeita preferência salva
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    updateThemeUI(savedTheme);
+
+    themeButtons.forEach(btn => btn.addEventListener('click', toggleTheme));
+
+    function toggleTheme() {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeUI(next);
+    }
+
+    function updateThemeUI(theme) {
+      if (theme === 'dark') {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Claro';
+        if (mobileThemeIcon) mobileThemeIcon.textContent = '☀️';
+        if (mobileThemeText) mobileThemeText.textContent = 'Claro';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Escuro';
+        if (mobileThemeIcon) mobileThemeIcon.textContent = '🌙';
+        if (mobileThemeText) mobileThemeText.textContent = 'Escuro';
+      }
+    }
+
+    /* ---- MOBILE NAV ---- */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileNav  = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+    });
+
+    function closeMobileNav() {
+      mobileNav.classList.remove('open');
+    }
+
+    /* ---- SCROLL ANIMATIONS (IntersectionObserver) ---- */
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const skillLevels = document.querySelectorAll('.skill-levels');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Skill levels: gera retângulos quando entrar na viewport
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const levelsContainer = entry.target;
+          const level = parseInt(levelsContainer.dataset.level) || 0;
+          levelsContainer.innerHTML = '';
+          for (let i = 0; i < 10; i++) {
+            const levelDiv = document.createElement('div');
+            levelDiv.className = 'skill-level' + (i < level ? ' filled' : '');
+            levelsContainer.appendChild(levelDiv);
+          }
+          skillObserver.unobserve(levelsContainer);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    skillLevels.forEach(levels => skillObserver.observe(levels));
+
+    /* ---- CONTACT FORM ---- */
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('.form-submit');
+      const success = document.getElementById('formSuccess');
+
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+
+      // Cria FormData com os dados do formulário
+      const formData = new FormData(form);
+
+      // Envia via fetch
+      fetch('send-email.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.sucesso) {
+          form.reset();
+          btn.style.display = 'none';
+          success.style.display = 'block';
+          // Opcional: esconder mensagem após 5 segundos
+          setTimeout(() => {
+            success.style.display = 'none';
+            btn.style.display = 'block';
+            btn.textContent = 'Enviar mensagem →';
+            btn.disabled = false;
+          }, 5000);
+        } else {
+          alert('Erro: ' + (data.erro || 'Falha ao enviar'));
+          btn.textContent = 'Enviar mensagem →';
+          btn.disabled = false;
+        }
+      })
+      .catch(erro => {
+        alert('Erro ao conectar: ' + erro);
+        btn.textContent = 'Enviar mensagem →';
+        btn.disabled = false;
+      });
+    }
+
+    /* ---- ACTIVE NAV LINK on scroll ---- */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 140) current = sec.getAttribute('id');
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--accent)'
+          : '';
+      });
+    }, { passive: true });
+
+    /* ---- PROTOTYPE MODAL (Figma) ---- */
+    const prototypeModal = document.getElementById('prototypeModal');
+    const prototypeFrame = document.getElementById('prototypeFrame');
+    const prototypeTitle = document.getElementById('prototypeTitle');
+    const prototypeClose = document.getElementById('prototypeClose');
+
+    let lastFocused = null;
+
+    function openPrototypeModal(src, title) {
+      if (!prototypeModal || !prototypeFrame) return;
+
+      lastFocused = document.activeElement;
+
+      if (prototypeTitle && title) prototypeTitle.textContent = title;
+      if (title) prototypeFrame.setAttribute('title', title);
+
+      prototypeFrame.src = src;
+      prototypeModal.classList.add('open');
+      prototypeModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+
+      // Move foco para o botão de fechar (acessibilidade)
+      setTimeout(() => prototypeClose && prototypeClose.focus(), 0);
+    }
+
+    function closePrototypeModal() {
+      if (!prototypeModal || !prototypeFrame) return;
+
+      prototypeModal.classList.remove('open');
+      prototypeModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+
+      // Limpa o iframe para parar áudio/vídeo e reduzir uso de recursos
+      prototypeFrame.src = '';
+
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      lastFocused = null;
+    }
+
+    document.querySelectorAll('.js-open-prototype[data-prototype-src]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const src = el.getAttribute('data-prototype-src');
+        const title = el.getAttribute('data-prototype-title') || 'Protótipo (Figma)';
+        if (src) openPrototypeModal(src, title);
+      });
+
+      // Suporte a teclado para elementos não nativos (ex: div)
+      if (el.tagName.toLowerCase() !== 'a' && el.tagName.toLowerCase() !== 'button') {
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const src = el.getAttribute('data-prototype-src');
+            const title = el.getAttribute('data-prototype-title') || 'Protótipo (Figma)';
+            if (src) openPrototypeModal(src, title);
+          }
+        });
+      }
+    });
+
+    // Abre o protótipo ao clicar no card (exceto links/botões)
+    document.querySelectorAll('.project-card[data-prototype-src]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const target = e.target;
+        if (!target || !target.closest) return;
+        if (target.closest('.js-open-prototype') || target.closest('a,button')) return;
+
+        const src = card.getAttribute('data-prototype-src');
+        const title = card.getAttribute('data-prototype-title') || 'Protótipo (Figma)';
+        if (src) openPrototypeModal(src, title);
+      });
+    });
+
+    prototypeModal && prototypeModal.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target && target.closest && target.closest('[data-modal-close]')) {
+        closePrototypeModal();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && prototypeModal && prototypeModal.classList.contains('open')) {
+        closePrototypeModal();
+      }
+    });
+
+    /* ---- LOAD MORE PROJECTS ---- */
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const hiddenProjects = document.querySelectorAll('.hidden-project');
+
+    if (loadMoreBtn && hiddenProjects.length > 0) {
+      loadMoreBtn.addEventListener('click', () => {
+        hiddenProjects.forEach(project => {
+          project.classList.remove('hidden-project');
+          // Trigger fade-in animation
+          setTimeout(() => project.classList.add('visible'), 100);
+        });
+        loadMoreBtn.style.display = 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
