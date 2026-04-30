@@ -31,6 +31,7 @@
     <a href="#home" class="nav-logo"><span>PORTIFÓLIO</span></a>
 
     <ul class="nav-links">
+      <li><a href="#home">Início</a></li>
       <li><a href="#about">Sobre</a></li>
       <li><a href="#skills">Habilidades</a></li>
       <li><a href="#projects">Projetos</a></li>
@@ -39,7 +40,9 @@
 
     <div style="display:flex;gap:0.75rem;align-items:center;">
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
-        <span id="themeIcon">☀️</span>
+        <span id="themeIcon">
+          <img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />
+        </span>
         <span id="themeText">Claro</span>
       </button>
       <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -56,7 +59,9 @@
     <a href="#contact" onclick="closeMobileNav()">Contato</a>
     <p>Tema:</p>
     <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" aria-label="Alternar tema">
-      <span id="mobileThemeIcon">☀️</span>
+      <span id="mobileThemeIcon">
+        <img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />
+      </span>
       <span id="mobileThemeText">Claro</span>
     </button>
   </div>
@@ -64,43 +69,45 @@
   <!-- ============================
        HERO
   ============================ -->
-  <section id="home">
+  <section id="home" class="hero-section">
+    
     <div class="hero-content">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        Disponível para projetos freelance
-      </div>
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Disponível para projetos freelance
+        </div>
 
-      <h1 class="hero-title">
-        Olá, sou o<br />
-        <span class="accent">Kauã</span>
-      </h1>
+        <h1 class="hero-title">
+            Olá, sou o<br />
+            <span class="accent">Kauã</span>
+        </h1>
 
-      <p class="hero-subtitle">Desenvolvedor Web · Frontend & Backend</p>
+        <p class="hero-devweb">Desenvolvedor Web - UX/UI - Python - ADS</p>
 
-      <p class="hero-desc">
-        Desenvolvo interfaces digitais e soluções web focadas em otimizar processos, fortalecer a presença digital e 
-        criar sistemas que aumentam a eficiência, organização e resultados das empresas.
-      </p>
+        <p class="hero-desc">
+            Desenvolvo interfaces digitais e soluções web focadas em otimizar processos, fortalecer a presença digital e 
+            criar sistemas que aumentam a eficiência, organização e resultados das empresas.
+        </p>
 
-      <div class="hero-actions">
-        <a href="#projects" class="btn-primary">
-          Ver projetos &rarr;
-        </a>
-        <a href="curriculo.pdf" download class="btn-secondary">
-          ⬇ Download CV
-        </a>
-      </div>
+        <div class="hero-actions">
+            <a href="#projects" class="btn-primary">
+                Ver projetos &rarr;
+            </a>
+            <a href="documentos/curriculo.pdf" download class="btn-secondary">
+                ⬇ Download CV
+            </a>
+        </div>
     </div>
 
     <div class="hero-visual">
-      <img src="imagens/kauaSemfundo.png" alt="Foto de Kauã" class="hero-photo" />
+        <img src="imagens/kauaSemfundo.png" alt="Foto de Kauã" class="hero-photo" />
     </div>
 
     <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      Scroll para explorar
+        <div class="scroll-line"></div>
+        Scroll para explorar
     </div>
+
   </section>
 
   
@@ -123,7 +130,15 @@
 
         <div class="skill-item">
           <div class="skill-info">
-            <span class="skill-name">HTML & CSS</span>
+            <span class="skill-name">HTML</span>
+            <span class="skill-pct">8/10</span>
+          </div>
+          <div class="skill-levels" data-level="8"></div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-info">
+            <span class="skill-name">CSS</span>
             <span class="skill-pct">8/10</span>
           </div>
           <div class="skill-levels" data-level="8"></div>
@@ -135,14 +150,6 @@
             <span class="skill-pct">5/10</span>
           </div>
           <div class="skill-levels" data-level="5"></div>
-        </div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">Design Responsivo</span>
-            <span class="skill-pct">8/10</span>
-          </div>
-          <div class="skill-levels" data-level="8"></div>
         </div>
       </div>
 
@@ -160,7 +167,7 @@
 
         <div class="skill-item">
           <div class="skill-info">
-            <span class="skill-name">Node.js</span>
+            <span class="skill-name">SQL</span>
             <span class="skill-pct">5/10</span>
           </div>
           <div class="skill-levels" data-level="5"></div>
@@ -169,9 +176,9 @@
         <div class="skill-item">
           <div class="skill-info">
             <span class="skill-name">Java</span>
-            <span class="skill-pct">5/10</span>
+            <span class="skill-pct">4/10</span>
           </div>
-          <div class="skill-levels" data-level="5"></div>
+          <div class="skill-levels" data-level="4"></div>
         </div>
       </div>
 
@@ -245,6 +252,7 @@
           <div class="project-techs">
             <span class="project-tech">Figma</span>
             <span class="project-tech">Canva</span>
+            <span class="project-tech">Trabalho em Equipe</span>
           </div>
           <div class="project-links">
             <a
@@ -252,8 +260,7 @@
               class="project-link js-open-prototype"
               data-prototype-title="Site Fortes Engenharia — Protótipo (Figma)"
               data-prototype-src="https://embed.figma.com/proto/QJKg9TGAalgYTthWsZIJGu/PROJETO?content-scaling=fixed&amp;kind=proto&amp;node-id=56-675&amp;scaling=scale-down&amp;starting-point-node-id=250%3A226&amp;embed-host=share"
-            >↗ Abrir Protótipo</a>
-            <a href="#" class="project-link">⌥ GitHub</a>
+            >Abrir Protótipo</a>
           </div>
         </div>
       </div>
@@ -295,8 +302,7 @@
               data-prototype-title="Jogo Ping-Pong"
               data-prototype-src-mobile="projetos/jogo/pingpong/ping_pong_mobile_v2.html"
               data-prototype-src="projetos/jogo/pingpong/ping_pong_desktop.html"
-            >↗ Jogar</a>
-            <a href="#" class="project-link">⌥ GitHub</a>
+            >Jogar</a>
           </div>
         </div>
       </div>
@@ -327,6 +333,7 @@
           <div class="project-techs">
             <span class="project-tech">Figma</span>
             <span class="project-tech">Canva</span>
+            <span class="project-tech">Freelancer</span>
           </div>
           <div class="project-links">
             <a
@@ -334,8 +341,7 @@
               class="project-link js-open-prototype"
               data-prototype-title="Protótipo APP NutriFit"
               data-prototype-src="https://embed.figma.com/proto/e3MvuA3z2FxpMyD8TU6orb/Nutrifit--c%C3%B3pia-?scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&node-id=1-2&starting-point-node-id=1%3A2&embed-host=share"
-            >↗ Abrir Protótipo</a>
-            <a href="#" class="project-link">⌥ GitHub</a>
+            >Abrir Protótipo</a>
           </div>
         </div>
       </div>
@@ -374,8 +380,7 @@
               class="project-link js-open-prototype"
               data-prototype-title="Gerenciador de Pedidos"
               data-prototype-src="projetos/jogo/gerenciador_pedidos.html"
-            >↗ Abrir App</a>
-            <a href="#" class="project-link">⌥ GitHub</a>
+            >Abrir App</a>
           </div>
         </div>
       </div>
@@ -397,8 +402,8 @@
             <span class="project-tech">JavaScript</span>
           </div>
           <div class="project-links">
-            <a href="https://kauaputtin.github.io/Portifolio-Kaua-v2/" target="_blank" rel="noopener" class="project-link">↗ Abrir site</a>
-            <a href="https://github.com/kauaputtin/Portifolio-Kaua-v2" target="_blank" rel="noopener" class="project-link">⌥ GitHub</a>
+            <a href="https://kauaputtin.github.io/Portifolio-Kaua-v2/" target="_blank" rel="noopener" class="project-link">Abrir site</a>
+            <a href="https://github.com/kauaputtin/Portifolio-Kaua-v2" target="_blank" rel="noopener" class="project-link">GitHub</a>
           </div>
         </div>
       </div>
@@ -419,8 +424,7 @@
             <span class="project-tech">Dialogflow</span>
           </div>
           <div class="project-links">
-            <a href="#" class="project-link">↗ Demo ao vivo</a>
-            <a href="#" class="project-link">⌥ GitHub</a>
+            <a href="#" class="project-link">Demo ao vivo</a>
           </div>
         </div>
       </div>
@@ -452,7 +456,7 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-num">+10</div>
+          <div class="stat-num">+5</div>
           <div class="stat-label">Projetos</div>
         </div>
       </div>
@@ -507,7 +511,9 @@
 
         <div class="contact-links">
           <a href="mailto:kauaputtin@gmail.com" class="contact-link-item">
-            <div class="contact-link-icon">✉️</div>
+            <div class="contact-link-icon">
+              <img src="imagens/email.png" alt="E-mail" class="contact-link-icon-image" />
+            </div>
             <div class="contact-link-info">
               <div class="link-label">E-mail</div>
               <div class="link-value">kauaputtin@gmail.com</div>
@@ -515,7 +521,9 @@
           </a>
 
           <a href="https://github.com/kauaputtin" target="_blank" rel="noopener" class="contact-link-item">
-            <div class="contact-link-icon">🐙</div>
+            <div class="contact-link-icon">
+              <img src="imagens/github.png" alt="GitHub" class="contact-link-icon-image" />
+            </div>
             <div class="contact-link-info">
               <div class="link-label">GitHub</div>
               <div class="link-value">https://github.com/kauaputtin</div>
@@ -523,7 +531,9 @@
           </a>
 
           <a href="https://linkedin.com/in/kauaputtin" target="_blank" rel="noopener" class="contact-link-item">
-            <div class="contact-link-icon">💼</div>
+            <div class="contact-link-icon">
+              <img src="imagens/linkedin.png" alt="LinkedIn" class="contact-link-icon-image" />
+            </div>
             <div class="contact-link-info">
               <div class="link-label">LinkedIn</div>
               <div class="link-value">linkedin.com/in/kauaputtin/</div>
@@ -531,7 +541,9 @@
           </a>
 
           <a href="https://wa.me/5527981538302" target="_blank" rel="noopener" class="contact-link-item">
-            <div class="contact-link-icon">💬</div>
+            <div class="contact-link-icon">
+              <img src="imagens/whatsapp.png" alt="WhatsApp" class="contact-link-icon-image" />
+            </div>
             <div class="contact-link-info">
               <div class="link-label">WhatsApp</div>
               <div class="link-value">(27) 98153-8302</div>
@@ -638,18 +650,22 @@
     }
 
     function updateThemeUI(theme) {
-      if (theme === 'dark') {
-        themeIcon.textContent = '☀️';
-        themeText.textContent = 'Claro';
-        if (mobileThemeIcon) mobileThemeIcon.textContent = '☀️';
-        if (mobileThemeText) mobileThemeText.textContent = 'Claro';
-      } else {
-        themeIcon.textContent = '🌙';
+    if (theme === 'dark') {
+        // Tema Escuro → Mostra Lua
+        themeIcon.innerHTML = `<img src="imagens/lua.png" alt="Ícone de lua" class="theme-icon-image" />`;
         themeText.textContent = 'Escuro';
-        if (mobileThemeIcon) mobileThemeIcon.textContent = '🌙';
+        
+        if (mobileThemeIcon) mobileThemeIcon.innerHTML = `<img src="imagens/lua.png" alt="Ícone de lua" class="theme-icon-image" />`;
         if (mobileThemeText) mobileThemeText.textContent = 'Escuro';
-      }
+    } else {
+        // Tema Claro → Mostra Sol
+        themeIcon.innerHTML = `<img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />`;
+        themeText.textContent = 'Claro';
+        
+        if (mobileThemeIcon) mobileThemeIcon.innerHTML = `<img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />`;
+        if (mobileThemeText) mobileThemeText.textContent = 'Claro';
     }
+    } 
 
     /* ---- MOBILE NAV ---- */
     const hamburger  = document.getElementById('hamburger');
