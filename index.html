@@ -20,6 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css">
+   <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -32,9 +33,9 @@
 
     <ul class="nav-links">
       <li><a href="#home">Início</a></li>
-      <li><a href="#about">Sobre</a></li>
       <li><a href="#skills">Habilidades</a></li>
       <li><a href="#projects">Projetos</a></li>
+      <li><a href="#about">Sobre</a></li>
       <li><a href="#contact">Contato</a></li>
     </ul>
 
@@ -53,9 +54,9 @@
 
   <!-- Mobile nav -->
   <div class="mobile-nav" id="mobileNav">
-    <a href="#about" onclick="closeMobileNav()">Sobre</a>
     <a href="#skills" onclick="closeMobileNav()">Habilidades</a>
     <a href="#projects" onclick="closeMobileNav()">Projetos</a>
+    <a href="#about" onclick="closeMobileNav()">Sobre</a>
     <a href="#contact" onclick="closeMobileNav()">Contato</a>
     <p>Tema:</p>
     <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" aria-label="Alternar tema">
@@ -409,22 +410,23 @@
       </div>
 
       <!-- Projeto 6-->
-      <div class="project-card fade-up hidden-project">
+      <div class="project-card fade-up hidden-project" data-card-url="https://kauaputtin.github.io/gerador-de-senha/">
         <div class="project-thumb">
-          <div class="project-thumb-icon"></div>
+          <img src="imagens/geradorsenha.png" alt="Gerador de Senhas" class="project-thumb-image" />
         </div>
+        
         <div class="project-body">
-          <h3 class="project-name">Chatbot de Suporte</h3>
+          <h3 class="project-name">Gerador de Senhas</h3>
           <p class="project-desc">
-            Chatbot inteligente para atendimento ao cliente com integração a APIs de IA e base de conhecimento.
+            Aplicação web para geração de senhas seguras, com opções de personalização e critérios de complexidade.
           </p>
           <div class="project-techs">
-            <span class="project-tech">Python</span>
-            <span class="project-tech">Flask</span>
-            <span class="project-tech">Dialogflow</span>
+            <span class="project-tech">HTML</span>
+            <span class="project-tech">CSS</span>
+            <span class="project-tech">JavaScript</span>
           </div>
           <div class="project-links">
-            <a href="#" class="project-link">Demo ao vivo</a>
+            <a href="https://kauaputtin.github.io/gerador-de-senha/" target="_blank" rel="noopener" class="project-link">Abrir site</a>
           </div>
         </div>
       </div>
@@ -618,11 +620,7 @@
       </div>
     </div>
   </div>
-
-  <!-- ============================
-       JAVASCRIPT
-  ============================ -->
-  <script>
+ <script>
     /* ---- DARK/LIGHT MODE ---- */
     const themeToggle = document.getElementById('themeToggle');
     const mobileThemeToggle = document.getElementById('mobileThemeToggle');
@@ -727,7 +725,9 @@
       const formData = new FormData(form);
 
       // Envia via fetch
-      fetch('send-email.php', {
+      alert('Mensagem enviada (simulação)');
+
+      fetch('/enviar-formulario', {
         method: 'POST',
         body: formData
       })
@@ -896,7 +896,8 @@
         loadMoreBtn.style.display = 'none';
       });
     }
-  </script>
+</script>
+  
 
 </body>
 </html>
