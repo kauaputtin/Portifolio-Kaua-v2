@@ -7,6 +7,3 @@
 [submodule "projetos/gerador-de-senha"]
 	path = projetos/gerador-de-senha
 	url = https://github.com/kauaputtin/gerador-de-senha.git
-[submodule "projetos/eventos-corporativos"]
-	path = projetos/eventos-corporativos
-	url = https://github.com/projetojax/eventos_corporativos.git
