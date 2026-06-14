@@ -1,0 +1,3 @@
+[submodule "projetos/jogo/pingpong"]
+	path = projetos/jogo/pingpong
+	url = https://github.com/kauaputtin/ping-pong-jogo.git
