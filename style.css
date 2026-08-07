@@ -589,6 +589,38 @@
       animation: fadeUp 0.8s 0.4s ease both;
     }
 
+    .hero-socials {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+
+    .hero-social-link {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-social-link:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 28px var(--accent-glow);
+    }
+
+    .hero-social-icon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
     .btn-primary {
       display: inline-flex;
       align-items: center;
@@ -690,7 +722,7 @@
     .load-more-container {
       display: flex;
       justify-content: center;
-      margin-top: 2rem;
+      margin: 3rem 0 4.5rem;
     }
 
     .load-more-btn {
@@ -709,6 +741,128 @@
     .hidden-project {
       display: none !important;
     }
+
+    /* ============================================
+       CERTIFICATES SECTION
+    ============================================ */
+    #certificates {
+      border-top: 1px solid var(--border);
+    }
+
+    .certificates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .certificate-card {
+      min-height: 100%;
+      padding: 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .certificate-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-glow);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .certificate-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex: 0 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .certificate-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .certificate-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 0.45rem;
+    }
+
+    .certificate-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      line-height: 1.15;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .certificate-issuer {
+      color: var(--text-secondary);
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .certificate-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      flex: 0 0 auto;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      line-height: 1;
+      padding-top: 0.18rem;
+    }
+
+    .certificate-date::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #37e681;
+      box-shadow: 0 0 12px rgba(55, 230, 129, 0.5);
+    }
+
+    .certificate-role {
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+    }
+
+    .certificate-desc {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .certificate-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .certificate-tags span {
+      padding: 0.32rem 0.72rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.015);
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
     #about {
       border-top: 1px solid var(--border);
     }
@@ -1430,6 +1584,14 @@
       .hero-title { font-size: 2.4rem; }
       .hero-desc { font-size: 0.98rem; }
       .projects-grid { grid-template-columns: 1fr; }
+      .certificates-grid { grid-template-columns: 1fr; }
+      .certificate-card {
+        padding: 1.15rem;
+      }
+      .certificate-topline {
+        flex-direction: column;
+        gap: 0.4rem;
+      }
       .skills-grid { grid-template-columns: 1fr; }
     }
 
