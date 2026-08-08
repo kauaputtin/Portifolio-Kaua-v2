@@ -47,17 +47,50 @@ themeButtons.forEach((btn) => btn.addEventListener('click', toggleTheme));
 /* ---- MOBILE NAV ---- */
 const hamburger = document.getElementById('hamburger');
 const mobileNav = document.getElementById('mobileNav');
+const mainNav = document.querySelector('.main-nav');
+
+function updateMobileHeader() {
+  if (!mainNav) return;
+  const isMobile = window.matchMedia?.('(max-width: 768px)').matches;
+  const menuIsOpen = mobileNav?.classList.contains('open');
+  mainNav.classList.toggle('is-compact', Boolean(isMobile && !menuIsOpen && window.scrollY > 56));
+}
+
+function setMobileMenuOpen(isOpen) {
+  if (!mobileNav || !hamburger) return;
+  mobileNav.classList.toggle('open', isOpen);
+  hamburger.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+  hamburger.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  mainNav?.classList.toggle('menu-open', isOpen);
+  if (isOpen) mainNav?.classList.remove('is-compact');
+  else updateMobileHeader();
+}
 
 if (hamburger && mobileNav) {
   hamburger.addEventListener('click', () => {
-    mobileNav.classList.toggle('open');
+    setMobileMenuOpen(!mobileNav.classList.contains('open'));
   });
 }
 
 window.closeMobileNav = function closeMobileNav() {
-  if (!mobileNav) return;
-  mobileNav.classList.remove('open');
+  setMobileMenuOpen(false);
 };
+
+let mobileHeaderFrame = 0;
+window.addEventListener(
+  'scroll',
+  () => {
+    if (mobileHeaderFrame) return;
+    mobileHeaderFrame = window.requestAnimationFrame(() => {
+      updateMobileHeader();
+      mobileHeaderFrame = 0;
+    });
+  },
+  { passive: true }
+);
+window.addEventListener('resize', updateMobileHeader);
+updateMobileHeader();
 
 /* ---- SCROLL ANIMATIONS (IntersectionObserver) ---- */
 const fadeEls = document.querySelectorAll('.fade-up');
@@ -246,15 +279,102 @@ window.addEventListener('keydown', (ev) => {
   if (ev.key === 'Escape' && prototypeModal?.classList?.contains('open')) closePrototypeModal();
 });
 
-/* ---- PROJECT CARD (click whole card) ---- */
-document.querySelectorAll('.project-card[data-card-url]').forEach((card) => {
-  card.addEventListener('click', (ev) => {
-    const target = ev.target;
-    if (target?.closest?.('a,button')) return;
+/* ---- PROJECT DETAILS MODAL ---- */
+const projectDetailModal = document.getElementById('projectDetailModal');
+const projectDetailClose = document.getElementById('projectDetailClose');
+const projectDetailTitle = document.getElementById('projectDetailTitle');
+const projectDetailImage = document.getElementById('projectDetailImage');
+const projectDetailDescription = document.getElementById('projectDetailDescription');
+const projectDetailType = document.getElementById('projectDetailType');
+const projectDetailPlatform = document.getElementById('projectDetailPlatform');
+const projectDetailStack = document.getElementById('projectDetailStack');
+const projectDetailVisit = document.getElementById('projectDetailVisit');
+const projectDetailGithub = document.getElementById('projectDetailGithub');
+const projectDetailPrototype = document.getElementById('projectDetailPrototype');
 
-    const url = card.getAttribute('data-card-url');
-    if (url) window.open(url, '_blank');
-  });
+let projectDetailLastFocused = null;
+let activeProjectPrototype = '';
+let activeProjectTitle = '';
+
+function setProjectDetailLink(link, url) {
+  if (!link) return;
+  link.hidden = !url;
+  if (url) link.href = url;
+  else link.removeAttribute('href');
+}
+
+function openProjectDetail(card) {
+  if (!projectDetailModal || !card) return;
+  const data = card.dataset;
+
+  activeProjectTitle = data.projectTitle || 'Projeto';
+  activeProjectPrototype = data.projectPrototype || '';
+  projectDetailLastFocused = card;
+
+  if (projectDetailTitle) projectDetailTitle.textContent = activeProjectTitle;
+  if (projectDetailDescription) projectDetailDescription.textContent = data.projectDescription || '';
+  if (projectDetailType) projectDetailType.textContent = data.projectType || 'Projeto digital';
+  if (projectDetailPlatform) projectDetailPlatform.textContent = data.projectPlatform || '—';
+
+  if (projectDetailImage) {
+    projectDetailImage.src = data.projectImage || '';
+    projectDetailImage.alt = `Visual do projeto ${activeProjectTitle}`;
+  }
+
+  if (projectDetailStack) {
+    projectDetailStack.innerHTML = '';
+    String(data.projectStack || '')
+      .split('|')
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .forEach((technology) => {
+        const tag = document.createElement('span');
+        tag.textContent = technology;
+        projectDetailStack.appendChild(tag);
+      });
+  }
+
+  setProjectDetailLink(projectDetailVisit, data.projectUrl || '');
+  setProjectDetailLink(projectDetailGithub, data.projectGithub || '');
+  if (projectDetailPrototype) projectDetailPrototype.hidden = !activeProjectPrototype;
+
+  projectDetailModal.classList.add('open');
+  projectDetailModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  setTimeout(() => projectDetailClose?.focus?.(), 0);
+}
+
+function closeProjectDetailModal(restoreFocus = true) {
+  if (!projectDetailModal) return;
+  projectDetailModal.classList.remove('open');
+  projectDetailModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+
+  if (restoreFocus) projectDetailLastFocused?.focus?.();
+}
+
+document.querySelectorAll('.project-detail-trigger').forEach((card) => {
+  card.addEventListener('click', () => openProjectDetail(card));
+});
+
+projectDetailClose?.addEventListener?.('click', () => closeProjectDetailModal());
+
+projectDetailModal?.addEventListener?.('click', (ev) => {
+  if (ev.target?.closest?.('[data-project-detail-close]')) closeProjectDetailModal();
+});
+
+projectDetailPrototype?.addEventListener?.('click', () => {
+  if (!activeProjectPrototype) return;
+  const triggerToRestore = projectDetailLastFocused;
+  closeProjectDetailModal(false);
+  openPrototypeModal(activeProjectPrototype, activeProjectTitle);
+  lastFocused = triggerToRestore;
+});
+
+window.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape' && projectDetailModal?.classList?.contains('open')) {
+    closeProjectDetailModal();
+  }
 });
 
 /* ---- LOAD MORE PROJECTS ---- */
@@ -262,18 +382,76 @@ const loadMoreBtn = document.getElementById('loadMoreBtn');
 const hiddenProjects = document.querySelectorAll('.hidden-project');
 
 if (loadMoreBtn && hiddenProjects.length > 0) {
+  let projectsExpanded = false;
+
   loadMoreBtn.addEventListener('click', () => {
+    projectsExpanded = !projectsExpanded;
+
     hiddenProjects.forEach((project) => {
-      project.classList.remove('hidden-project');
-      setTimeout(() => project.classList.add('visible'), 100);
+      if (projectsExpanded) {
+        project.classList.remove('hidden-project');
+        requestAnimationFrame(() => {
+          if (projectsExpanded) project.classList.add('visible');
+        });
+      } else {
+        project.classList.add('hidden-project');
+        project.classList.remove('visible');
+      }
     });
-    loadMoreBtn.style.display = 'none';
+
+    loadMoreBtn.setAttribute('aria-expanded', String(projectsExpanded));
+    loadMoreBtn.textContent = projectsExpanded
+      ? 'Ver menos projetos \u2191'
+      : 'Ver mais projetos \u2192';
   });
 }
 
 /* ---- MOBILE CERTIFICATES TOGGLE ---- */
 const certificateToggleBtn = document.getElementById('certificateToggleBtn');
 const certificatesGrid = document.getElementById('certificatesGrid');
+const certificateCards = [...document.querySelectorAll('.certificate-card')];
+const certificateMobileQuery = window.matchMedia?.('(max-width: 768px)');
+
+function setCertificateCardExpanded(card, isExpanded) {
+  const button = card.querySelector('.certificate-expand-btn');
+  const isMobile = certificateMobileQuery?.matches ?? false;
+  const shouldExpand = Boolean(isMobile && isExpanded);
+
+  card.classList.toggle('certificate-card-expanded', shouldExpand);
+  button?.setAttribute('aria-expanded', String(shouldExpand));
+  button?.setAttribute(
+    'aria-label',
+    shouldExpand ? 'Recolher detalhes do certificado' : 'Mostrar detalhes do certificado'
+  );
+
+  card.querySelectorAll('.certificate-desc, .certificate-tags').forEach((detail) => {
+    detail.setAttribute('aria-hidden', String(isMobile && !shouldExpand));
+  });
+}
+
+certificateCards.forEach((card) => {
+  const button = document.createElement('button');
+  button.className = 'certificate-expand-btn';
+  button.type = 'button';
+  button.setAttribute('aria-expanded', 'false');
+  button.setAttribute('aria-label', 'Mostrar detalhes do certificado');
+  button.innerHTML = '<span aria-hidden="true"></span>';
+  card.append(button);
+
+  button.addEventListener('click', () => {
+    setCertificateCardExpanded(card, !card.classList.contains('certificate-card-expanded'));
+  });
+});
+
+function syncCertificateCardsToViewport() {
+  certificateCards.forEach((card) => {
+    if (!certificateMobileQuery?.matches) card.classList.remove('certificate-card-expanded');
+    setCertificateCardExpanded(card, card.classList.contains('certificate-card-expanded'));
+  });
+}
+
+certificateMobileQuery?.addEventListener?.('change', syncCertificateCardsToViewport);
+syncCertificateCardsToViewport();
 
 certificateToggleBtn?.addEventListener?.('click', () => {
   if (!certificatesGrid) return;
