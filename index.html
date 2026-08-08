@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css">
-   <script src="script.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260808-2">
+  <script src="script.js?v=20260808-2" defer></script>
 </head>
 
 <body>
@@ -28,8 +28,11 @@
   <!-- ============================
        NAVIGATION
   ============================ -->
-  <nav>
-    <a href="#home" class="nav-logo"><span>PORTFÓLIO</span></a>
+  <nav class="main-nav">
+    <a href="#home" class="nav-logo" aria-label="Ir para o início">
+      <span class="nav-logo-word">PORTFÓLIO</span>
+      <img src="imagens/logo_cabecalho.svg" alt="" class="nav-logo-mark" aria-hidden="true" />
+    </a>
 
     <ul class="nav-links">
       <li><a href="#home">Início</a></li>
@@ -48,7 +51,7 @@
         </span>
         <span id="themeText">Claro</span>
       </button>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
+      <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menu" aria-controls="mobileNav" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -197,7 +200,6 @@
         <span class="skill-status skill-status-frequent"><span aria-hidden="true"></span>Uso frequente</span>
       </article>
     </div>
-
     <a href="#projects" class="skills-project-link">Ver habilidades aplicadas nos projetos <span aria-hidden="true">&rarr;</span></a>
   </section>
 
@@ -231,7 +233,7 @@
         <span class="project-body">
           <span>
             <span class="project-card-stack"><span>Figma</span><span>Canva</span><span>Equipe</span></span>
-            <span class="project-name">ProtótipoFortes Engenharia</span>
+            <span class="project-name">Protótipo Fortes Engenharia</span>
           </span>
           <span class="project-card-arrow" aria-hidden="true">&nearr;</span>
         </span>
@@ -242,7 +244,7 @@
         class="project-card project-detail-trigger fade-up"
         data-project-title="Protótipo APP NutriFit"
         data-project-image="imagens/nutrifit.png"
-        data-project-description="Protótipo de aplicativo mmobile para acompanhamento de dieta, registro de refeições, macros e metas nutricionais."
+        data-project-description="Protótipo de aplicativo mobile para acompanhamento de dieta, registro de refeições, macros e metas nutricionais."
         data-project-type="Mobile UI/UX"
         data-project-platform="Protótipo no Figma"
         data-project-stack="Figma|Canva|Freelancer"
@@ -318,11 +320,10 @@
         class="project-card project-detail-trigger fade-up hidden-project"
         data-project-title="Gerenciador de Pedidos"
         data-project-image="imagens/gerpedido.png"
-        data-project-description="Sistema web para gerenciamento de pedidos, clientes e pagamentos, com geração de resumos e organização do fluxo de vendas.
-"
-        data-project-type="Aplicação web"
-        data-project-platform="kauaputtin.github.io"
-        data-project-stack="HTML|CSS|JavaScript"
+        data-project-description="Sistema web para gerenciamento de pedidos, clientes e pagamentos, com geração de resumos e organização do fluxo de vendas."
+        data-project-type="Full Stack"
+        data-project-platform="mspedidos.vercel.app"
+        data-project-stack="Full Stack|Supabase"
         data-project-url="https://mspedidos.vercel.app/"
         aria-label="Ver detalhes do Gerenciador de Pedidos"
       >
@@ -332,7 +333,7 @@
         </span>
         <span class="project-body">
           <span>
-            <span class="project-card-stack"><span>Full Stack</span><span></span><span>Supabase</span></span>
+            <span class="project-card-stack"><span>Full Stack</span><span>Supabase</span></span>
             <span class="project-name">MS Pedidos</span>
           </span>
           <span class="project-card-arrow" aria-hidden="true">&nearr;</span>
@@ -429,30 +430,35 @@
   ============================ -->
   <section id="journey">
     <span class="section-label">Experiências</span>
-    <h2 class="section-title">Momentos que marcaram minha jornada</h2>
+    <h2 class="section-title">Minha Jornada</h2>
     <p class="section-subtitle">
-      Projetos, eventos e experiências que contribuíram para minha evolução pessoal e profissional.
+      Experiências práticas que ampliaram minha formação, minha conexão com empresas e minha participação na comunidade de tecnologia.
     </p>
 
     <div class="journey-grid">
       <a href="jornada/fortes-engenharia.html" class="journey-card fade-up" aria-label="Conhecer minha experiência no projeto da Fortes Engenharia">
         <div class="journey-card-media journey-card-media-fortes">
+          <img src="imagens/trajetoria/base27 (2).JPG" alt="Equipe do projeto da Fortes Engenharia no Base27" class="journey-card-image" loading="lazy" />
           <span class="journey-card-index">01</span>
-          <div class="journey-image-placeholder" aria-hidden="true">
-            <span>＋</span>
-            <small>Adicionar imagem</small>
+          <span class="journey-card-badge journey-card-badge-award">Melhor projeto da turma</span>
+          <div class="journey-card-tags journey-card-tags-mobile">
+            <span>Desenvolvimento Web</span>
+            <span>UX/UI</span>
+            <span>Prototipação</span>
           </div>
         </div>
         <div class="journey-card-body">
           <div class="journey-card-meta">
-            <span>Projeto</span>
-            <time datetime="2024-06">Jun 2024</time>
+            <span>Desafio acadêmico</span>
+            <span>Fortes Engenharia · Base27</span>
           </div>
           <h3>Desafio Fortes Engenharia</h3>
-          <p>Desenvolvimento de uma solução para um desafio real, por meio do Programa Base Científica.</p>
+          <p>Desenvolvimento de um protótipo web para a Fortes Engenharia. O projeto foi destaque da turma e apresentado no Base27 para lideranças da empresa.</p>
+          <span class="journey-card-highlight">Projeto acadêmico aproximado de um problema real de mercado</span>
           <div class="journey-card-tags">
-            <span>Inovação</span>
-            <span>Trabalho em equipe</span>
+            <span>Desenvolvimento Web</span>
+            <span>UX/UI</span>
+            <span>Prototipação</span>
           </div>
           <span class="journey-card-link">Conhecer experiência <span aria-hidden="true">&rarr;</span></span>
         </div>
@@ -460,22 +466,26 @@
 
       <a href="jornada/campus-party-sp.html" class="journey-card fade-up" aria-label="Conhecer minha experiência na Campus Party São Paulo">
         <div class="journey-card-media journey-card-media-campus">
+          <img src="imagens/trajetoria/campus_party3.JPG" alt="Grupo de estudantes da UVV na Campus Party Brasil 2024" class="journey-card-image" loading="lazy" />
           <span class="journey-card-index">02</span>
-          <div class="journey-image-placeholder" aria-hidden="true">
-            <span>＋</span>
-            <small>Adicionar imagem</small>
+          <div class="journey-card-tags journey-card-tags-mobile">
+            <span>Tecnologia e inovação</span>
+            <span>Networking</span>
+            <span>Inteligência Artificial</span>
           </div>
         </div>
         <div class="journey-card-body">
           <div class="journey-card-meta">
-            <span>Evento</span>
-            <time datetime="2024-07">Jul 2024</time>
+            <span>São Paulo · CPBR16</span>
+            <time datetime="2024-07-09">9–14 jul 2024</time>
           </div>
-          <h3>Campus Party São Paulo</h3>
-          <p>Vivência na 16ª Campus Party Brasil, conhecendo novas tecnologias, ideias e comunidades.</p>
+          <h3>Campus Party Brasil 2024</h3>
+          <p>Imersão em palestras, estandes, robótica, drones, eSports e experiências voltadas à inovação e à tecnologia, em uma viagem proporcionada pela UVV.</p>
+          <span class="journey-card-highlight">Palestras · Robótica · IA · Drones · eSports · Inovação</span>
           <div class="journey-card-tags">
-            <span>Tecnologia</span>
-            <span>Comunidade</span>
+            <span>Tecnologia e inovação</span>
+            <span>Networking</span>
+            <span>Inteligência Artificial</span>
           </div>
           <span class="journey-card-link">Conhecer experiência <span aria-hidden="true">&rarr;</span></span>
         </div>
@@ -483,22 +493,27 @@
 
       <a href="jornada/ti-360.html" class="journey-card fade-up" aria-label="Conhecer minha experiência na organização do TI 360">
         <div class="journey-card-media journey-card-media-ti360">
+          <img src="imagens/trajetoria/ti360 (2).JPG" alt="Participantes de uma oficina do TI 360 na UVV" class="journey-card-image" loading="lazy" />
           <span class="journey-card-index">03</span>
-          <div class="journey-image-placeholder" aria-hidden="true">
-            <span>＋</span>
-            <small>Adicionar imagem</small>
+          <span class="journey-card-badge">Organização</span>
+          <div class="journey-card-tags journey-card-tags-mobile">
+            <span>Organização de eventos</span>
+            <span>Liderança</span>
+            <span>Comunicação</span>
           </div>
         </div>
         <div class="journey-card-body">
           <div class="journey-card-meta">
-            <span>Organização</span>
-            <time>Recente</time>
+            <span>UVV · Vila Velha/ES</span>
+            <time datetime="2026-08-04">04 ago 2026</time>
           </div>
           <h3>TI 360</h3>
-          <p>Participação na organização de uma experiência voltada à tecnologia, conexão e troca de conhecimento.</p>
+          <p>Organização do TI 360 na UVV, conectando palestras, oficinas, empresas e estudantes em um evento voltado à tecnologia, inovação e mercado.</p>
+          <span class="journey-card-highlight">Planejamento e execução junto à Atlética Tubarões UVV</span>
           <div class="journey-card-tags">
+            <span>Organização de eventos</span>
             <span>Liderança</span>
-            <span>Organização</span>
+            <span>Comunicação</span>
           </div>
           <span class="journey-card-link">Conhecer experiência <span aria-hidden="true">&rarr;</span></span>
         </div>
@@ -571,7 +586,7 @@
             </div>
             <span class="certificate-date">mai 2024</span>
           </div>
-          <p class="certificate-role">Prêmio de conclusão do exame final</p>
+          <p class="certificate-role">Certificado de conclusão</p>
           <p class="certificate-desc">
             Conclusão satisfatória do exame final do curso Database Foundations da Oracle Academy.
           </p>
@@ -637,7 +652,7 @@
             </div>
             <span class="certificate-date">set 2025</span>
           </div>
-          <p class="certificate-role">AI Facilites: For Best Generation</p>
+          <p class="certificate-role">Certificado de apresentação</p>
           <p class="certificate-desc">
             Apresentação do projeto AI Facilites: For Best Generation durante a Inovaweek 2025.
           </p>
@@ -659,7 +674,7 @@
             </div>
             <span class="certificate-date">set 2025</span>
           </div>
-          <p class="certificate-role">AI Facilites: For Best Generation</p>
+          <p class="certificate-role">Certificado de exposição</p>
           <p class="certificate-desc">
             Participação como expositor apresentando o projeto AI Facilites: For Best Generation durante a Inovaweek 2025.
           </p>
