@@ -61,7 +61,6 @@ window.closeMobileNav = function closeMobileNav() {
 
 /* ---- SCROLL ANIMATIONS (IntersectionObserver) ---- */
 const fadeEls = document.querySelectorAll('.fade-up');
-const skillLevels = document.querySelectorAll('.skill-levels');
 
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(
@@ -77,40 +76,59 @@ if ('IntersectionObserver' in window) {
   );
 
   fadeEls.forEach((el) => observer.observe(el));
-
-  const skillObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const levelsContainer = entry.target;
-        const level = Number.parseInt(levelsContainer.dataset.level || '0', 10) || 0;
-        levelsContainer.innerHTML = '';
-        for (let i = 0; i < 10; i++) {
-          const levelDiv = document.createElement('div');
-          levelDiv.className = 'skill-level' + (i < level ? ' filled' : '');
-          levelsContainer.appendChild(levelDiv);
-        }
-        skillObserver.unobserve(levelsContainer);
-      });
-    },
-    { threshold: 0.5 }
-  );
-
-  skillLevels.forEach((levels) => skillObserver.observe(levels));
 } else {
   fadeEls.forEach((el) => el.classList.add('visible'));
 }
 
 /* ---- CONTACT FORM (GitHub Pages-friendly) ---- */
+const contactForm = document.getElementById('contactForm');
+
+function getSelectedContactMethod(form = contactForm) {
+  return form?.querySelector?.('input[name="contactMethod"]:checked')?.value || 'email';
+}
+
+function updateContactSubmitLabel() {
+  const btn = contactForm?.querySelector?.('.form-submit');
+  const isWhatsApp = getSelectedContactMethod() === 'whatsapp';
+
+  contactForm?.querySelectorAll?.('[data-contact-email-only]').forEach((group) => {
+    group.hidden = isWhatsApp;
+    group.querySelectorAll('input').forEach((input) => {
+      input.disabled = isWhatsApp;
+    });
+  });
+
+  if (!btn) return;
+  btn.textContent = isWhatsApp
+    ? 'Enviar pelo WhatsApp →'
+    : 'Enviar pelo Gmail →';
+}
+
+contactForm?.querySelectorAll?.('input[name="contactMethod"]').forEach((option) => {
+  option.addEventListener('change', () => {
+    const success = document.getElementById('formSuccess');
+    if (success) success.style.display = 'none';
+    updateContactSubmitLabel();
+  });
+});
+
+updateContactSubmitLabel();
+
 window.handleSubmit = function handleSubmit(e) {
   e.preventDefault();
   const form = e.target;
   const btn = form?.querySelector?.('.form-submit');
   const success = document.getElementById('formSuccess');
+  const contactMethod = getSelectedContactMethod(form);
 
   if (btn) {
-    btn.textContent = 'Enviando...';
+    btn.textContent = contactMethod === 'whatsapp' ? 'Abrindo WhatsApp...' : 'Abrindo Gmail...';
     btn.disabled = true;
+  }
+
+  if (success) {
+    success.style.display = 'none';
+    success.classList.remove('form-info');
   }
 
   const data = new FormData(form);
@@ -119,18 +137,28 @@ window.handleSubmit = function handleSubmit(e) {
   const subject = String(data.get('subject') || 'Contato pelo portfólio');
   const message = String(data.get('message') || '');
 
-  const body = [`Nome: ${name}`, `E-mail: ${email}`, '', message].join('\n');
-  const mailto = `mailto:kauaputtin@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  if (contactMethod === 'whatsapp') {
+    const whatsappUrl = `https://wa.me/5527981538302?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (success) {
+      success.textContent = 'WhatsApp aberto. Agora é só confirmar o envio da mensagem.';
+      success.classList.add('form-info');
+    }
+  } else {
+    const body = [`Nome: ${name}`, `E-mail: ${email}`, '', message].join('\n');
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent('kauaputtin@gmail.com')}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+    if (success) {
+      success.textContent = 'Gmail aberto. Agora é só confirmar o envio da mensagem.';
+      success.classList.add('form-info');
+    }
+  }
 
-  // Em GitHub Pages não existe backend/PHP; usa mailto como fallback.
-  window.location.href = mailto;
-
-  form?.reset?.();
   if (success) success.style.display = 'block';
 
   if (btn) {
-    btn.textContent = 'Enviar mensagem →';
     btn.disabled = false;
+    updateContactSubmitLabel();
   }
 };
 
@@ -242,3 +270,20 @@ if (loadMoreBtn && hiddenProjects.length > 0) {
     loadMoreBtn.style.display = 'none';
   });
 }
+
+/* ---- MOBILE CERTIFICATES TOGGLE ---- */
+const certificateToggleBtn = document.getElementById('certificateToggleBtn');
+const certificatesGrid = document.getElementById('certificatesGrid');
+
+certificateToggleBtn?.addEventListener?.('click', () => {
+  if (!certificatesGrid) return;
+  const isExpanded = certificatesGrid.classList.toggle('certificates-expanded');
+  certificateToggleBtn.setAttribute('aria-expanded', String(isExpanded));
+  certificateToggleBtn.textContent = isExpanded
+    ? 'Ver menos certificados ↑'
+    : 'Ver mais certificados →';
+
+  if (isExpanded) {
+    certificatesGrid.querySelectorAll('.certificate-card').forEach((card) => card.classList.add('visible'));
+  }
+});

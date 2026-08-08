@@ -35,6 +35,7 @@
       <li><a href="#home">Início</a></li>
       <li><a href="#skills">Habilidades</a></li>
       <li><a href="#projects">Projetos</a></li>
+      <li><a href="#journey">Jornada</a></li>
       <li><a href="#certificates">Certificados</a></li>
       <li><a href="#about">Sobre</a></li>
       <li><a href="#contact">Contato</a></li>
@@ -57,6 +58,7 @@
   <div class="mobile-nav" id="mobileNav">
     <a href="#skills" onclick="closeMobileNav()">Habilidades</a>
     <a href="#projects" onclick="closeMobileNav()">Projetos</a>
+    <a href="#journey" onclick="closeMobileNav()">Jornada</a>
     <a href="#certificates" onclick="closeMobileNav()">Certificados</a>
     <a href="#about" onclick="closeMobileNav()">Sobre</a>
     <a href="#contact" onclick="closeMobileNav()">Contato</a>
@@ -68,16 +70,6 @@
       <span id="mobileThemeText">Claro</span>
     </button>
   </div>
-
-   <!-- ============================
-       mobile pre hero
-    ============================ -->
-  <section class="mobile-prehero" aria-label="Seção mobile">
-    <div class="hero-badge">
-      <span class="dot"></span>
-        OPEN TO WORK
-    </div>
-  </section>
   
   <!-- ============================
        HERO
@@ -103,7 +95,7 @@
             <a href="#projects" class="btn-primary">
                 Ver projetos &rarr;
             </a>
-            <a href="documentos/curriculo.pdf" download class="btn-secondary">
+            <a href="documentos/Curriculo_Kaua_Pestana.pdf" download class="btn-secondary">
                  ⌵ Download CV
             </a>
         </div>
@@ -135,99 +127,78 @@
     <span class="section-label">Tecnologias</span>
     <h2 class="section-title">Minhas habilidades</h2>
     <p class="section-subtitle">
-      Ferramentas e tecnologias que uso para construir projetos do início ao fim.
+      Tecnologias que utilizo para transformar ideias em soluções digitais funcionais, intuitivas e bem construídas.
     </p>
 
     <div class="skills-grid">
-
-      <!-- Frontend -->
-      <div class="skill-category fade-up">
-        <div class="skill-cat-label">Frontend</div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">HTML</span>
-            <span class="skill-pct">8/10</span>
+      <article class="skill-category fade-up">
+        <div class="skill-category-header">
+          <div>
+            <span class="skill-category-number">01</span>
+            <h3>Front-end</h3>
           </div>
-          <div class="skill-levels" data-level="8"></div>
         </div>
+        <p class="skill-description">Interfaces responsivas, acessíveis e modernas, com atenção à experiência de quem utiliza.</p>
+        <ul class="skill-tags" aria-label="Tecnologias de front-end">
+          <li><img src="imagens/icones-tecnologia/html-5_174854.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />HTML</li>
+          <li><img src="imagens/icones-tecnologia/css-3.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />CSS</li>
+          <li><img src="imagens/icones-tecnologia/js.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />JavaScript</li>
+          <li><img src="imagens/icones-tecnologia/icons8-texto-datilografado-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />TypeScript</li>
+        </ul>
+        <span class="skill-status skill-status-frequent"><span aria-hidden="true"></span>Uso frequente</span>
+      </article>
 
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">CSS</span>
-            <span class="skill-pct">8/10</span>
+      <article class="skill-category fade-up">
+        <div class="skill-category-header">
+          <div>
+            <span class="skill-category-number">02</span>
+            <h3>Back-end &amp; dados</h3>
           </div>
-          <div class="skill-levels" data-level="8"></div>
         </div>
+        <p class="skill-description">Desenvolvimento de lógica, automações e soluções para armazenar e organizar dados.</p>
+        <ul class="skill-tags" aria-label="Tecnologias de back-end e dados">
+          <li><img src="imagens/icones-tecnologia/python_5968350.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Python</li>
+          <li><img src="imagens/icones-tecnologia/sql.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />SQL</li>
+          <li><img src="imagens/icones-tecnologia/java.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Java</li>
+          <li><img src="imagens/icones-tecnologia/icons8-c-50.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />C</li>
+        </ul>
+        <span class="skill-status skill-status-learning"><span aria-hidden="true"></span>Em evolução</span>
+      </article>
 
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">JavaScript</span>
-            <span class="skill-pct">5/10</span>
+      <article class="skill-category fade-up">
+        <div class="skill-category-header">
+          <div>
+            <span class="skill-category-number">03</span>
+            <h3>UI/UX &amp; design</h3>
           </div>
-          <div class="skill-levels" data-level="5"></div>
         </div>
-      </div>
+        <p class="skill-description">Protótipos, identidades visuais e experiências digitais intuitivas e consistentes.</p>
+        <ul class="skill-tags" aria-label="Ferramentas de design">
+          <li><img src="imagens/icones-tecnologia/icons8-figma-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Figma</li>
+          <li><img src="imagens/icones-tecnologia/icons8-tela-48.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Canva</li>
+          <li><img src="imagens/icones-tecnologia/capcut-icon.svg" alt="" class="tech-icon tech-icon-monochrome" width="24" height="24" decoding="async" />CapCut</li>
+        </ul>
+        <span class="skill-status skill-status-frequent"><span aria-hidden="true"></span>Uso frequente</span>
+      </article>
 
-      <!-- Backend -->
-      <div class="skill-category fade-up">
-        <div class="skill-cat-label">Backend</div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">Python</span>
-            <span class="skill-pct">6/10</span>
+      <article class="skill-category fade-up">
+        <div class="skill-category-header">
+          <div>
+            <span class="skill-category-number">04</span>
+            <h3>Ferramentas</h3>
           </div>
-          <div class="skill-levels" data-level="6"></div>
         </div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">SQL</span>
-            <span class="skill-pct">5/10</span>
-          </div>
-          <div class="skill-levels" data-level="5"></div>
-        </div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">Java</span>
-            <span class="skill-pct">4/10</span>
-          </div>
-          <div class="skill-levels" data-level="4"></div>
-        </div>
-      </div>
-
-      <!-- Ferramentas -->
-      <div class="skill-category fade-up">
-        <div class="skill-cat-label">Ferramentas</div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">Git & GitHub</span>
-            <span class="skill-pct">7/10</span>
-          </div>
-          <div class="skill-levels" data-level="7"></div>
-        </div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">Canva</span>
-            <span class="skill-pct">10/10</span>
-          </div>
-          <div class="skill-levels" data-level="10"></div>
-        </div>
-
-        <div class="skill-item">
-          <div class="skill-info">
-            <span class="skill-name">VS Code</span>
-            <span class="skill-pct">9/10</span>
-          </div>
-          <div class="skill-levels" data-level="9"></div>
-        </div>
-      </div>
-
+        <p class="skill-description">Versionamento, colaboração e organização para manter o desenvolvimento produtivo.</p>
+        <ul class="skill-tags" aria-label="Ferramentas de desenvolvimento">
+          <li><img src="imagens/icones-tecnologia/icons8-git-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Git</li>
+          <li><img src="imagens/icones-tecnologia/github.png" alt="" class="tech-icon tech-icon-monochrome" width="24" height="24" decoding="async" />GitHub</li>
+          <li><img src="imagens/icones-tecnologia/icons8-visual-studio-code-2019-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />VS Code</li>
+        </ul>
+        <span class="skill-status skill-status-frequent"><span aria-hidden="true"></span>Uso frequente</span>
+      </article>
     </div>
+
+    <a href="#projects" class="skills-project-link">Ver habilidades aplicadas nos projetos <span aria-hidden="true">&rarr;</span></a>
   </section>
 
   <!-- ============================
@@ -500,6 +471,88 @@
   </section>
 
   <!-- ============================
+       JOURNEY
+  ============================ -->
+  <section id="journey">
+    <span class="section-label">Experiências</span>
+    <h2 class="section-title">Momentos que marcaram minha jornada</h2>
+    <p class="section-subtitle">
+      Projetos, eventos e experiências que contribuíram para minha evolução pessoal e profissional.
+    </p>
+
+    <div class="journey-grid">
+      <a href="jornada/fortes-engenharia.html" class="journey-card fade-up" aria-label="Conhecer minha experiência no projeto da Fortes Engenharia">
+        <div class="journey-card-media journey-card-media-fortes">
+          <span class="journey-card-index">01</span>
+          <div class="journey-image-placeholder" aria-hidden="true">
+            <span>＋</span>
+            <small>Adicionar imagem</small>
+          </div>
+        </div>
+        <div class="journey-card-body">
+          <div class="journey-card-meta">
+            <span>Projeto</span>
+            <time datetime="2024-06">Jun 2024</time>
+          </div>
+          <h3>Desafio Fortes Engenharia</h3>
+          <p>Desenvolvimento de uma solução para um desafio real, por meio do Programa Base Científica.</p>
+          <div class="journey-card-tags">
+            <span>Inovação</span>
+            <span>Trabalho em equipe</span>
+          </div>
+          <span class="journey-card-link">Conhecer experiência <span aria-hidden="true">&rarr;</span></span>
+        </div>
+      </a>
+
+      <a href="jornada/campus-party-sp.html" class="journey-card fade-up" aria-label="Conhecer minha experiência na Campus Party São Paulo">
+        <div class="journey-card-media journey-card-media-campus">
+          <span class="journey-card-index">02</span>
+          <div class="journey-image-placeholder" aria-hidden="true">
+            <span>＋</span>
+            <small>Adicionar imagem</small>
+          </div>
+        </div>
+        <div class="journey-card-body">
+          <div class="journey-card-meta">
+            <span>Evento</span>
+            <time datetime="2024-07">Jul 2024</time>
+          </div>
+          <h3>Campus Party São Paulo</h3>
+          <p>Vivência na 16ª Campus Party Brasil, conhecendo novas tecnologias, ideias e comunidades.</p>
+          <div class="journey-card-tags">
+            <span>Tecnologia</span>
+            <span>Comunidade</span>
+          </div>
+          <span class="journey-card-link">Conhecer experiência <span aria-hidden="true">&rarr;</span></span>
+        </div>
+      </a>
+
+      <a href="jornada/ti-360.html" class="journey-card fade-up" aria-label="Conhecer minha experiência na organização do TI 360">
+        <div class="journey-card-media journey-card-media-ti360">
+          <span class="journey-card-index">03</span>
+          <div class="journey-image-placeholder" aria-hidden="true">
+            <span>＋</span>
+            <small>Adicionar imagem</small>
+          </div>
+        </div>
+        <div class="journey-card-body">
+          <div class="journey-card-meta">
+            <span>Organização</span>
+            <time>Recente</time>
+          </div>
+          <h3>TI 360</h3>
+          <p>Participação na organização de uma experiência voltada à tecnologia, conexão e troca de conhecimento.</p>
+          <div class="journey-card-tags">
+            <span>Liderança</span>
+            <span>Organização</span>
+          </div>
+          <span class="journey-card-link">Conhecer experiência <span aria-hidden="true">&rarr;</span></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================
        CERTIFICATES
   ============================ -->
   <section id="certificates">
@@ -509,7 +562,7 @@
       Cursos, participações e extensões que fortalecem minha formação em tecnologia, inovação e desenvolvimento.
     </p>
 
-    <div class="certificates-grid">
+    <div class="certificates-grid" id="certificatesGrid">
       <article class="certificate-card fade-up">
         <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
@@ -664,6 +717,12 @@
         </div>
       </article>
     </div>
+
+    <div class="certificates-more-container">
+      <button class="btn-secondary certificate-toggle-btn" id="certificateToggleBtn" type="button" aria-controls="certificatesGrid" aria-expanded="false">
+        Ver mais certificados &rarr;
+      </button>
+    </div>
   </section>
 
   <!-- ============================
@@ -681,10 +740,6 @@
           <img src="imagens/kaua.png" alt="Foto de Kauã" />
         </div>
 
-        <div class="stat-card">
-          <div class="stat-num">+5</div>
-          <div class="stat-label">Projetos</div>
-        </div>
       </div>
 
       <div class="about-text fade-up">
@@ -702,8 +757,6 @@
           <br><br>
           Busco oportunidades que me permitam aplicar meus conhecimentos na prática, adquirir experiência e crescer na área de tecnologia.
         </p>
-
-        
 
         <div class="about-tags">
           <span class="tag">Inglês Básico</span>
@@ -734,7 +787,7 @@
         </p>
 
         <div class="contact-links">
-          <a href="mailto:kauaputtin@gmail.com" class="contact-link-item">
+          <a href="mailto:kauaputtin@gmail.com" class="contact-link-item" aria-label="Enviar e-mail para Kauã" title="E-mail">
             <div class="contact-link-icon">
               <img src="imagens/email.png" alt="E-mail" class="contact-link-icon-image" />
             </div>
@@ -744,7 +797,7 @@
             </div>
           </a>
 
-          <a href="https://github.com/kauaputtin" target="_blank" rel="noopener" class="contact-link-item">
+          <a href="https://github.com/kauaputtin" target="_blank" rel="noopener" class="contact-link-item" aria-label="Acessar GitHub de Kauã" title="GitHub">
             <div class="contact-link-icon">
               <img src="imagens/github.png" alt="GitHub" class="contact-link-icon-image" />
             </div>
@@ -754,7 +807,7 @@
             </div>
           </a>
 
-          <a href="https://linkedin.com/in/kauaputtin" target="_blank" rel="noopener" class="contact-link-item">
+          <a href="https://linkedin.com/in/kauaputtin" target="_blank" rel="noopener" class="contact-link-item" aria-label="Acessar LinkedIn de Kauã" title="LinkedIn">
             <div class="contact-link-icon">
               <img src="imagens/linkedin.png" alt="LinkedIn" class="contact-link-icon-image" />
             </div>
@@ -764,7 +817,7 @@
             </div>
           </a>
 
-          <a href="https://wa.me/5527981538302" target="_blank" rel="noopener" class="contact-link-item">
+          <a href="https://wa.me/5527981538302" target="_blank" rel="noopener" class="contact-link-item" aria-label="Conversar com Kauã pelo WhatsApp" title="WhatsApp">
             <div class="contact-link-icon">
               <img src="imagens/whatsapp.png" alt="WhatsApp" class="contact-link-icon-image" />
             </div>
@@ -778,17 +831,37 @@
 
       <!-- Formulário -->
       <form class="contact-form fade-up" id="contactForm" onsubmit="handleSubmit(event)">
-        <div class="form-group">
+        <fieldset class="contact-method-group">
+          <legend class="form-label">Como deseja enviar?</legend>
+          <div class="contact-method-options">
+            <label class="contact-method-option">
+              <input type="radio" name="contactMethod" value="email" checked />
+              <span>
+                <img src="imagens/email.png" alt="" aria-hidden="true" />
+                E-mail
+              </span>
+            </label>
+            <label class="contact-method-option">
+              <input type="radio" name="contactMethod" value="whatsapp" />
+              <span>
+                <img src="imagens/whatsapp.png" alt="" aria-hidden="true" />
+                WhatsApp
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-group" data-contact-email-only>
           <label class="form-label" for="name">Nome</label>
           <input class="form-input" id="name" name="name" type="text" placeholder="Seu nome" required />
         </div>
 
-        <div class="form-group">
+        <div class="form-group" data-contact-email-only>
           <label class="form-label" for="email">E-mail</label>
           <input class="form-input" id="email" name="email" type="email" placeholder="seuemail@exemplo.com" required />
         </div>
 
-        <div class="form-group">
+        <div class="form-group" data-contact-email-only>
           <label class="form-label" for="subject">Assunto</label>
           <input class="form-input" id="subject" name="subject" type="text" placeholder="Ex: Projeto freelance, proposta de emprego..." />
         </div>
@@ -798,8 +871,8 @@
           <textarea class="form-textarea" id="message" name="message" placeholder="Conte um pouco sobre seu projeto ou oportunidade..." required></textarea>
         </div>
 
-        <button type="submit" class="form-submit">Enviar mensagem →</button>
-        <div class="form-success" id="formSuccess">✓ Mensagem enviada! Entrarei em contato em breve.</div>
+        <button type="submit" class="form-submit">Enviar &rarr;</button>
+        <div class="form-success" id="formSuccess" role="status" aria-live="polite"></div>
       </form>
 
     </div>
@@ -810,11 +883,12 @@
   ============================ -->
   <footer>
     <p class="footer-copy">
-      © 2025 <span>Kauã</span> · Todos os direitos reservados.
+      © 2026 <span>Kauã</span> · Todos os direitos reservados.
     </p>
     <div class="footer-links">
       <a href="#home">Topo</a>
       <a href="#projects">Projetos</a>
+      <a href="#journey">Jornada</a>
       <a href="#contact">Contato</a>
     </div>
   </footer>
