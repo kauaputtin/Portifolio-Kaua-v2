@@ -9,23 +9,59 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css?v=20260808-3" />
-  <script src="../i18n.js?v=20260808-3" defer></script>
+  <link rel="stylesheet" href="../style.css?v=20260808-4" />
+  <script src="../i18n.js?v=20260808-4" defer></script>
+  <script src="../script.js?v=20260808-4" defer></script>
   <script>try { document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark'; } catch {}</script>
 </head>
 <body class="journey-detail-page">
-  <nav class="detail-nav">
-    <a href="../index.html#home" class="nav-logo"><span>PORTFÓLIO</span></a>
-    <div class="detail-nav-actions">
-      <button class="language-toggle detail-language-toggle" type="button" data-language-toggle aria-label="Mudar idioma para inglês">BR</button>
-      <a href="../index.html#journey" class="detail-back detail-back-nav"><span aria-hidden="true">&larr;</span> Voltar para Minha Jornada</a>
+  <nav class="main-nav">
+    <a href="../index.html#home" class="nav-logo" aria-label="Ir para o início">
+      <span class="nav-logo-word">PORTFÓLIO</span>
+      <img src="../imagens/logo_cabecalho.svg" alt="" class="nav-logo-mark" aria-hidden="true" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html#home">Início</a></li>
+      <li><a href="../index.html#skills">Habilidades</a></li>
+      <li><a href="../index.html#projects">Projetos</a></li>
+      <li><a href="../index.html#journey">Jornada</a></li>
+      <li><a href="../index.html#certificates">Certificados</a></li>
+      <li><a href="../index.html#about">Sobre</a></li>
+      <li><a href="../index.html#contact">Contato</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="language-toggle desktop-language-toggle" type="button" data-language-toggle aria-label="Mudar idioma para inglês">BR</button>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
+        <span id="themeIcon"><img src="../imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" /></span>
+        <span id="themeText">Claro</span>
+      </button>
+      <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menu" aria-controls="mobileNav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="../index.html#skills" onclick="closeMobileNav()">Habilidades</a>
+    <a href="../index.html#projects" onclick="closeMobileNav()">Projetos</a>
+    <a href="../index.html#journey" onclick="closeMobileNav()">Jornada</a>
+    <a href="../index.html#certificates" onclick="closeMobileNav()">Certificados</a>
+    <a href="../index.html#about" onclick="closeMobileNav()">Sobre</a>
+    <a href="../index.html#contact" onclick="closeMobileNav()">Contato</a>
+    <div class="mobile-nav-controls" aria-label="Preferências">
+      <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" type="button" aria-label="Alternar tema" title="Alternar tema">
+        <span id="mobileThemeIcon"><img src="../imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" /></span>
+      </button>
+      <button class="language-toggle mobile-language-toggle" type="button" data-language-toggle aria-label="Mudar idioma para inglês">BR</button>
+    </div>
+  </div>
 
   <main class="journey-detail-main">
     <header class="journey-detail-hero">
       <div class="journey-detail-hero-inner">
-        <a href="../index.html#journey" class="detail-back detail-back-hero"><span aria-hidden="true">&larr;</span> Voltar para Minha Jornada</a>
+        <a href="../index.html" class="detail-back detail-back-hero"><span aria-hidden="true">&larr;</span> Voltar para a página principal</a>
         <span class="journey-detail-eyebrow">São Paulo · 9–14 de julho de 2024</span>
         <h1 class="journey-detail-title">Campus Party Brasil 2024</h1>
         <p class="journey-detail-lead">

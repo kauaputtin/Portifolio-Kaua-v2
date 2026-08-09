@@ -224,6 +224,7 @@
 
     /* Shared journey detail interface */
     'Voltar para Minha Jornada': 'Back to My Journey',
+    'Voltar para a página principal': 'Back to the main page',
     'Informações': 'Information',
     'Registros': 'Highlights',
     'Galeria do projeto': 'Project gallery',

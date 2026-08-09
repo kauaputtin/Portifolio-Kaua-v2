@@ -1085,7 +1085,7 @@
 
     .detail-back-hero {
       width: fit-content;
-      margin-bottom: 2rem;
+      margin-bottom: 0.85rem;
     }
 
     .journey-detail-main { overflow: hidden; }
@@ -1122,7 +1122,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.65rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.7rem;
       color: var(--accent);
       font-size: 0.75rem;
       font-weight: 800;
@@ -1139,7 +1139,7 @@
 
     .journey-detail-title {
       max-width: 850px;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.7rem;
       color: var(--text-primary);
       font-family: var(--font-display);
       font-size: clamp(2.8rem, 7vw, 6rem);
@@ -1977,10 +1977,15 @@
     }
 
     .project-card-stack {
+      position: absolute;
+      right: 0.75rem;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      z-index: 3;
       display: flex;
       flex-wrap: wrap;
       gap: 0.3rem;
-      margin-bottom: 0.42rem;
+      margin: 0;
     }
 
     .project-card-stack > span {
@@ -1988,15 +1993,16 @@
       align-items: center;
       min-height: 20px;
       padding: 0.2rem 0.45rem;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 999px;
-      background: var(--surface);
-      color: var(--text-muted);
+      background: var(--accent);
+      color: #fff;
       font-size: 0.52rem;
       font-weight: 700;
       line-height: 1;
       letter-spacing: 0.015em;
       text-transform: uppercase;
+      box-shadow: 0 4px 14px rgba(15, 14, 13, 0.24);
     }
 
     .project-name {
@@ -2737,9 +2743,15 @@
       .detail-nav { min-height: 64px; }
       .detail-back { font-size: 0.78rem; }
       .detail-back-nav { display: inline-flex; }
-      .detail-back-hero { display: none; }
+      .detail-back-hero {
+        display: inline-flex;
+        max-width: none;
+        margin-bottom: 0.75rem;
+        text-align: left;
+        white-space: nowrap;
+      }
       .journey-detail-hero {
-        min-height: 68vh;
+        min-height: 55vh;
         padding: 8rem 5% 4rem;
       }
       .journey-detail-section { padding: 4.5rem 5%; }
@@ -3129,6 +3141,11 @@
 @media (max-width: 768px) {
   .desktop-language-toggle { display: none; }
 
+  .hero-socials {
+    width: 100%;
+    justify-content: center;
+  }
+
   .mobile-nav-controls {
     display: flex;
     align-items: center;
@@ -3164,10 +3181,7 @@
   .detail-nav-actions { gap: 0.5rem; }
 
   .detail-language-toggle {
-    min-width: 34px;
-    width: 34px;
-    height: 34px;
-    padding: 0;
+    display: none;
   }
 
   .skill-description { display: none; }

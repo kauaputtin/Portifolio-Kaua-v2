@@ -10,6 +10,7 @@ const mobileThemeIcon = document.getElementById('mobileThemeIcon');
 const themeText = document.getElementById('themeText');
 const mobileThemeText = document.getElementById('mobileThemeText');
 const html = document.documentElement;
+const assetBasePath = document.body?.classList.contains('journey-detail-page') ? '../' : '';
 
 const themeButtons = [themeToggle, mobileThemeToggle].filter(Boolean);
 
@@ -30,8 +31,8 @@ function toggleTheme() {
 function updateThemeUI(theme) {
   const isDark = theme === 'dark';
   const iconHtml = isDark
-    ? `<img src="imagens/lua.png" alt="${uiText('Ícone de lua')}" class="theme-icon-image" />`
-    : `<img src="imagens/sol.png" alt="${uiText('Ícone de sol')}" class="theme-icon-image" />`;
+    ? `<img src="${assetBasePath}imagens/lua.png" alt="${uiText('Ícone de lua')}" class="theme-icon-image" />`
+    : `<img src="${assetBasePath}imagens/sol.png" alt="${uiText('Ícone de sol')}" class="theme-icon-image" />`;
   const label = uiText(isDark ? 'Escuro' : 'Claro');
 
   if (themeIcon) themeIcon.innerHTML = iconHtml;
