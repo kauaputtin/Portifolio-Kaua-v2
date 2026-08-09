@@ -122,6 +122,43 @@
 
     .nav-logo-mark { display: none; }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .language-toggle {
+      min-width: 42px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .language-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .language-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .mobile-nav-controls { display: none; }
+
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -1015,6 +1052,19 @@
     .journey-detail-page { min-height: 100vh; }
 
     .detail-nav { justify-content: space-between; }
+
+    .detail-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .detail-language-toggle {
+      min-width: 38px;
+      height: 34px;
+      padding: 0 0.55rem;
+      background: transparent;
+    }
 
     .detail-back {
       display: inline-flex;
@@ -3077,6 +3127,49 @@
    Altere X, Y e zoom sem afetar o desktop.
 ============================================ */
 @media (max-width: 768px) {
+  .desktop-language-toggle { display: none; }
+
+  .mobile-nav-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.15rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .mobile-nav-controls .mobile-theme-toggle,
+  .mobile-nav-controls .mobile-language-toggle {
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 46px;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .mobile-nav-controls .mobile-theme-toggle {
+    background: var(--surface);
+  }
+
+  .mobile-nav-controls .theme-icon-image {
+    width: 20px;
+    height: 20px;
+  }
+
+  .detail-nav-actions { gap: 0.5rem; }
+
+  .detail-language-toggle {
+    min-width: 34px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+  }
+
   .skill-description { display: none; }
 
   .hero-visual {

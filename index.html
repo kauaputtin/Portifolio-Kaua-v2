@@ -9,8 +9,8 @@
   <meta property="og:title" content="Portfólio | Kauã Puttin Pestana" />
   <meta property="og:description" content="Criando experiências digitais modernas com código limpo e design intencional." />
   <meta property="og:type" content="website" />
-  <title>Portfólio | Kauã Puttin Pestana</title>
-  <link rel="icon" type="image/png" href="imagens/logo.png" />
+  <title>Kauã Puttin Pestana | Portfólio</title>
+  <link rel="icon" type="image/svg+xml" href="imagens/logo_cabecalho.svg" />
   <link rel="shortcut icon" type="image/png" href="imagens/logo.png" />
   <link rel="apple-touch-icon" href="imagens/logo.png" />
 
@@ -19,8 +19,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css?v=20260808-2">
-  <script src="script.js?v=20260808-2" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260808-3">
+  <script src="i18n.js?v=20260808-3" defer></script>
+  <script src="script.js?v=20260808-3" defer></script>
 </head>
 
 <body>
@@ -44,7 +45,8 @@
       <li><a href="#contact">Contato</a></li>
     </ul>
 
-    <div style="display:flex;gap:0.75rem;align-items:center;">
+    <div class="nav-actions">
+      <button class="language-toggle desktop-language-toggle" type="button" data-language-toggle aria-label="Mudar idioma para inglês">BR</button>
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
         <span id="themeIcon">
           <img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />
@@ -65,13 +67,14 @@
     <a href="#certificates" onclick="closeMobileNav()">Certificados</a>
     <a href="#about" onclick="closeMobileNav()">Sobre</a>
     <a href="#contact" onclick="closeMobileNav()">Contato</a>
-    <p>Tema:</p>
-    <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" aria-label="Alternar tema">
-      <span id="mobileThemeIcon">
-        <img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />
-      </span>
-      <span id="mobileThemeText">Claro</span>
-    </button>
+    <div class="mobile-nav-controls" aria-label="Preferências">
+      <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" type="button" aria-label="Alternar tema" title="Alternar tema">
+        <span id="mobileThemeIcon">
+          <img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />
+        </span>
+      </button>
+      <button class="language-toggle mobile-language-toggle" type="button" data-language-toggle aria-label="Mudar idioma para inglês">BR</button>
+    </div>
   </div>
   
   <!-- ============================
@@ -291,25 +294,24 @@
 
       <button
         type="button"
-        class="project-card project-detail-trigger fade-up"
-        data-project-title="Gerador de Senhas"
-        data-project-image="imagens/geradorsenha.png"
-        data-project-description="Aplicação para geração de senhas seguras, com opções de personalização e critérios de complexidade."
-        data-project-type="Aplicação web"
+        class="project-card project-detail-trigger fade-up hidden-project"
+        data-project-title="Jogo Ping-Pong"
+        data-project-image="imagens/pingpong.png"
+        data-project-description="Jogo de ping-pong no navegador, com modo para 1 ou 2 jogadores"
+        data-project-type="Jogo web"
         data-project-platform="kauaputtin.github.io"
-        data-project-stack="Python|HTML|CSS|JavaScript"
-        data-project-url="https://kauaputtin.github.io/gerador-de-senha/"
-        data-project-github="https://github.com/kauaputtin/gerador-de-senha"
-        aria-label="Ver detalhes do projeto Gerador de Senhas"
+        data-project-stack="HTML|CSS|JavaScript"
+        data-project-url="https://kauaputtin.github.io/ping-pong-jogo/"
+        aria-label="Ver detalhes do Jogo Ping-Pong"
       >
         <span class="project-thumb">
-          <img src="imagens/geradorsenha.png" alt="Tela do Gerador de Senhas" class="project-thumb-image" />
-          <span class="project-card-number">04</span>
+          <img src="imagens/pingpong.png" alt="Tela do Jogo Ping-Pong" class="project-thumb-image" />
+          <span class="project-card-number">07</span>
         </span>
         <span class="project-body">
           <span>
-            <span class="project-card-stack"><span>Python</span><span>HTML</span><span>CSS</span><span>JavaScript</span></span>
-            <span class="project-name">Gerador de Senhas</span>
+            <span class="project-card-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></span>
+            <span class="project-name">Jogo Ping-Pong</span>
           </span>
           <span class="project-card-arrow" aria-hidden="true">&nearr;</span>
         </span>
@@ -342,6 +344,32 @@
 
       <button
         type="button"
+        class="project-card project-detail-trigger fade-up"
+        data-project-title="Gerador de Senhas"
+        data-project-image="imagens/geradorsenha.png"
+        data-project-description="Aplicação para geração de senhas seguras, com opções de personalização e critérios de complexidade."
+        data-project-type="Aplicação web"
+        data-project-platform="kauaputtin.github.io"
+        data-project-stack="Python|HTML|CSS|JavaScript"
+        data-project-url="https://kauaputtin.github.io/gerador-de-senha/"
+        data-project-github="https://github.com/kauaputtin/gerador-de-senha"
+        aria-label="Ver detalhes do projeto Gerador de Senhas"
+      >
+        <span class="project-thumb">
+          <img src="imagens/geradorsenha.png" alt="Tela do Gerador de Senhas" class="project-thumb-image" />
+          <span class="project-card-number">04</span>
+        </span>
+        <span class="project-body">
+          <span>
+            <span class="project-card-stack"><span>Python</span><span>HTML</span><span>CSS</span><span>JavaScript</span></span>
+            <span class="project-name">Gerador de Senhas</span>
+          </span>
+          <span class="project-card-arrow" aria-hidden="true">&nearr;</span>
+        </span>
+      </button>
+
+      <button
+        type="button"
         class="project-card project-detail-trigger fade-up hidden-project"
         data-project-title="Spyfall Clash"
         data-project-image="imagens/spyfall-clash.png"
@@ -361,31 +389,6 @@
           <span>
             <span class="project-card-stack"><span>Node.js</span><span>HTML</span><span>CSS</span><span>JavaScript</span></span>
             <span class="project-name">Spyfall Clash</span>
-          </span>
-          <span class="project-card-arrow" aria-hidden="true">&nearr;</span>
-        </span>
-      </button>
-
-      <button
-        type="button"
-        class="project-card project-detail-trigger fade-up hidden-project"
-        data-project-title="Jogo Ping-Pong"
-        data-project-image="imagens/pingpong.png"
-        data-project-description="Jogo de ping-pong no navegador, com modo para 1 ou 2 jogadores"
-        data-project-type="Jogo web"
-        data-project-platform="kauaputtin.github.io"
-        data-project-stack="HTML|CSS|JavaScript"
-        data-project-url="https://kauaputtin.github.io/ping-pong-jogo/"
-        aria-label="Ver detalhes do Jogo Ping-Pong"
-      >
-        <span class="project-thumb">
-          <img src="imagens/pingpong.png" alt="Tela do Jogo Ping-Pong" class="project-thumb-image" />
-          <span class="project-card-number">07</span>
-        </span>
-        <span class="project-body">
-          <span>
-            <span class="project-card-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></span>
-            <span class="project-name">Jogo Ping-Pong</span>
           </span>
           <span class="project-card-arrow" aria-hidden="true">&nearr;</span>
         </span>
@@ -442,7 +445,7 @@
           <span class="journey-card-index">01</span>
           <span class="journey-card-badge journey-card-badge-award">Melhor projeto da turma</span>
           <div class="journey-card-tags journey-card-tags-mobile">
-            <span>Desenvolvimento Web</span>
+            <span>Trabalho em equipe</span>
             <span>UX/UI</span>
             <span>Prototipação</span>
           </div>
@@ -456,7 +459,7 @@
           <p>Desenvolvimento de um protótipo web para a Fortes Engenharia. O projeto foi destaque da turma e apresentado no Base27 para lideranças da empresa.</p>
           <span class="journey-card-highlight">Projeto acadêmico aproximado de um problema real de mercado</span>
           <div class="journey-card-tags">
-            <span>Desenvolvimento Web</span>
+            <span>Trabalho em equipe</span>
             <span>UX/UI</span>
             <span>Prototipação</span>
           </div>
@@ -493,7 +496,7 @@
 
       <a href="jornada/ti-360.html" class="journey-card fade-up" aria-label="Conhecer minha experiência na organização do TI 360">
         <div class="journey-card-media journey-card-media-ti360">
-          <img src="imagens/trajetoria/ti360 (2).JPG" alt="Participantes de uma oficina do TI 360 na UVV" class="journey-card-image" loading="lazy" />
+          <img src="imagens/trajetoria/LOGOTI360.png" alt="Participantes de uma oficina do TI 360 na UVV" class="journey-card-image" loading="lazy" />
           <span class="journey-card-index">03</span>
           <span class="journey-card-badge">Organização</span>
           <div class="journey-card-tags journey-card-tags-mobile">

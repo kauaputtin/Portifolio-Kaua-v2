@@ -1,4 +1,8 @@
 /* ---- DARK/LIGHT MODE ---- */
+function uiText(value) {
+  return window.portfolioI18n?.t?.(value) || value;
+}
+
 const themeToggle = document.getElementById('themeToggle');
 const mobileThemeToggle = document.getElementById('mobileThemeToggle');
 const themeIcon = document.getElementById('themeIcon');
@@ -26,9 +30,9 @@ function toggleTheme() {
 function updateThemeUI(theme) {
   const isDark = theme === 'dark';
   const iconHtml = isDark
-    ? `<img src="imagens/lua.png" alt="Ícone de lua" class="theme-icon-image" />`
-    : `<img src="imagens/sol.png" alt="Ícone de sol" class="theme-icon-image" />`;
-  const label = isDark ? 'Escuro' : 'Claro';
+    ? `<img src="imagens/lua.png" alt="${uiText('Ícone de lua')}" class="theme-icon-image" />`
+    : `<img src="imagens/sol.png" alt="${uiText('Ícone de sol')}" class="theme-icon-image" />`;
+  const label = uiText(isDark ? 'Escuro' : 'Claro');
 
   if (themeIcon) themeIcon.innerHTML = iconHtml;
   if (themeText) themeText.textContent = label;
@@ -61,7 +65,7 @@ function setMobileMenuOpen(isOpen) {
   mobileNav.classList.toggle('open', isOpen);
   hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', String(isOpen));
-  hamburger.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  hamburger.setAttribute('aria-label', uiText(isOpen ? 'Fechar menu' : 'Abrir menu'));
   mainNav?.classList.toggle('menu-open', isOpen);
   if (isOpen) mainNav?.classList.remove('is-compact');
   else updateMobileHeader();
@@ -132,9 +136,9 @@ function updateContactSubmitLabel() {
   });
 
   if (!btn) return;
-  btn.textContent = isWhatsApp
+  btn.textContent = uiText(isWhatsApp
     ? 'Enviar pelo WhatsApp →'
-    : 'Enviar pelo Gmail →';
+    : 'Enviar pelo Gmail →');
 }
 
 contactForm?.querySelectorAll?.('input[name="contactMethod"]').forEach((option) => {
@@ -155,7 +159,7 @@ window.handleSubmit = function handleSubmit(e) {
   const contactMethod = getSelectedContactMethod(form);
 
   if (btn) {
-    btn.textContent = contactMethod === 'whatsapp' ? 'Abrindo WhatsApp...' : 'Abrindo Gmail...';
+    btn.textContent = uiText(contactMethod === 'whatsapp' ? 'Abrindo WhatsApp...' : 'Abrindo Gmail...');
     btn.disabled = true;
   }
 
@@ -167,22 +171,22 @@ window.handleSubmit = function handleSubmit(e) {
   const data = new FormData(form);
   const name = String(data.get('name') || '');
   const email = String(data.get('email') || '');
-  const subject = String(data.get('subject') || 'Contato pelo portfólio');
+  const subject = String(data.get('subject') || uiText('Contato pelo portfólio'));
   const message = String(data.get('message') || '');
 
   if (contactMethod === 'whatsapp') {
     const whatsappUrl = `https://wa.me/5527981538302?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     if (success) {
-      success.textContent = 'WhatsApp aberto. Agora é só confirmar o envio da mensagem.';
+      success.textContent = uiText('WhatsApp aberto. Agora é só confirmar o envio da mensagem.');
       success.classList.add('form-info');
     }
   } else {
-    const body = [`Nome: ${name}`, `E-mail: ${email}`, '', message].join('\n');
+    const body = [`${uiText('Nome')}: ${name}`, `E-mail: ${email}`, '', message].join('\n');
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent('kauaputtin@gmail.com')}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.open(gmailUrl, '_blank', 'noopener,noreferrer');
     if (success) {
-      success.textContent = 'Gmail aberto. Agora é só confirmar o envio da mensagem.';
+      success.textContent = uiText('Gmail aberto. Agora é só confirmar o envio da mensagem.');
       success.classList.add('form-info');
     }
   }
@@ -263,7 +267,7 @@ document.querySelectorAll('.js-open-prototype[data-prototype-src]').forEach((el)
     ev.preventDefault();
     const src = getPrototypeSrc(el);
     if (!src) return;
-    const title = el.getAttribute('data-prototype-title') || 'Protótipo';
+    const title = el.getAttribute('data-prototype-title') || uiText('Protótipo');
     openPrototypeModal(src, title);
   });
 });
@@ -307,18 +311,20 @@ function openProjectDetail(card) {
   if (!projectDetailModal || !card) return;
   const data = card.dataset;
 
-  activeProjectTitle = data.projectTitle || 'Projeto';
+  activeProjectTitle = data.projectTitle || uiText('Projeto');
   activeProjectPrototype = data.projectPrototype || '';
   projectDetailLastFocused = card;
 
   if (projectDetailTitle) projectDetailTitle.textContent = activeProjectTitle;
   if (projectDetailDescription) projectDetailDescription.textContent = data.projectDescription || '';
-  if (projectDetailType) projectDetailType.textContent = data.projectType || 'Projeto digital';
+  if (projectDetailType) projectDetailType.textContent = data.projectType || uiText('Projeto digital');
   if (projectDetailPlatform) projectDetailPlatform.textContent = data.projectPlatform || '—';
 
   if (projectDetailImage) {
     projectDetailImage.src = data.projectImage || '';
-    projectDetailImage.alt = `Visual do projeto ${activeProjectTitle}`;
+    projectDetailImage.alt = window.portfolioI18n?.language === 'en'
+      ? `Preview of project ${activeProjectTitle}`
+      : `Visual do projeto ${activeProjectTitle}`;
   }
 
   if (projectDetailStack) {
@@ -329,7 +335,7 @@ function openProjectDetail(card) {
       .filter(Boolean)
       .forEach((technology) => {
         const tag = document.createElement('span');
-        tag.textContent = technology;
+        tag.textContent = uiText(technology);
         projectDetailStack.appendChild(tag);
       });
   }
@@ -380,10 +386,9 @@ window.addEventListener('keydown', (ev) => {
 /* ---- LOAD MORE PROJECTS ---- */
 const loadMoreBtn = document.getElementById('loadMoreBtn');
 const hiddenProjects = document.querySelectorAll('.hidden-project');
+let projectsExpanded = false;
 
 if (loadMoreBtn && hiddenProjects.length > 0) {
-  let projectsExpanded = false;
-
   loadMoreBtn.addEventListener('click', () => {
     projectsExpanded = !projectsExpanded;
 
@@ -400,9 +405,9 @@ if (loadMoreBtn && hiddenProjects.length > 0) {
     });
 
     loadMoreBtn.setAttribute('aria-expanded', String(projectsExpanded));
-    loadMoreBtn.textContent = projectsExpanded
+    loadMoreBtn.textContent = uiText(projectsExpanded
       ? 'Ver menos projetos \u2191'
-      : 'Ver mais projetos \u2192';
+      : 'Ver mais projetos \u2192');
   });
 }
 
@@ -421,7 +426,7 @@ function setCertificateCardExpanded(card, isExpanded) {
   button?.setAttribute('aria-expanded', String(shouldExpand));
   button?.setAttribute(
     'aria-label',
-    shouldExpand ? 'Recolher detalhes do certificado' : 'Mostrar detalhes do certificado'
+    uiText(shouldExpand ? 'Recolher detalhes do certificado' : 'Mostrar detalhes do certificado')
   );
 
   card.querySelectorAll('.certificate-desc, .certificate-tags').forEach((detail) => {
@@ -434,7 +439,7 @@ certificateCards.forEach((card) => {
   button.className = 'certificate-expand-btn';
   button.type = 'button';
   button.setAttribute('aria-expanded', 'false');
-  button.setAttribute('aria-label', 'Mostrar detalhes do certificado');
+  button.setAttribute('aria-label', uiText('Mostrar detalhes do certificado'));
   button.innerHTML = '<span aria-hidden="true"></span>';
   card.append(button);
 
@@ -457,11 +462,35 @@ certificateToggleBtn?.addEventListener?.('click', () => {
   if (!certificatesGrid) return;
   const isExpanded = certificatesGrid.classList.toggle('certificates-expanded');
   certificateToggleBtn.setAttribute('aria-expanded', String(isExpanded));
-  certificateToggleBtn.textContent = isExpanded
+  certificateToggleBtn.textContent = uiText(isExpanded
     ? 'Ver menos certificados ↑'
-    : 'Ver mais certificados →';
+    : 'Ver mais certificados →');
 
   if (isExpanded) {
     certificatesGrid.querySelectorAll('.certificate-card').forEach((card) => card.classList.add('visible'));
+  }
+});
+
+window.addEventListener('portfolio:languagechange', () => {
+  updateThemeUI(html.getAttribute('data-theme') || 'dark');
+  if (hamburger && mobileNav) setMobileMenuOpen(mobileNav.classList.contains('open'));
+  updateContactSubmitLabel();
+
+  if (loadMoreBtn) {
+    loadMoreBtn.textContent = uiText(projectsExpanded
+      ? 'Ver menos projetos ↑'
+      : 'Ver mais projetos →');
+  }
+
+  syncCertificateCardsToViewport();
+  if (certificateToggleBtn && certificatesGrid) {
+    const certificatesExpanded = certificatesGrid.classList.contains('certificates-expanded');
+    certificateToggleBtn.textContent = uiText(certificatesExpanded
+      ? 'Ver menos certificados ↑'
+      : 'Ver mais certificados →');
+  }
+
+  if (projectDetailModal?.classList.contains('open') && projectDetailLastFocused) {
+    openProjectDetail(projectDetailLastFocused);
   }
 });
