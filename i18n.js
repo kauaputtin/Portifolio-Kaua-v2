@@ -52,10 +52,11 @@
     'UI/UX & design': 'UI/UX & design',
     'Protótipos, identidades visuais e experiências digitais intuitivas e consistentes.': 'Prototypes, visual identities, and intuitive, consistent digital experiences.',
     'Ferramentas': 'Tools',
-    'Versionamento, colaboração e organização para manter o desenvolvimento produtivo.': 'Version control, collaboration, and organization for a productive development workflow.',
+    'Criação, versionamento, colaboração e organização para transformar ideias em projetos.': 'Creation, version control, collaboration, and organization to turn ideas into projects.',
     'Uso frequente': 'Frequent use',
     'Em evolução': 'Currently learning',
     'Ver habilidades aplicadas nos projetos': 'See skills applied in projects',
+    'Carrossel automático com imagens dos projetos': 'Automatic carousel with project images',
     'Tecnologias de front-end': 'Front-end technologies',
     'Tecnologias de back-end e dados': 'Back-end and data technologies',
     'Ferramentas de design': 'Design tools',
@@ -137,6 +138,7 @@
 
     /* Certificates */
     'Licenças e certificados': 'Licenses and certificates',
+    'Certificado': 'Certificate',
     'Cursos, participações e extensões que fortalecem minha formação em tecnologia, inovação e desenvolvimento.': 'Courses, events, and extension programs that strengthen my education in technology, innovation, and development.',
     'Ouvinte Palestra “IA na Prática”': 'Attendee — “AI in Practice” Talk',
     'Programando com ChatGPT': 'Programming with ChatGPT',
@@ -175,6 +177,8 @@
     'set 2025': 'Sep 2025',
     'Ver mais certificados →': 'View more certificates →',
     'Ver menos certificados ↑': 'View fewer certificates ↑',
+    'Ver certificado': 'View certificate',
+    'Fechar certificado': 'Close certificate',
     'Mostrar detalhes do certificado': 'Show certificate details',
     'Recolher detalhes do certificado': 'Hide certificate details',
 

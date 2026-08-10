@@ -118,6 +118,22 @@ if ('IntersectionObserver' in window) {
   fadeEls.forEach((el) => el.classList.add('visible'));
 }
 
+/* ---- AUTOMATIC PROJECT SHOWCASE ---- */
+const projectShowcaseTrack = document.getElementById('projectShowcaseTrack');
+const projectShowcaseShell = projectShowcaseTrack?.closest?.('.project-showcase-shell');
+const projectShowcaseSource = projectShowcaseTrack?.querySelector?.('.project-showcase-group');
+
+if (projectShowcaseTrack && projectShowcaseShell && projectShowcaseSource) {
+  const projectShowcaseClone = projectShowcaseSource.cloneNode(true);
+  projectShowcaseClone.setAttribute('aria-hidden', 'true');
+  projectShowcaseClone.querySelectorAll('img').forEach((image) => {
+    image.alt = '';
+  });
+  projectShowcaseTrack.append(projectShowcaseClone);
+  projectShowcaseTrack.classList.add('is-ready');
+  projectShowcaseShell.classList.add('is-ready');
+}
+
 /* ---- CONTACT FORM (GitHub Pages-friendly) ---- */
 const contactForm = document.getElementById('contactForm');
 
@@ -386,30 +402,49 @@ window.addEventListener('keydown', (ev) => {
 
 /* ---- LOAD MORE PROJECTS ---- */
 const loadMoreBtn = document.getElementById('loadMoreBtn');
-const hiddenProjects = document.querySelectorAll('.hidden-project');
+const projectsGrid = document.getElementById('projectsGrid');
+const projectCards = [...document.querySelectorAll('.project-card')];
+const projectMobileQuery = window.matchMedia?.('(max-width: 768px)');
 let projectsExpanded = false;
 
-if (loadMoreBtn && hiddenProjects.length > 0) {
+function updateProjectLoadMoreLabel() {
+  if (!loadMoreBtn) return;
+  loadMoreBtn.textContent = uiText(projectsExpanded
+    ? 'Ver menos projetos \u2191'
+    : 'Ver mais projetos \u2192');
+}
+
+function syncProjectsToViewport() {
+  const visibleLimit = projectMobileQuery?.matches ? 4 : 6;
+  const canExpand = projectCards.length > visibleLimit;
+
+  projectCards.forEach((project, index) => {
+    const wasHidden = project.classList.contains('hidden-project');
+    const shouldHide = !projectsExpanded && index >= visibleLimit;
+
+    project.classList.toggle('hidden-project', shouldHide);
+    if (shouldHide) project.classList.remove('visible');
+
+    if (wasHidden && !shouldHide) {
+      requestAnimationFrame(() => project.classList.add('visible'));
+    }
+  });
+
+  if (loadMoreBtn) {
+    loadMoreBtn.hidden = !canExpand;
+    loadMoreBtn.setAttribute('aria-expanded', String(projectsExpanded));
+    updateProjectLoadMoreLabel();
+  }
+}
+
+if (loadMoreBtn && projectsGrid && projectCards.length > 0) {
   loadMoreBtn.addEventListener('click', () => {
     projectsExpanded = !projectsExpanded;
-
-    hiddenProjects.forEach((project) => {
-      if (projectsExpanded) {
-        project.classList.remove('hidden-project');
-        requestAnimationFrame(() => {
-          if (projectsExpanded) project.classList.add('visible');
-        });
-      } else {
-        project.classList.add('hidden-project');
-        project.classList.remove('visible');
-      }
-    });
-
-    loadMoreBtn.setAttribute('aria-expanded', String(projectsExpanded));
-    loadMoreBtn.textContent = uiText(projectsExpanded
-      ? 'Ver menos projetos \u2191'
-      : 'Ver mais projetos \u2192');
+    syncProjectsToViewport();
   });
+
+  projectMobileQuery?.addEventListener?.('change', syncProjectsToViewport);
+  syncProjectsToViewport();
 }
 
 /* ---- MOBILE CERTIFICATES TOGGLE ---- */
@@ -417,11 +452,105 @@ const certificateToggleBtn = document.getElementById('certificateToggleBtn');
 const certificatesGrid = document.getElementById('certificatesGrid');
 const certificateCards = [...document.querySelectorAll('.certificate-card')];
 const certificateMobileQuery = window.matchMedia?.('(max-width: 768px)');
+const certificateReducedMotionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+const certificateCollapseTimers = new WeakMap();
+const certificateDetailModal = document.getElementById('certificateDetailModal');
+const certificateDetailClose = document.getElementById('certificateDetailClose');
+const certificateDetailTitle = document.getElementById('certificateDetailTitle');
+const certificateDetailImage = document.getElementById('certificateDetailImage');
+
+let certificateDetailLastFocused = null;
+let activeCertificateCard = null;
+
+function getCertificateTitle(card) {
+  return card?.querySelector('.certificate-title')?.textContent?.trim() || uiText('Certificado');
+}
+
+function updateCertificateModalContent(card) {
+  if (!card || !certificateDetailImage) return;
+  const title = getCertificateTitle(card);
+
+  if (certificateDetailTitle) certificateDetailTitle.textContent = title;
+  certificateDetailImage.src = card.dataset.certificateImage || '';
+  certificateDetailImage.alt = window.portfolioI18n?.language === 'en'
+    ? `Certificate: ${title}`
+    : `Certificado: ${title}`;
+}
+
+function openCertificateModal(card, trigger) {
+  if (!certificateDetailModal || !card?.dataset?.certificateImage) return;
+  certificateDetailLastFocused = trigger || document.activeElement;
+  activeCertificateCard = card;
+  updateCertificateModalContent(card);
+
+  certificateDetailModal.classList.add('open');
+  certificateDetailModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  setTimeout(() => certificateDetailClose?.focus?.(), 0);
+}
+
+function closeCertificateModal() {
+  if (!certificateDetailModal) return;
+  certificateDetailModal.classList.remove('open');
+  certificateDetailModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+  if (certificateDetailImage) {
+    certificateDetailImage.removeAttribute('src');
+    certificateDetailImage.alt = '';
+  }
+
+  certificateDetailLastFocused?.focus?.();
+  certificateDetailLastFocused = null;
+  activeCertificateCard = null;
+}
+
+function syncCertificateViewButtons() {
+  certificateCards.forEach((card) => {
+    const button = card.querySelector('.certificate-view-btn');
+    if (!button) return;
+    button.textContent = uiText('Ver certificado');
+    button.setAttribute('aria-label', `${uiText('Ver certificado')}: ${getCertificateTitle(card)}`);
+  });
+}
+
+certificateCards.forEach((card) => {
+  const button = card.querySelector('.certificate-view-btn');
+  button?.addEventListener?.('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    openCertificateModal(card, button);
+  });
+});
+
+certificateDetailClose?.addEventListener?.('click', closeCertificateModal);
+
+certificateDetailModal?.addEventListener?.('click', (event) => {
+  if (event.target?.closest?.('[data-certificate-detail-close]')) closeCertificateModal();
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && certificateDetailModal?.classList?.contains('open')) {
+    closeCertificateModal();
+  }
+});
+
+syncCertificateViewButtons();
 
 function setCertificateCardExpanded(card, isExpanded) {
   const button = card.querySelector('.certificate-expand-btn');
   const isMobile = certificateMobileQuery?.matches ?? false;
   const shouldExpand = Boolean(isMobile && isExpanded);
+  const details = [...card.querySelectorAll('.certificate-desc')];
+  const pendingCollapse = certificateCollapseTimers.get(card);
+
+  if (pendingCollapse) {
+    window.clearTimeout(pendingCollapse);
+    certificateCollapseTimers.delete(card);
+  }
+
+  if (shouldExpand || !isMobile) {
+    details.forEach((detail) => { detail.hidden = false; });
+  }
 
   card.classList.toggle('certificate-card-expanded', shouldExpand);
   button?.setAttribute('aria-expanded', String(shouldExpand));
@@ -430,9 +559,21 @@ function setCertificateCardExpanded(card, isExpanded) {
     uiText(shouldExpand ? 'Recolher detalhes do certificado' : 'Mostrar detalhes do certificado')
   );
 
-  card.querySelectorAll('.certificate-desc, .certificate-tags').forEach((detail) => {
+  details.forEach((detail) => {
     detail.setAttribute('aria-hidden', String(isMobile && !shouldExpand));
   });
+
+  if (isMobile && !shouldExpand) {
+    const collapseDelay = certificateReducedMotionQuery?.matches ? 0 : 360;
+    const collapseTimer = window.setTimeout(() => {
+      if (!card.classList.contains('certificate-card-expanded')) {
+        details.forEach((detail) => { detail.hidden = true; });
+      }
+      certificateCollapseTimers.delete(card);
+    }, collapseDelay);
+
+    certificateCollapseTimers.set(card, collapseTimer);
+  }
 }
 
 certificateCards.forEach((card) => {
@@ -444,7 +585,9 @@ certificateCards.forEach((card) => {
   button.innerHTML = '<span aria-hidden="true"></span>';
   card.append(button);
 
-  button.addEventListener('click', () => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     setCertificateCardExpanded(card, !card.classList.contains('certificate-card-expanded'));
   });
 });
@@ -477,10 +620,10 @@ window.addEventListener('portfolio:languagechange', () => {
   if (hamburger && mobileNav) setMobileMenuOpen(mobileNav.classList.contains('open'));
   updateContactSubmitLabel();
 
-  if (loadMoreBtn) {
-    loadMoreBtn.textContent = uiText(projectsExpanded
-      ? 'Ver menos projetos ↑'
-      : 'Ver mais projetos →');
+  updateProjectLoadMoreLabel();
+  syncCertificateViewButtons();
+  if (certificateDetailModal?.classList?.contains('open') && activeCertificateCard) {
+    updateCertificateModalContent(activeCertificateCard);
   }
 
   syncCertificateCardsToViewport();

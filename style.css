@@ -1540,22 +1540,32 @@
       margin-bottom: 1rem;
     }
 
-    .certificate-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+    .certificate-view-btn {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.1rem;
+      padding: 0.58rem 0.95rem;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .certificate-tags span {
-      padding: 0.32rem 0.72rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--text-muted);
-      background: rgba(255,255,255,0.015);
-      font-size: 0.72rem;
-      font-weight: 700;
-      line-height: 1;
-      text-transform: uppercase;
+    .certificate-view-btn:hover {
+      box-shadow: 0 10px 26px rgba(232, 113, 58, 0.22);
+      transform: translateY(-2px);
+    }
+
+    .certificate-view-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
     }
 
     .certificates-more-container {
@@ -1707,10 +1717,114 @@
     }
 
     /* ============================================
+       AUTOMATIC PROJECT SHOWCASE
+    ============================================ */
+    .project-showcase {
+      width: 100%;
+      padding: 0 7% 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-showcase-shell {
+      width: 100%;
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--bg-card);
+      box-shadow: var(--shadow);
+      scrollbar-width: none;
+    }
+
+    .project-showcase-shell::-webkit-scrollbar { display: none; }
+    .project-showcase-shell.is-ready { overflow: hidden; }
+
+    .project-showcase-track {
+      --project-showcase-duration: 40s;
+      width: max-content;
+      display: flex;
+      will-change: transform;
+    }
+
+    .project-showcase-track.is-ready {
+      animation: projectShowcaseScroll var(--project-showcase-duration) linear infinite;
+    }
+
+    .project-showcase-group {
+      display: flex;
+      gap: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    .project-showcase-slide {
+      width: clamp(230px, 28vw, 420px);
+      aspect-ratio: 16 / 9;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 19px;
+      background: var(--surface);
+    }
+
+    .project-showcase-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .project-showcase-shell:hover .project-showcase-track { animation-play-state: paused; }
+      .project-showcase-slide:hover img {
+        filter: saturate(1.08);
+        transform: scale(1.035);
+      }
+    }
+
+    @keyframes projectShowcaseScroll {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
+    }
+
+    @media (min-width: 769px) {
+      .project-showcase {
+        padding-right: var(--desktop-page-gutter);
+        padding-left: var(--desktop-page-gutter);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .project-showcase { padding: 0 5% 1.5rem; }
+      .project-showcase-shell {
+        padding: 0.55rem;
+        border-radius: 22px;
+      }
+      .project-showcase-track { --project-showcase-duration: 30s; }
+      .project-showcase-group {
+        gap: 0.55rem;
+        padding-right: 0.55rem;
+      }
+      .project-showcase-slide {
+        width: min(74vw, 300px);
+        border-radius: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-showcase-shell.is-ready { overflow-x: auto; }
+      .project-showcase-track.is-ready {
+        animation: none;
+        transform: none;
+      }
+      .project-showcase-group[aria-hidden="true"] { display: none; }
+      .project-showcase-slide img { transition: none; }
+    }
+
+    /* ============================================
        SKILLS SECTION
     ============================================ */
     #skills {
-      border-top: 1px solid var(--border);
       position: relative;
       overflow: hidden;
     }
@@ -2095,6 +2209,31 @@
       transform: translateY(0) scale(1);
     }
 
+    .certificate-detail-dialog {
+      width: min(980px, 100%);
+      max-height: min(92dvh, 820px);
+    }
+
+    .certificate-detail-body {
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      overflow: auto;
+      overscroll-behavior: contain;
+      background: var(--surface);
+    }
+
+    .certificate-detail-image {
+      width: 100%;
+      height: auto;
+      max-height: calc(92dvh - 100px);
+      display: block;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+    }
+
     .project-detail-header {
       min-height: 66px;
       display: flex;
@@ -2402,6 +2541,18 @@
       .project-detail-facts strong { font-size: 0.78rem; }
       .project-detail-stack { padding: 0.9rem; }
       .project-detail-stack > div span { padding: 0.28rem 0.58rem; font-size: 0.62rem; }
+
+      .certificate-detail-modal { padding: 0.75rem; }
+      .certificate-detail-dialog {
+        width: min(100%, 460px);
+        max-height: 88dvh;
+        border-radius: 20px;
+      }
+      .certificate-detail-body { padding: 0.55rem; }
+      .certificate-detail-image {
+        max-height: calc(88dvh - 74px);
+        border-radius: 13px;
+      }
 
       .prototype-dialog {
         width: 100vw;
@@ -2718,12 +2869,7 @@
       .journey-card-media::after {
         background: linear-gradient(180deg, transparent 30%, rgba(15, 14, 13, 0.78));
       }
-      .journey-card-badge-award { display: none; }
-      .journey-card-badge:not(.journey-card-badge-award) {
-        top: 1rem;
-        right: 1rem;
-        bottom: auto;
-      }
+      .journey-card-badge { display: none; }
       .journey-card-tags-mobile {
         position: absolute;
         right: 0.85rem;
@@ -3026,6 +3172,7 @@
 
   .certificate-card {
     position: relative;
+    min-height: 0;
     display: grid;
     grid-template-columns: 52px minmax(0, 1fr);
     align-items: start;
@@ -3068,6 +3215,7 @@
     position: absolute;
     top: 1rem;
     right: 0.85rem;
+    z-index: 2;
     width: 34px;
     height: 34px;
     display: grid;
@@ -3077,6 +3225,7 @@
     background: var(--surface);
     color: var(--text-primary);
     cursor: pointer;
+    touch-action: manipulation;
     transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
   }
 
@@ -3101,14 +3250,12 @@
     transform: translateY(2px) rotate(225deg);
   }
 
-  .certificate-desc,
-  .certificate-tags {
+  .certificate-desc {
     overflow: hidden;
     transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, margin 0.35s ease, transform 0.35s ease;
   }
 
-  .certificate-card:not(.certificate-card-expanded) .certificate-desc,
-  .certificate-card:not(.certificate-card-expanded) .certificate-tags {
+  .certificate-card:not(.certificate-card-expanded) .certificate-desc {
     max-height: 0;
     margin: 0;
     opacity: 0;
@@ -3125,12 +3272,6 @@
     transform: translateY(0);
   }
 
-  .certificate-card-expanded .certificate-tags {
-    max-height: 8rem;
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
 }
 
 /* Margens laterais mais compactas — somente desktop */
@@ -3152,7 +3293,6 @@
   .main-nav .hamburger,
   .main-nav + .mobile-nav,
   .certificate-desc,
-  .certificate-tags,
   .certificate-expand-btn span { transition: none; }
 }
 
@@ -3211,6 +3351,7 @@
   .hero-visual {
     overflow: hidden;
     border-radius: 24px;
+    margin-top: 1rem;
   }
 
   .hero-photo {

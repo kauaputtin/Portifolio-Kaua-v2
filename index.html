@@ -19,9 +19,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css?v=20260808-6">
-  <script src="i18n.js?v=20260808-4" defer></script>
-  <script src="script.js?v=20260808-4" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260810-4">
+  <script src="i18n.js?v=20260810-4" defer></script>
+  <script src="script.js?v=20260810-4" defer></script>
 </head>
 
 <body>
@@ -124,7 +124,41 @@
 
   </section>
 
-  
+  <!-- ============================
+       AUTOMATIC PROJECT SHOWCASE
+  ============================ -->
+  <div class="project-showcase" role="region" aria-label="Carrossel automático com imagens dos projetos">
+    <div class="project-showcase-shell">
+      <div class="project-showcase-track" id="projectShowcaseTrack" aria-live="off">
+        <div class="project-showcase-group">
+          <figure class="project-showcase-slide">
+            <img src="imagens/fortes.png" alt="Tela do protótipo Fortes Engenharia" decoding="async" />
+          </figure>
+          <figure class="project-showcase-slide">
+            <img src="imagens/nutrifit.png" alt="Tela do protótipo NutriFit" decoding="async" />
+          </figure>
+          <figure class="project-showcase-slide">
+            <img src="imagens/mao-certa.png" alt="Tela da aplicação MãoCerta" decoding="async" />
+          </figure>
+          <figure class="project-showcase-slide">
+            <img src="imagens/pingpong.png" alt="Tela do Jogo Ping-Pong" decoding="async" />
+          </figure>
+          <figure class="project-showcase-slide">
+            <img src="imagens/gerpedido.png" alt="Tela do Gerenciador de Pedidos" decoding="async" />
+          </figure>
+          <figure class="project-showcase-slide">
+            <img src="imagens/geradorsenha.png" alt="Tela do Gerador de Senhas" decoding="async" />
+          </figure>
+          <figure class="project-showcase-slide">
+            <img src="imagens/spyfall-clash.png" alt="Tela do jogo Spyfall Clash" decoding="async" />
+          </figure>
+          <figure class="project-showcase-slide">
+            <img src="imagens/portifolio.png" alt="Tela do Site Portfólio" decoding="async" />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ============================
        SKILLS
@@ -175,27 +209,14 @@
         <div class="skill-category-header">
           <div>
             <span class="skill-category-number">03</span>
-            <h3>UI/UX &amp; design</h3>
-          </div>
-        </div>
-        <p class="skill-description">Protótipos, identidades visuais e experiências digitais intuitivas e consistentes.</p>
-        <ul class="skill-tags" aria-label="Ferramentas de design">
-          <li><img src="imagens/icones-tecnologia/icons8-figma-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Figma</li>
-          <li><img src="imagens/icones-tecnologia/icons8-tela-48.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Canva</li>
-          <li><img src="imagens/icones-tecnologia/capcut-icon.svg" alt="" class="tech-icon tech-icon-monochrome" width="24" height="24" decoding="async" />CapCut</li>
-        </ul>
-        <span class="skill-status skill-status-frequent"><span aria-hidden="true"></span>Uso frequente</span>
-      </article>
-
-      <article class="skill-category fade-up">
-        <div class="skill-category-header">
-          <div>
-            <span class="skill-category-number">04</span>
             <h3>Ferramentas</h3>
           </div>
         </div>
-        <p class="skill-description">Versionamento, colaboração e organização para manter o desenvolvimento produtivo.</p>
-        <ul class="skill-tags" aria-label="Ferramentas de desenvolvimento">
+        <p class="skill-description">Criação, versionamento, colaboração e organização para transformar ideias em projetos.</p>
+        <ul class="skill-tags" aria-label="Ferramentas">
+          <li><img src="imagens/icones-tecnologia/icons8-figma-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Figma</li>
+          <li><img src="imagens/icones-tecnologia/icons8-tela-48.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Canva</li>
+          <li><img src="imagens/icones-tecnologia/capcut-icon.svg" alt="" class="tech-icon tech-icon-monochrome" width="24" height="24" decoding="async" />CapCut</li>
           <li><img src="imagens/icones-tecnologia/icons8-git-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />Git</li>
           <li><img src="imagens/icones-tecnologia/github.png" alt="" class="tech-icon tech-icon-monochrome" width="24" height="24" decoding="async" />GitHub</li>
           <li><img src="imagens/icones-tecnologia/icons8-visual-studio-code-2019-100.png" alt="" class="tech-icon" width="24" height="24" decoding="async" />VS Code</li>
@@ -216,7 +237,7 @@
       Uma seleção de projetos que mostram minha evolução como desenvolvedor. Clique em um card para conhecer os detalhes.
     </p>
 
-    <div class="projects-grid">
+    <div class="projects-grid" id="projectsGrid">
       <button
         type="button"
         class="project-card project-detail-trigger fade-up"
@@ -370,7 +391,7 @@
 
       <button
         type="button"
-        class="project-card project-detail-trigger fade-up hidden-project"
+        class="project-card project-detail-trigger fade-up"
         data-project-title="Spyfall Clash"
         data-project-image="imagens/spyfall-clash.png"
         data-project-description="Jogo web multiplayer do impostor, com tema do jogo Clash Royale, salas em tempo real, votação por rodada e cartas secretas."
@@ -396,7 +417,7 @@
 
       <button
         type="button"
-        class="project-card project-detail-trigger fade-up hidden-project"
+        class="project-card project-detail-trigger fade-up"
         data-project-title="Site Portfólio"
         data-project-image="imagens/portifolio.png"
         data-project-description="Portfólio pessoal desenvolvido para apresentar projetos, habilidades, experiências e formas de contato."
@@ -422,7 +443,7 @@
     </div>
 
     <div class="load-more-container">
-      <button id="loadMoreBtn" class="btn-secondary load-more-btn">
+      <button id="loadMoreBtn" class="btn-secondary load-more-btn" type="button" aria-controls="projectsGrid" aria-expanded="false">
         Ver mais projetos →
       </button>
     </div>
@@ -535,7 +556,7 @@
     </p>
 
     <div class="certificates-grid" id="certificatesGrid">
-      <article class="certificate-card fade-up">
+      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/iaNaPratica.jpg">
         <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
           <div class="certificate-topline">
@@ -549,15 +570,11 @@
           <p class="certificate-desc">
             Participação em palestra sobre uso prático de inteligência artificial no contexto acadêmico e profissional.
           </p>
-          <div class="certificate-tags">
-            <span>IA</span>
-            <span>Aplicações práticas</span>
-            <span>Computação</span>
-          </div>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
       </article>
 
-      <article class="certificate-card fade-up">
+      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/chatGpt.jpg">
         <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
           <div class="certificate-topline">
@@ -571,15 +588,11 @@
           <p class="certificate-desc">
             Participação em atividade sobre programação com ChatGPT e aplicações práticas de IA no desenvolvimento.
           </p>
-          <div class="certificate-tags">
-            <span>ChatGPT</span>
-            <span>IA</span>
-            <span>Ciência da Computação</span>
-          </div>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
       </article>
 
-      <article class="certificate-card fade-up">
+      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/oracle.png">
         <img src="imagens/logo-oracle.jpg" alt="Logo Oracle" class="certificate-logo" />
         <div class="certificate-content">
           <div class="certificate-topline">
@@ -593,15 +606,11 @@
           <p class="certificate-desc">
             Conclusão satisfatória do exame final do curso Database Foundations da Oracle Academy.
           </p>
-          <div class="certificate-tags">
-            <span>MySQL</span>
-            <span>Banco de dados</span>
-            <span>Modelagem</span>
-          </div>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
       </article>
 
-      <article class="certificate-card fade-up">
+      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/base27.jpg">
         <img src="imagens/logo-base27.jpg" alt="Logo Base27" class="certificate-logo" />
         <div class="certificate-content">
           <div class="certificate-topline">
@@ -615,15 +624,11 @@
           <p class="certificate-desc">
             Projeto para desenvolvimento de soluções proposto pela Fortes Engenharia, realizado pela Base27.
           </p>
-          <div class="certificate-tags">
-            <span>Resolução de problemas</span>
-            <span>Projeto</span>
-            <span>Computação</span>
-          </div>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
       </article>
 
-      <article class="certificate-card fade-up">
+      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/campusParty.jpg">
         <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
           <div class="certificate-topline">
@@ -637,15 +642,11 @@
           <p class="certificate-desc">
             Vivência técnica em evento de tecnologia em São Paulo, promovida pela UVV, sobre inovação, comunidades digitais e experiências práticas.
           </p>
-          <div class="certificate-tags">
-            <span>Tecnologia</span>
-            <span>Inovação</span>
-            <span>Comunidade</span>
-          </div>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
       </article>
 
-      <article class="certificate-card fade-up">
+      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/apresentador.jpg">
         <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
           <div class="certificate-topline">
@@ -659,15 +660,11 @@
           <p class="certificate-desc">
             Apresentação do projeto AI Facilites: For Best Generation durante a Inovaweek 2025.
           </p>
-          <div class="certificate-tags">
-            <span>Pitch</span>
-            <span>Inovação</span>
-            <span>Produto</span>
-          </div>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
       </article>
 
-      <article class="certificate-card fade-up">
+      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/expositor.jpg">
         <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
           <div class="certificate-topline">
@@ -681,11 +678,7 @@
           <p class="certificate-desc">
             Participação como expositor apresentando o projeto AI Facilites: For Best Generation durante a Inovaweek 2025.
           </p>
-          <div class="certificate-tags">
-            <span>Exposição</span>
-            <span>Inovaweek</span>
-            <span>Inovação tecnológica</span>
-          </div>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
       </article>
     </div>
@@ -864,6 +857,23 @@
       <a href="#contact">Contato</a>
     </div>
   </footer>
+
+  <!-- ============================
+       CERTIFICATE VIEWER MODAL
+  ============================ -->
+  <div class="project-detail-modal certificate-detail-modal" id="certificateDetailModal" aria-hidden="true">
+    <div class="project-detail-backdrop" data-certificate-detail-close></div>
+    <article class="project-detail-dialog certificate-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="certificateDetailTitle">
+      <header class="project-detail-header">
+        <h2 id="certificateDetailTitle">Certificado</h2>
+        <button class="project-detail-close" id="certificateDetailClose" type="button" aria-label="Fechar certificado">&times;</button>
+      </header>
+
+      <div class="certificate-detail-body">
+        <img class="certificate-detail-image" id="certificateDetailImage" src="" alt="" />
+      </div>
+    </article>
+  </div>
 
   <!-- ============================
        PROJECT DETAILS MODAL
