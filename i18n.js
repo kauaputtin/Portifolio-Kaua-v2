@@ -18,6 +18,7 @@
     'Certificados': 'Certificates',
     'Sobre': 'About',
     'Contato': 'Contact',
+    'Contrate': 'Hire me',
     'Topo': 'Top',
     'Tema:': 'Theme:',
     'Claro': 'Light',

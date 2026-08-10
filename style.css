@@ -135,6 +135,50 @@
       gap: 0.75rem;
     }
 
+    .nav-hire-button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.3rem 0.35rem 0.3rem 1rem;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      background: black;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-hire-button:hover {
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .nav-hire-button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .nav-hire-arrow {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgb(0, 0, 0);
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-hire-button:hover .nav-hire-arrow { transform: translateY(2px); }
+
     .language-toggle {
       min-width: 42px;
       height: 36px;
@@ -1775,7 +1819,6 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-      .project-showcase-shell:hover .project-showcase-track { animation-play-state: paused; }
       .project-showcase-slide:hover img {
         filter: saturate(1.08);
         transform: scale(1.035);
@@ -2585,7 +2628,10 @@
     /* ============================================
        CONTACT SECTION
     ============================================ */
-    #contact { border-top: 1px solid var(--border); }
+    #contact {
+      border-top: 1px solid var(--border);
+      scroll-margin-top: 7rem;
+    }
 
     .contact-wrapper {
       display: grid;
@@ -3276,7 +3322,6 @@
 
 /* Margens laterais mais compactas — somente desktop */
 @media (min-width: 769px) {
-  .main-nav,
   section,
   .journey-detail-hero,
   .journey-detail-section,
@@ -3284,6 +3329,160 @@
   footer {
     padding-right: var(--desktop-page-gutter);
     padding-left: var(--desktop-page-gutter);
+  }
+
+  .main-nav {
+    top: 1rem;
+    right: var(--desktop-page-gutter);
+    left: var(--desktop-page-gutter);
+    min-height: 66px;
+    padding: 0.55rem 0.65rem 0.55rem 0.85rem;
+    column-gap: clamp(0.85rem, 1.5vw, 1.5rem);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--nav-bg);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .main-nav .nav-logo {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+  }
+
+  .main-nav .nav-logo-word { display: none; }
+
+  .main-nav .nav-logo-mark {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+  }
+
+  .main-nav .nav-links {
+    min-width: 0;
+    gap: clamp(2rem, 2.8vw, 2.75rem);
+  }
+
+  .main-nav .nav-links a {
+    font-size: clamp(0.72rem, 0.56rem + 0.24vw, 0.84rem);
+    white-space: nowrap;
+  }
+
+  .main-nav .nav-actions {
+    flex: 0 0 auto;
+    gap: 2rem;
+  }
+
+  .main-nav .desktop-language-toggle,
+  .main-nav > .nav-actions > .theme-toggle {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .main-nav #themeText { display: none; }
+  .main-nav .theme-toggle .theme-icon-image {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .main-nav .nav-links,
+  .main-nav .desktop-language-toggle,
+  .main-nav > .nav-actions > .theme-toggle,
+  .main-nav .nav-hire-button { display: none; }
+
+  .main-nav .hamburger {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0;
+  }
+
+  .main-nav .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .main-nav .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .main-nav .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .main-nav + .mobile-nav {
+    top: 5.75rem;
+    right: var(--desktop-page-gutter);
+    left: var(--desktop-page-gutter);
+    height: auto;
+    max-height: calc(100dvh - 6.5rem);
+    display: flex;
+    padding: 1.25rem;
+    overflow-y: auto;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+    transform: translateY(-10px) scale(0.98);
+    transform-origin: top center;
+    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s;
+  }
+
+  .main-nav + .mobile-nav.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .mobile-nav .mobile-hire-button {
+    width: min(100%, 9.5rem);
+    min-height: 42px;
+    display: flex;
+    align-self: center;
+    margin: 0.15rem auto 0;
+    padding: 0.25rem 0.3rem 0.25rem 0.85rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: #000;
+    color: #fff;
+    font-size: 0.72rem;
+  }
+
+  .mobile-nav .mobile-hire-button:hover { color: #fff; }
+
+  .mobile-nav .mobile-hire-button .nav-hire-arrow {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .mobile-nav-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.15rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .mobile-nav-controls .mobile-theme-toggle,
+  .mobile-nav-controls .mobile-language-toggle {
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border-radius: 50%;
   }
 }
 
@@ -3302,6 +3501,28 @@
 ============================================ */
 @media (max-width: 768px) {
   .desktop-language-toggle { display: none; }
+  .main-nav .nav-hire-button { display: none; }
+
+  .mobile-nav .mobile-hire-button {
+    width: min(100%, 9.5rem);
+    min-height: 42px;
+    display: flex;
+    align-self: center;
+    margin: 0.15rem auto 0;
+    padding: 0.25rem 0.3rem 0.25rem 0.85rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: #000;
+    color: #fff;
+    font-size: 0.72rem;
+  }
+
+  .mobile-nav .mobile-hire-button:hover { color: #fff; }
+  .mobile-nav .mobile-hire-button .nav-hire-arrow {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
 
   .hero-socials {
     width: 100%;
