@@ -638,3 +638,72 @@ window.addEventListener('portfolio:languagechange', () => {
     openProjectDetail(projectDetailLastFocused);
   }
 });
+
+
+/* ---- CERTIFICATE STATS (count-up animation) ---- */
+(() => {
+  const stats = document.getElementById('certificatesStats');
+  if (!stats) return;
+
+  const cards = [...document.querySelectorAll('#certificatesGrid .certificate-card')];
+  const totals = {
+    count: cards.length,
+    hours: cards.reduce((sum, card) => sum + (Number(card.dataset.hours) || 0), 0),
+  };
+
+  const targets = [...stats.querySelectorAll('[data-cert-stat]')];
+  targets.forEach((el) => { el.textContent = String(totals[el.dataset.certStat] ?? el.textContent); });
+
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+  targets.forEach((el) => { el.textContent = '0'; });
+
+  const animate = (el, to, duration) => {
+    const wrapper = el.closest('.certificates-stat');
+    wrapper?.classList.add('is-counting');
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = String(Math.round(to * eased));
+      if (progress < 1) requestAnimationFrame(step);
+      else wrapper?.classList.remove('is-counting');
+    };
+    requestAnimationFrame(step);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    targets.forEach((el) => {
+      const to = totals[el.dataset.certStat] || 0;
+      animate(el, to, el.dataset.certStat === 'hours' ? 1600 : 1100);
+    });
+    observer.disconnect();
+  }, { threshold: 0.4 });
+
+  observer.observe(stats);
+})();
+
+
+/* ---- HERO PHOTO LOAD ANIMATION ---- */
+(() => {
+  const visual = document.getElementById('heroVisual');
+  const photo = visual?.querySelector('.hero-photo');
+  if (!visual || !photo) return;
+
+  visual.classList.add('hero-anim');
+  let done = false;
+  const reveal = () => {
+    if (done) return;
+    done = true;
+    requestAnimationFrame(() => visual.classList.add('is-loaded'));
+  };
+
+  if (photo.complete && photo.naturalWidth) reveal();
+  else {
+    photo.addEventListener('load', reveal, { once: true });
+    photo.addEventListener('error', reveal, { once: true });
+    setTimeout(reveal, 4000);
+  }
+})();

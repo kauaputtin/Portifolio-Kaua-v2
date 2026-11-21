@@ -124,8 +124,14 @@
         </div>
     </div>
 
-    <div class="hero-visual">
-        <img src="imagens/kauaSemfundo.png" alt="Foto de Kauã" class="hero-photo" />
+    <div class="hero-visual" id="heroVisual">
+        <span class="hero-photo-glow" aria-hidden="true"></span>
+        <span class="hero-photo-frame" aria-hidden="true"></span>
+        <picture>
+          <source srcset="imagens/kaua-hero.webp" type="image/webp" />
+          <img src="imagens/kaua-hero.png" alt="Foto de Kauã" class="hero-photo" width="684" height="1200" fetchpriority="high" decoding="async" />
+        </picture>
+        <span class="hero-photo-chip" aria-hidden="true"><i></i>Open to work</span>
     </div>
 
     
@@ -585,136 +591,169 @@
        CERTIFICATES
   ============================ -->
   <section id="certificates">
-    <span class="section-label">Licenças e certificados</span>
-    <h2 class="section-title">Certificados</h2>
-    <p class="section-subtitle">
-      Cursos, participações e extensões que fortalecem minha formação em tecnologia, inovação e desenvolvimento.
-    </p>
+    <div class="certificates-header">
+      <div class="certificates-heading">
+        <span class="section-label">Licenças e certificados</span>
+        <h2 class="section-title">Sempre estudando</h2>
+        <p class="section-subtitle">
+          Cursos, eventos e extensões que vão além da graduação em Ciência da Computação.
+        </p>
+      </div>
+
+      <dl class="certificates-stats" id="certificatesStats">
+        <div class="certificates-stat">
+          <dt>Certificados</dt>
+          <dd><span data-cert-stat="count">9</span></dd>
+        </div>
+        <div class="certificates-stat">
+          <dt>Horas</dt>
+          <dd><span data-cert-stat="hours">68</span><small>h</small></dd>
+        </div>
+      </dl>
+    </div>
 
     <div class="certificates-grid" id="certificatesGrid">
-      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/iaNaPratica.jpg">
-        <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
-        <div class="certificate-content">
-          <div class="certificate-topline">
-            <div>
-              <h3 class="certificate-title">Ouvinte Palestra “IA na Prática”</h3>
-              <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
-            </div>
-            <span class="certificate-date">abr 2024</span>
-          </div>
-          <p class="certificate-role">Certificado de palestra</p>
-          <p class="certificate-desc">
-            Participação em palestra sobre uso prático de inteligência artificial no contexto acadêmico e profissional.
-          </p>
+      <article class="certificate-card fade-up" style="--cert-index: 0" data-certificate-image="documentos/certificados/expoTi2026.jpg" data-hours="8">
+        <div class="certificate-media">
+          <img src="documentos/certificados/expoTi2026.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">8 h</span>
           <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
-      </article>
-
-      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/chatGpt.jpg">
-        <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
-          <div class="certificate-topline">
-            <div>
-              <h3 class="certificate-title">Programando com ChatGPT</h3>
-              <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
-            </div>
-            <span class="certificate-date">abr 2024</span>
+          <div class="certificate-meta">
+            <span class="certificate-type">Evento</span>
+            <span class="certificate-date">14 nov 2026</span>
           </div>
-          <p class="certificate-role">Certificado de participação</p>
-          <p class="certificate-desc">
-            Participação em atividade sobre programação com ChatGPT e aplicações práticas de IA no desenvolvimento.
-          </p>
-          <button class="certificate-view-btn" type="button">Ver certificado</button>
+          <h3 class="certificate-title">HDI EXPO-TI 2026</h3>
+          <p class="certificate-issuer">HDI Brasil</p>
+          <p class="certificate-desc">Participação no HDI EXPO-TI 2026, evento sobre tecnologia e gestão de serviços de TI, com carga horária de 8 horas.</p>
         </div>
       </article>
-
-      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/oracle.png">
-        <img src="imagens/logo-oracle.jpg" alt="Logo Oracle" class="certificate-logo" />
-        <div class="certificate-content">
-          <div class="certificate-topline">
-            <div>
-              <h3 class="certificate-title">Curso Database Foundations</h3>
-              <p class="certificate-issuer">Oracle Academy</p>
-            </div>
-            <span class="certificate-date">mai 2024</span>
-          </div>
-          <p class="certificate-role">Certificado de conclusão</p>
-          <p class="certificate-desc">
-            Conclusão satisfatória do exame final do curso Database Foundations da Oracle Academy.
-          </p>
+      <article class="certificate-card fade-up" style="--cert-index: 1" data-certificate-image="documentos/certificados/inovaweek2026.jpg" data-hours="12">
+        <div class="certificate-media">
+          <img src="documentos/certificados/inovaweek2026.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">12 h</span>
           <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
-      </article>
-
-      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/base27.jpg">
-        <img src="imagens/logo-base27.jpg" alt="Logo Base27" class="certificate-logo" />
         <div class="certificate-content">
-          <div class="certificate-topline">
-            <div>
-              <h3 class="certificate-title">Certificado Programa Base Científica</h3>
-              <p class="certificate-issuer">Base27</p>
-            </div>
+          <div class="certificate-meta">
+            <span class="certificate-type">Extensão</span>
+            <span class="certificate-date">21 a 24 set 2026</span>
+          </div>
+          <h3 class="certificate-title">InovaApps · InovaWeek 2026 – Robotic Solution</h3>
+          <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
+          <p class="certificate-desc">Ouvinte no InovaApps, realizado no projeto de extensão InovaWeek 2026 – Robotic Solution, na UVV.</p>
+        </div>
+      </article>
+      <article class="certificate-card fade-up" style="--cert-index: 2" data-certificate-image="documentos/certificados/expositor.jpg" data-hours="8">
+        <div class="certificate-media">
+          <img src="documentos/certificados/expositor.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">8 h</span>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
+        </div>
+        <div class="certificate-content">
+          <div class="certificate-meta">
+            <span class="certificate-type">Exposição</span>
+            <span class="certificate-date">16 a 18 set 2025</span>
+          </div>
+          <h3 class="certificate-title">Expositor no evento Expoinova</h3>
+          <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
+          <p class="certificate-desc">Participação como expositor apresentando o projeto AI Facilites: For Best Generation durante a Inovaweek 2025.</p>
+        </div>
+      </article>
+      <article class="certificate-card fade-up" style="--cert-index: 3" data-certificate-image="documentos/certificados/apresentador.jpg" data-hours="1">
+        <div class="certificate-media">
+          <img src="documentos/certificados/apresentador.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">1 h</span>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
+        </div>
+        <div class="certificate-content">
+          <div class="certificate-meta">
+            <span class="certificate-type">Pitch</span>
+            <span class="certificate-date">16 a 18 set 2025</span>
+          </div>
+          <h3 class="certificate-title">Apresentador do Pitch no “INOVAAPPS”</h3>
+          <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
+          <p class="certificate-desc">Apresentação do projeto AI Facilites: For Best Generation durante a Inovaweek 2025.</p>
+        </div>
+      </article>
+      <article class="certificate-card fade-up" style="--cert-index: 0" data-certificate-image="documentos/certificados/campusParty.jpg" data-hours="16">
+        <div class="certificate-media">
+          <img src="documentos/certificados/campusParty.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">16 h</span>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
+        </div>
+        <div class="certificate-content">
+          <div class="certificate-meta">
+            <span class="certificate-type">Visita técnica</span>
+            <span class="certificate-date">12 e 13 jul 2024</span>
+          </div>
+          <h3 class="certificate-title">Visita Técnica à 16ª Campus Party Brasil</h3>
+          <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
+          <p class="certificate-desc">Vivência técnica em evento de tecnologia em São Paulo, promovida pela UVV, sobre inovação, comunidades digitais e experiências práticas.</p>
+        </div>
+      </article>
+      <article class="certificate-card fade-up" style="--cert-index: 1" data-certificate-image="documentos/certificados/base27.jpg" data-hours="20">
+        <div class="certificate-media">
+          <img src="documentos/certificados/base27.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">20 h</span>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
+        </div>
+        <div class="certificate-content">
+          <div class="certificate-meta">
+            <span class="certificate-type">Programa</span>
             <span class="certificate-date">jun 2024</span>
           </div>
-          <p class="certificate-role">Certificado de participação</p>
-          <p class="certificate-desc">
-            Projeto para desenvolvimento de soluções proposto pela Fortes Engenharia, realizado pela Base27.
-          </p>
-          <button class="certificate-view-btn" type="button">Ver certificado</button>
+          <h3 class="certificate-title">Certificado Programa Base Científica</h3>
+          <p class="certificate-issuer">Base27 · Fortes Engenharia</p>
+          <p class="certificate-desc">Projeto para desenvolvimento de soluções proposto pela Fortes Engenharia, realizado pela Base27.</p>
         </div>
       </article>
-
-      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/campusParty.jpg">
-        <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
-        <div class="certificate-content">
-          <div class="certificate-topline">
-            <div>
-              <h3 class="certificate-title">Visita Técnica à 16ª Campus Party Brasil</h3>
-              <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
-            </div>
-            <span class="certificate-date">jul 2024</span>
-          </div>
-          <p class="certificate-role">Certificado de participação</p>
-          <p class="certificate-desc">
-            Vivência técnica em evento de tecnologia em São Paulo, promovida pela UVV, sobre inovação, comunidades digitais e experiências práticas.
-          </p>
+      <article class="certificate-card fade-up" style="--cert-index: 2" data-certificate-image="documentos/certificados/oracle.png">
+        <div class="certificate-media">
+          <img src="documentos/certificados/oracle.png" alt="" class="certificate-thumb" loading="lazy" />
           <button class="certificate-view-btn" type="button">Ver certificado</button>
         </div>
-      </article>
-
-      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/apresentador.jpg">
-        <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
         <div class="certificate-content">
-          <div class="certificate-topline">
-            <div>
-              <h3 class="certificate-title">Apresentador do Pitch no “INOVAAPPS”</h3>
-              <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
-            </div>
-            <span class="certificate-date">set 2025</span>
+          <div class="certificate-meta">
+            <span class="certificate-type">Curso</span>
+            <span class="certificate-date">19 mai 2024</span>
           </div>
-          <p class="certificate-role">Certificado de apresentação</p>
-          <p class="certificate-desc">
-            Apresentação do projeto AI Facilites: For Best Generation durante a Inovaweek 2025.
-          </p>
-          <button class="certificate-view-btn" type="button">Ver certificado</button>
+          <h3 class="certificate-title">Curso Database Foundations</h3>
+          <p class="certificate-issuer">Oracle Academy</p>
+          <p class="certificate-desc">Conclusão satisfatória do exame final do curso Database Foundations da Oracle Academy.</p>
         </div>
       </article>
-
-      <article class="certificate-card fade-up" data-certificate-image="documentos/certificados/expositor.jpg">
-        <img src="imagens/logo-uvv.jpg" alt="Logo Universidade Vila Velha" class="certificate-logo" />
-        <div class="certificate-content">
-          <div class="certificate-topline">
-            <div>
-              <h3 class="certificate-title">Expositor no evento Expoinova</h3>
-              <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
-            </div>
-            <span class="certificate-date">set 2025</span>
-          </div>
-          <p class="certificate-role">Certificado de exposição</p>
-          <p class="certificate-desc">
-            Participação como expositor apresentando o projeto AI Facilites: For Best Generation durante a Inovaweek 2025.
-          </p>
+      <article class="certificate-card fade-up" style="--cert-index: 3" data-certificate-image="documentos/certificados/chatGpt.jpg" data-hours="2">
+        <div class="certificate-media">
+          <img src="documentos/certificados/chatGpt.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">2 h</span>
           <button class="certificate-view-btn" type="button">Ver certificado</button>
+        </div>
+        <div class="certificate-content">
+          <div class="certificate-meta">
+            <span class="certificate-type">Oficina</span>
+            <span class="certificate-date">23 abr 2024</span>
+          </div>
+          <h3 class="certificate-title">Programando com ChatGPT</h3>
+          <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
+          <p class="certificate-desc">Participação em atividade sobre programação com ChatGPT e aplicações práticas de IA no desenvolvimento.</p>
+        </div>
+      </article>
+      <article class="certificate-card fade-up" style="--cert-index: 0" data-certificate-image="documentos/certificados/iaNaPratica.jpg" data-hours="1">
+        <div class="certificate-media">
+          <img src="documentos/certificados/iaNaPratica.jpg" alt="" class="certificate-thumb" loading="lazy" />
+          <span class="certificate-hours">1 h</span>
+          <button class="certificate-view-btn" type="button">Ver certificado</button>
+        </div>
+        <div class="certificate-content">
+          <div class="certificate-meta">
+            <span class="certificate-type">Palestra</span>
+            <span class="certificate-date">24 abr 2024</span>
+          </div>
+          <h3 class="certificate-title">Ouvinte Palestra “IA na Prática”</h3>
+          <p class="certificate-issuer">Universidade Vila Velha - UVV</p>
+          <p class="certificate-desc">Participação em palestra sobre uso prático de inteligência artificial no contexto acadêmico e profissional.</p>
         </div>
       </article>
     </div>
