@@ -138,7 +138,7 @@ if (projectShowcaseTrack && projectShowcaseShell && projectShowcaseSource) {
 const contactForm = document.getElementById('contactForm');
 
 function getSelectedContactMethod(form = contactForm) {
-  return form?.querySelector?.('input[name="contactMethod"]:checked')?.value || 'email';
+  return form?.querySelector?.('input[name="contactMethod"]:checked')?.value || 'whatsapp';
 }
 
 function updateContactSubmitLabel() {

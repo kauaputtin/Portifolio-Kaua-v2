@@ -4407,3 +4407,105 @@ html:not([data-theme="dark"]) #home .hero-visual picture {
 @media (prefers-reduced-motion: reduce) {
   #certificates .certificate-stack-item { transition: none; }
 }
+
+#certificates .certificates-heading .section-title { margin-bottom: 0; }
+
+/* ============================================
+   HERO — detalhes laranja no fundo
+============================================ */
+#home { isolation: isolate; }
+
+/* brilhos laranja */
+#home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 45% at 6% 12%, var(--accent-soft), transparent 70%),
+    radial-gradient(40% 55% at 85% 55%, var(--accent-soft), transparent 70%),
+    radial-gradient(30% 35% at 45% 100%, var(--accent-soft), transparent 70%);
+}
+
+/* grade de pontinhos laranja, mais forte perto da foto */
+#home::after {
+  display: block;
+  content: '';
+  position: absolute;
+  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  z-index: -1;
+  border-radius: 0;
+  animation: none;
+  transform: none;
+  opacity: 1;
+  pointer-events: none;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent) 1px, transparent 1.6px) 0 0 / 26px 26px;
+  -webkit-mask-image: radial-gradient(55% 65% at 78% 50%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(55% 65% at 78% 50%, #000 0%, transparent 72%);
+  opacity: 0.55;
+}
+
+/* anéis laranja girando atrás da foto */
+#home .hero-photo-glow::before,
+#home .hero-photo-glow::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#home .hero-photo-glow::before {
+  inset: 14%;
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: heroRingSpin 60s linear infinite;
+}
+
+#home .hero-photo-glow::after {
+  inset: 4%;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-top-color: var(--accent);
+  animation: heroRingSpin 24s linear infinite reverse;
+}
+
+@keyframes heroRingSpin { to { transform: rotate(360deg); } }
+
+/* risco laranja sob o título */
+#home .hero-title .accent {
+  position: relative;
+  display: inline-block;
+}
+
+#home .hero-title .accent::after {
+  content: '';
+  position: absolute;
+  left: 0.04em;
+  right: 0.04em;
+  bottom: 0.02em;
+  height: 0.09em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  #home::after {
+    -webkit-mask-image: radial-gradient(70% 45% at 50% 30%, #000 0%, transparent 75%);
+    mask-image: radial-gradient(70% 45% at 50% 30%, #000 0%, transparent 75%);
+  }
+  #home .hero-title .accent::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #home .hero-photo-glow::before,
+  #home .hero-photo-glow::after { animation: none; }
+}
+
+/* jornadas sem o título laranja: respiro entre "Voltar" e o título */
+.journey-detail-hero .detail-back-hero { margin-bottom: 1.5rem; }

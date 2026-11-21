@@ -197,6 +197,7 @@
     '19 mai 2024': 'May 19, 2024',
     '23 abr 2024': 'Apr 23, 2024',
     '24 abr 2024': 'Apr 24, 2024',
+    'Fora da sala de aula': 'Outside the classroom',
     'Fora de sala de aula.': 'Outside the classroom.',
     'Dentro da universidade': 'Inside the university',
     '6 certificados': '6 certificates',
