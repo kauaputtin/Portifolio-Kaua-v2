@@ -206,6 +206,7 @@
     'Ver certificados': 'View certificates',
     'Certificado anterior': 'Previous certificate',
     'Próximo certificado': 'Next certificate',
+    'Arraste para o lado para ver os outros': 'Swipe sideways to see the others',
     'Ver mais certificados →': 'View more certificates →',
     'Ver menos certificados ↑': 'View fewer certificates ↑',
     'Ver certificado': 'View certificate',

@@ -519,7 +519,8 @@ certificateCards.forEach((card) => {
   button?.addEventListener?.('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
-    openCertificateModal(card, button);
+    if (window.openCertificateViewer) window.openCertificateViewer(card, button);
+    else openCertificateModal(card, button);
   });
 });
 
@@ -710,57 +711,182 @@ window.addEventListener('portfolio:languagechange', () => {
 })();
 
 
-/* ---- CERTIFICATE GROUP GALLERY (grupo "Dentro da universidade") ---- */
+/* ---- CERTIFICATE VIEWER (tela cheia, arrastar para o lado) ---- */
 (() => {
-  const modal = document.getElementById('certificateDetailModal');
-  const image = document.getElementById('certificateDetailImage');
-  const nav = document.getElementById('certificateDetailNav');
-  const prev = document.getElementById('certificateDetailPrev');
-  const next = document.getElementById('certificateDetailNext');
-  const caption = document.getElementById('certificateDetailCaption');
-  const counter = document.getElementById('certificateDetailCounter');
-  if (!modal || !image || !nav) return;
+  const esc = (v) => String(v ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const text = (root, sel) => root?.querySelector?.(sel)?.textContent?.trim() || '';
 
+  const viewer = document.createElement('div');
+  viewer.className = 'cert-viewer';
+  viewer.setAttribute('role', 'dialog');
+  viewer.setAttribute('aria-modal', 'true');
+  viewer.setAttribute('aria-hidden', 'true');
+  viewer.innerHTML = `
+    <div class="cert-viewer-bar">
+      <div class="cert-viewer-heading">
+        <strong class="cert-viewer-group"></strong>
+        <span class="cert-viewer-count"></span>
+      </div>
+      <button class="cert-viewer-close" type="button">&times;</button>
+    </div>
+    <div class="cert-viewer-track"></div>
+    <button class="cert-viewer-arrow cert-viewer-prev" type="button">&lsaquo;</button>
+    <button class="cert-viewer-arrow cert-viewer-next" type="button">&rsaquo;</button>
+    <div class="cert-viewer-dots"></div>
+    <p class="cert-viewer-hint"></p>`;
+  document.body.append(viewer);
+
+  const track = viewer.querySelector('.cert-viewer-track');
+  const dots = viewer.querySelector('.cert-viewer-dots');
+  const count = viewer.querySelector('.cert-viewer-count');
+  const group = viewer.querySelector('.cert-viewer-group');
+  const hint = viewer.querySelector('.cert-viewer-hint');
+  const closeBtn = viewer.querySelector('.cert-viewer-close');
+  const prevBtn = viewer.querySelector('.cert-viewer-prev');
+  const nextBtn = viewer.querySelector('.cert-viewer-next');
   let items = [];
   let index = 0;
+  let lastFocus = null;
 
-  const show = (i) => {
-    if (!items.length) return;
-    index = (i + items.length) % items.length;
-    const item = items[index];
-    image.src = item.src;
-    image.alt = item.title;
-    if (caption) caption.textContent = item.title;
-    if (counter) counter.textContent = `${index + 1} / ${items.length} · ${item.hours}`;
-  };
-
-  document.querySelectorAll('.certificate-card-group').forEach((card) => {
-    card.querySelector('.certificate-view-btn')?.addEventListener('click', () => {
-      items = [...card.querySelectorAll('[data-certificate-item]')].map((li) => ({
+  function itemsFromCard(card) {
+    const issuer = text(card, '.certificate-issuer');
+    const groupItems = [...card.querySelectorAll('[data-certificate-item]')];
+    if (groupItems.length) {
+      return groupItems.map((li) => ({
         src: li.dataset.certificateItem,
-        title: li.querySelector('span')?.textContent?.trim() || '',
-        hours: li.querySelector('small')?.textContent?.trim() || '',
+        title: text(li, ':scope > span'),
+        hours: text(li, ':scope > small'),
+        type: text(li, '[data-k="type"]'),
+        date: text(li, '[data-k="date"]'),
+        desc: text(li, '[data-k="desc"]'),
+        issuer,
       }));
-      nav.hidden = false;
-      modal.classList.add('is-gallery');
-      show(0);
+    }
+    return [{
+      src: card.dataset.certificateImage,
+      title: text(card, '.certificate-title'),
+      hours: text(card, '.certificate-hours'),
+      type: text(card, '.certificate-type'),
+      date: text(card, '.certificate-date'),
+      desc: text(card, '.certificate-desc'),
+      issuer,
+    }];
+  }
+
+  function render() {
+    track.innerHTML = items.map((it, i) => `
+      <figure class="cert-viewer-slide" aria-roledescription="slide" aria-label="${i + 1} / ${items.length}">
+        <div class="cert-viewer-media"><img src="${esc(it.src)}" alt="${esc(it.title)}" draggable="false" loading="${i < 2 ? 'eager' : 'lazy'}" /></div>
+        <figcaption class="cert-viewer-info">
+          <div class="cert-viewer-meta">
+            ${it.type ? `<span class="cert-viewer-chip">${esc(it.type)}</span>` : ''}
+            ${it.date ? `<span>${esc(it.date)}</span>` : ''}
+            ${it.hours ? `<span class="cert-viewer-hours">${esc(it.hours)}</span>` : ''}
+          </div>
+          <h3>${esc(it.title)}</h3>
+          ${it.issuer ? `<p class="cert-viewer-issuer">${esc(it.issuer)}</p>` : ''}
+          ${it.desc ? `<p class="cert-viewer-desc">${esc(it.desc)}</p>` : ''}
+        </figcaption>
+      </figure>`).join('');
+    dots.innerHTML = items.length > 1
+      ? items.map((_, i) => `<button type="button" aria-label="${i + 1}"></button>`).join('')
+      : '';
+    dots.querySelectorAll('button').forEach((b, i) => b.addEventListener('click', () => go(i)));
+    viewer.classList.toggle('is-single', items.length < 2);
+  }
+
+  function update() {
+    count.textContent = items.length > 1 ? `${index + 1} / ${items.length}` : '';
+    dots.querySelectorAll('button').forEach((b, i) => b.classList.toggle('active', i === index));
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === items.length - 1;
+  }
+
+  function go(i, smooth = true) {
+    index = Math.max(0, Math.min(items.length - 1, i));
+    track.scrollTo({ left: index * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+    update();
+  }
+
+  let scrollTimer = null;
+  track.addEventListener('scroll', () => {
+    const i = Math.round(track.scrollLeft / Math.max(track.clientWidth, 1));
+    if (i !== index) { index = i; update(); }
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => viewer.classList.add('swiped'), 150);
+  }, { passive: true });
+
+  function open(card, trigger) {
+    items = itemsFromCard(card);
+    if (!items.length || !items[0].src) return;
+    lastFocus = trigger || document.activeElement;
+    group.textContent = card.classList.contains('certificate-card-group') ? text(card, '.certificate-title') : uiText('Certificado');
+    closeBtn.setAttribute('aria-label', uiText('Fechar certificado'));
+    prevBtn.setAttribute('aria-label', uiText('Certificado anterior'));
+    nextBtn.setAttribute('aria-label', uiText('Próximo certificado'));
+    hint.textContent = uiText('Arraste para o lado para ver os outros');
+    viewer.setAttribute('aria-label', group.textContent);
+    render();
+    viewer.classList.remove('swiped');
+    viewer.classList.add('open');
+    viewer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    requestAnimationFrame(() => { go(0, false); closeBtn.focus({ preventScroll: true }); });
+  }
+
+  function close() {
+    if (!viewer.classList.contains('open')) return;
+    viewer.classList.remove('open');
+    viewer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    setTimeout(() => { if (!viewer.classList.contains('open')) track.innerHTML = ''; }, 300);
+    lastFocus?.focus?.({ preventScroll: true });
+  }
+
+  closeBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', () => go(index - 1));
+  nextBtn.addEventListener('click', () => go(index + 1));
+  viewer.addEventListener('click', (e) => {
+    if (e.target === viewer || e.target.classList?.contains('cert-viewer-slide')) close();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (!viewer.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') go(index - 1);
+    if (e.key === 'ArrowRight') go(index + 1);
+  });
+  window.addEventListener('resize', () => { if (viewer.classList.contains('open')) go(index, false); });
+
+  // arrastar para baixo fecha (celular)
+  let startY = null;
+  let startX = null;
+  track.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchmove', (e) => {
+    if (startY === null) return;
+    const dy = e.touches[0].clientY - startY;
+    const dx = Math.abs(e.touches[0].clientX - startX);
+    if (dy > 0 && dy > dx * 1.4) {
+      viewer.style.setProperty('--drag', `${Math.min(dy, 260)}px`);
+      viewer.classList.add('dragging');
+    }
+  }, { passive: true });
+  track.addEventListener('touchend', () => {
+    const drag = parseFloat(viewer.style.getPropertyValue('--drag')) || 0;
+    viewer.classList.remove('dragging');
+    viewer.style.removeProperty('--drag');
+    startY = null;
+    if (drag > 110) close();
+  });
+
+  // tocar na miniatura também abre
+  document.querySelectorAll('#certificates .certificate-media').forEach((media) => {
+    media.style.cursor = 'zoom-in';
+    media.addEventListener('click', (e) => {
+      if (e.target.closest('.certificate-view-btn')) return;
+      const card = media.closest('.certificate-card');
+      open(card, card.querySelector('.certificate-view-btn'));
     });
   });
 
-  document.querySelectorAll('.certificate-card:not(.certificate-card-group) .certificate-view-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      items = [];
-      nav.hidden = true;
-      modal.classList.remove('is-gallery');
-    });
-  });
-
-  prev?.addEventListener('click', () => show(index - 1));
-  next?.addEventListener('click', () => show(index + 1));
-
-  window.addEventListener('keydown', (event) => {
-    if (!modal.classList.contains('open') || !items.length) return;
-    if (event.key === 'ArrowLeft') show(index - 1);
-    if (event.key === 'ArrowRight') show(index + 1);
-  });
+  window.openCertificateViewer = open;
 })();
