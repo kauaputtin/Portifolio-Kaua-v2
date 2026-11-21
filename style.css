@@ -4560,3 +4560,28 @@ html:not([data-theme="dark"]) #home .hero-visual picture {
 
   .mobile-nav .mobile-nav-controls { display: none !important; }
 }
+
+/* ============================================
+   MODO CLARO — contraste (textos legíveis)
+============================================ */
+html:not([data-theme="dark"]) {
+  --accent: #A9440F;
+  --tag-text: #A9440F;
+  --text-muted: #6A655E;
+}
+
+.hero-devweb { color: var(--text-secondary); }
+
+html:not([data-theme="dark"]) .project-card-stack > span {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(169, 68, 15, 0.3);
+  color: var(--accent);
+}
+
+/* mobile: título sobre a foto continua branco no modo claro */
+@media (max-width: 768px) {
+  html:not([data-theme="dark"]) #home .hero-title { color: #fff; }
+  html:not([data-theme="dark"]) #home .hero-title .accent { color: #F08A55; }
+}
+
+html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55; }
