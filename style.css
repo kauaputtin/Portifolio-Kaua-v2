@@ -4829,3 +4829,13 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
 }
 
 .cert-viewer, .certificate-media { -webkit-tap-highlight-color: transparent; }
+
+/* certificados individuais: miniatura reta (só o grupo da UVV fica em pilha inclinada) */
+#certificates .certificate-card:not(.certificate-card-group) .certificate-thumb,
+#certificates .certificate-card:not(.certificate-card-group):nth-child(even) .certificate-thumb {
+  transform: translateY(6px);
+}
+
+#certificates .certificate-card:not(.certificate-card-group):hover .certificate-thumb {
+  transform: translateY(-4px) scale(1.05);
+}
