@@ -831,11 +831,62 @@ window.addEventListener('portfolio:languagechange', () => {
     viewer.classList.add('open');
     viewer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
-    requestAnimationFrame(() => { go(0, false); closeBtn.focus({ preventScroll: true }); });
+    go(0, false);
+    closeBtn.focus({ preventScroll: true });
+    flipFrom(sourceThumb(card));
+  }
+
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+
+  function sourceThumb(card) {
+    return card.querySelector('.certificate-stack-item[style*="--stack: 0"]')
+      || card.querySelector('.certificate-thumb');
+  }
+
+  // animação de abertura: a miniatura "voa" até a posição final (só transform/opacity → leve)
+  function flipFrom(thumb) {
+    viewer.classList.remove('is-entering');
+    void viewer.offsetWidth;
+    viewer.classList.add('is-entering');
+    const target = track.querySelector('.cert-viewer-slide img');
+    if (!thumb || !target || reduceMotion?.matches || !target.animate) return;
+    const t = thumb.getBoundingClientRect();
+    if (t.width) {
+      const cx = t.left + t.width / 2;
+      const cy = t.top + t.height / 2;
+      viewer.animate(
+        [
+          { clipPath: `circle(0px at ${cx}px ${cy}px)` },
+          { clipPath: `circle(150% at ${cx}px ${cy}px)` },
+        ],
+        { duration: 520, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' }
+      );
+    }
+    const rot = parseFloat((getComputedStyle(thumb).transform.match(/matrix\(([^,]+),\s*([^,]+)/) || []).slice(1, 3)
+      .reduce((acc, v, i, arr) => (i === 1 ? Math.atan2(+arr[1], +arr[0]) * 180 / Math.PI : acc), 0)) || 0;
+    const run = () => {
+      const a = thumb.getBoundingClientRect();
+      const b = target.getBoundingClientRect();
+      if (!a.width || !b.width) return;
+      const dx = (a.left + a.width / 2) - (b.left + b.width / 2);
+      const dy = (a.top + a.height / 2) - (b.top + b.height / 2);
+      const s = a.width / b.width;
+      target.animate(
+        [
+          { transform: `translate(${dx}px, ${dy}px) scale(${s}) rotate(${rot}deg)`, opacity: 0.9 },
+          { transform: 'translate(0, 0) scale(1.03) rotate(0deg)', opacity: 1, offset: 0.75 },
+          { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: 1 },
+        ],
+        { duration: 620, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+      );
+    };
+    if (target.complete && target.naturalWidth) run();
+    else target.decode?.().then(run).catch(() => {});
   }
 
   function close() {
     if (!viewer.classList.contains('open')) return;
+    viewer.classList.remove('is-entering');
     viewer.classList.remove('open');
     viewer.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');

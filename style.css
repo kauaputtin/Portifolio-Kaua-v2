@@ -4586,59 +4586,71 @@ html:not([data-theme="dark"]) .project-card-stack > span {
 
 html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55; }
 
-
 /* ============================================
    CERT VIEWER — tela cheia, arrastar para o lado
 ============================================ */
 .cert-viewer {
   --drag: 0px;
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
   z-index: 2000;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto auto;
-  background: rgba(10, 9, 8, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: #0c0b0a;
   color: #F0EDE8;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s;
+  transition: opacity 0.22s ease, visibility 0.22s;
   overscroll-behavior: contain;
 }
 
-.cert-viewer.open { opacity: 1; visibility: visible; }
+.cert-viewer.open { opacity: 1; visibility: visible; transition: none; }
+
+.cert-viewer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(70% 45% at 50% 40%, rgba(232, 113, 58, 0.12), transparent 70%);
+}
 
 .cert-viewer-bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: max(1rem, env(safe-area-inset-top)) clamp(1rem, 4vw, 2rem) 0.5rem;
+  padding: calc(env(safe-area-inset-top) + 0.75rem) clamp(1rem, 4vw, 2rem) 0.25rem;
 }
 
-.cert-viewer-heading { display: grid; gap: 0.15rem; min-width: 0; }
-.cert-viewer-group { font-size: 0.95rem; font-weight: 700; }
+.cert-viewer-heading { display: grid; gap: 0.1rem; min-width: 0; }
+.cert-viewer-group { font-size: 0.85rem; font-weight: 700; }
 .cert-viewer-count {
   font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   letter-spacing: 0.12em;
   color: #E8713A;
 }
 
 .cert-viewer-close {
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  margin-right: -0.5rem;
   border: 0;
   background: transparent;
   color: #F0EDE8;
-  font-size: 2rem;
+  font-size: 1.7rem;
   line-height: 1;
   cursor: pointer;
 }
 
 .cert-viewer-track {
+  position: relative;
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
@@ -4646,7 +4658,7 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   transform: translateY(var(--drag));
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.25s ease;
 }
 
 .cert-viewer.dragging .cert-viewer-track { transition: none; }
@@ -4662,54 +4674,50 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
-  padding: 0.5rem clamp(1rem, 6vw, 5rem) 1rem;
+  gap: 1rem;
+  padding: 0.5rem clamp(1.25rem, 6vw, 5rem) 0.75rem;
   overflow-y: auto;
 }
 
 .cert-viewer-media {
-  width: min(100%, 880px);
+  width: min(100%, 760px);
   display: grid;
   place-items: center;
 }
 
 .cert-viewer-media img {
   max-width: 100%;
-  max-height: min(58vh, 620px);
+  max-height: min(52vh, 540px);
   width: auto;
   height: auto;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #fff;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
   user-select: none;
   -webkit-user-drag: none;
-  transform: scale(0.96);
-  opacity: 0.6;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+  will-change: transform;
 }
 
-.cert-viewer.open .cert-viewer-media img { transform: scale(1); opacity: 1; }
-
 .cert-viewer-info {
-  width: min(100%, 640px);
+  width: min(100%, 560px);
   display: grid;
-  gap: 0.45rem;
+  gap: 0.3rem;
 }
 
 .cert-viewer-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 0.85rem;
+  gap: 0.35rem 0.7rem;
   font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #a19c94;
 }
 
 .cert-viewer-chip {
-  padding: 0.25rem 0.6rem;
+  padding: 0.18rem 0.5rem;
   border-radius: 999px;
   background: rgba(232, 113, 58, 0.14);
   color: #F08A55;
@@ -4717,32 +4725,34 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
   font-weight: 700;
   letter-spacing: 0;
   text-transform: none;
-  font-size: 0.74rem;
+  font-size: 0.68rem;
 }
 
 .cert-viewer-hours { color: #F08A55; font-weight: 700; }
 
 .cert-viewer-info h3 {
+  margin-top: 0.15rem;
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3.6vw, 1.6rem);
-  line-height: 1.2;
+  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  line-height: 1.25;
   font-weight: 800;
   color: #F0EDE8;
 }
 
-.cert-viewer-issuer { color: #F08A55; font-weight: 600; font-size: 0.9rem; }
-.cert-viewer-desc { color: #b8b2aa; font-size: 0.92rem; line-height: 1.6; }
+.cert-viewer-issuer { color: #F08A55; font-weight: 600; font-size: 0.78rem; }
+.cert-viewer-desc { color: #b0aaa2; font-size: 0.8rem; line-height: 1.55; }
 
 .cert-viewer-dots {
+  position: relative;
   display: flex;
   justify-content: center;
-  gap: 0.45rem;
-  padding: 0.25rem 0 0.5rem;
+  gap: 0.4rem;
+  padding: 0.25rem 0 0.4rem;
 }
 
 .cert-viewer-dots button {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   padding: 0;
   border: 0;
   border-radius: 999px;
@@ -4751,13 +4761,14 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
   transition: width 0.3s ease, background 0.3s ease;
 }
 
-.cert-viewer-dots button.active { width: 24px; background: #E8713A; }
+.cert-viewer-dots button.active { width: 18px; background: #E8713A; }
 
 .cert-viewer-hint {
+  position: relative;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   color: #8f8a83;
-  padding: 0 1rem max(1rem, env(safe-area-inset-bottom));
+  padding: 0 1rem calc(env(safe-area-inset-bottom) + 1rem);
   transition: opacity 0.4s ease;
 }
 
@@ -4768,14 +4779,14 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
 .cert-viewer-arrow {
   position: absolute;
   top: 42%;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
   border: 0;
   background: transparent;
   color: #F0EDE8;
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   line-height: 1;
   cursor: pointer;
   transition: color 0.2s ease, opacity 0.2s ease;
@@ -4786,10 +4797,26 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
 .cert-viewer-prev { left: clamp(0.25rem, 2vw, 1.5rem); }
 .cert-viewer-next { right: clamp(0.25rem, 2vw, 1.5rem); }
 
+/* entrada: barra, textos e pontos aparecem em sequência depois da imagem */
+.cert-viewer.is-entering .cert-viewer-bar,
+.cert-viewer.is-entering .cert-viewer-info,
+.cert-viewer.is-entering .cert-viewer-dots,
+.cert-viewer.is-entering .cert-viewer-hint {
+  animation: certViewerIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.cert-viewer.is-entering .cert-viewer-info { animation-delay: 0.16s; }
+.cert-viewer.is-entering .cert-viewer-dots,
+.cert-viewer.is-entering .cert-viewer-hint { animation-delay: 0.26s; }
+
+@keyframes certViewerIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @media (hover: none), (max-width: 768px) {
   .cert-viewer-arrow { display: none; }
-  .cert-viewer-slide { justify-content: flex-start; padding-top: 1rem; }
-  .cert-viewer-media img { max-height: 46vh; border-radius: 8px; }
+  .cert-viewer-media img { max-height: 34vh; }
+  .cert-viewer-slide { gap: 0.85rem; }
 }
 
 @media (min-width: 769px) and (hover: hover) {
@@ -4797,5 +4824,8 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cert-viewer, .cert-viewer-track, .cert-viewer-media img, .cert-viewer-dots button { transition: none; }
+  .cert-viewer, .cert-viewer-track, .cert-viewer-dots button { transition: none; }
+  .cert-viewer.is-entering * { animation: none !important; }
 }
+
+.cert-viewer, .certificate-media { -webkit-tap-highlight-color: transparent; }
