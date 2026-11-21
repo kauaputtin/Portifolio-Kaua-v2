@@ -508,8 +508,9 @@ function syncCertificateViewButtons() {
   certificateCards.forEach((card) => {
     const button = card.querySelector('.certificate-view-btn');
     if (!button) return;
-    button.textContent = uiText('Ver certificado');
-    button.setAttribute('aria-label', `${uiText('Ver certificado')}: ${getCertificateTitle(card)}`);
+    const label = uiText(card.classList.contains('certificate-card-group') ? 'Ver certificados' : 'Ver certificado');
+    button.textContent = label;
+    button.setAttribute('aria-label', `${label}: ${getCertificateTitle(card)}`);
   });
 }
 
@@ -647,7 +648,7 @@ window.addEventListener('portfolio:languagechange', () => {
 
   const cards = [...document.querySelectorAll('#certificatesGrid .certificate-card')];
   const totals = {
-    count: cards.length,
+    count: cards.reduce((sum, card) => sum + (Number(card.dataset.count) || 1), 0),
     hours: cards.reduce((sum, card) => sum + (Number(card.dataset.hours) || 0), 0),
   };
 
@@ -706,4 +707,60 @@ window.addEventListener('portfolio:languagechange', () => {
     photo.addEventListener('error', reveal, { once: true });
     setTimeout(reveal, 4000);
   }
+})();
+
+
+/* ---- CERTIFICATE GROUP GALLERY (grupo "Dentro da universidade") ---- */
+(() => {
+  const modal = document.getElementById('certificateDetailModal');
+  const image = document.getElementById('certificateDetailImage');
+  const nav = document.getElementById('certificateDetailNav');
+  const prev = document.getElementById('certificateDetailPrev');
+  const next = document.getElementById('certificateDetailNext');
+  const caption = document.getElementById('certificateDetailCaption');
+  const counter = document.getElementById('certificateDetailCounter');
+  if (!modal || !image || !nav) return;
+
+  let items = [];
+  let index = 0;
+
+  const show = (i) => {
+    if (!items.length) return;
+    index = (i + items.length) % items.length;
+    const item = items[index];
+    image.src = item.src;
+    image.alt = item.title;
+    if (caption) caption.textContent = item.title;
+    if (counter) counter.textContent = `${index + 1} / ${items.length} · ${item.hours}`;
+  };
+
+  document.querySelectorAll('.certificate-card-group').forEach((card) => {
+    card.querySelector('.certificate-view-btn')?.addEventListener('click', () => {
+      items = [...card.querySelectorAll('[data-certificate-item]')].map((li) => ({
+        src: li.dataset.certificateItem,
+        title: li.querySelector('span')?.textContent?.trim() || '',
+        hours: li.querySelector('small')?.textContent?.trim() || '',
+      }));
+      nav.hidden = false;
+      modal.classList.add('is-gallery');
+      show(0);
+    });
+  });
+
+  document.querySelectorAll('.certificate-card:not(.certificate-card-group) .certificate-view-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      items = [];
+      nav.hidden = true;
+      modal.classList.remove('is-gallery');
+    });
+  });
+
+  prev?.addEventListener('click', () => show(index - 1));
+  next?.addEventListener('click', () => show(index + 1));
+
+  window.addEventListener('keydown', (event) => {
+    if (!modal.classList.contains('open') || !items.length) return;
+    if (event.key === 'ArrowLeft') show(index - 1);
+    if (event.key === 'ArrowRight') show(index + 1);
+  });
 })();
