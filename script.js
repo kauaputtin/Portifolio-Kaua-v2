@@ -642,52 +642,6 @@ window.addEventListener('portfolio:languagechange', () => {
 });
 
 
-/* ---- CERTIFICATE STATS (count-up animation) ---- */
-(() => {
-  const stats = document.getElementById('certificatesStats');
-  if (!stats) return;
-
-  const cards = [...document.querySelectorAll('#certificatesGrid .certificate-card')];
-  const totals = {
-    count: cards.reduce((sum, card) => sum + (Number(card.dataset.count) || 1), 0),
-    hours: cards.reduce((sum, card) => sum + (Number(card.dataset.hours) || 0), 0),
-  };
-
-  const targets = [...stats.querySelectorAll('[data-cert-stat]')];
-  targets.forEach((el) => { el.textContent = String(totals[el.dataset.certStat] ?? el.textContent); });
-
-  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-  if (reduceMotion || !('IntersectionObserver' in window)) return;
-
-  targets.forEach((el) => { el.textContent = '0'; });
-
-  const animate = (el, to, duration) => {
-    const wrapper = el.closest('.certificates-stat');
-    wrapper?.classList.add('is-counting');
-    const start = performance.now();
-    const step = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = String(Math.round(to * eased));
-      if (progress < 1) requestAnimationFrame(step);
-      else wrapper?.classList.remove('is-counting');
-    };
-    requestAnimationFrame(step);
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    if (!entries.some((entry) => entry.isIntersecting)) return;
-    targets.forEach((el) => {
-      const to = totals[el.dataset.certStat] || 0;
-      animate(el, to, el.dataset.certStat === 'hours' ? 1600 : 1100);
-    });
-    observer.disconnect();
-  }, { threshold: 0.4 });
-
-  observer.observe(stats);
-})();
-
-
 /* ---- HERO PHOTO LOAD ANIMATION ---- */
 (() => {
   const visual = document.getElementById('heroVisual');
@@ -711,11 +665,80 @@ window.addEventListener('portfolio:languagechange', () => {
 })();
 
 
-/* ---- CERTIFICATE VIEWER (tela cheia, arrastar para o lado) ---- */
+/* ---- CERTIFICADOS: lista, resumo animado, prévia e visualizador ---- */
 (() => {
+  const section = document.getElementById('certificates');
+  if (!section) return;
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
   const esc = (v) => String(v ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const text = (root, sel) => root?.querySelector?.(sel)?.textContent?.trim() || '';
+  const txt = (el, sel) => el?.querySelector?.(sel)?.textContent?.trim() || '';
 
+  /* resumo: números contando + barra crescendo quando aparece */
+  const summary = document.getElementById('certSummary');
+  const counters = [...(summary?.querySelectorAll('[data-cert-count]') || [])];
+  if (summary && !reduce && 'IntersectionObserver' in window) {
+    counters.forEach((el) => { el.textContent = '0'; });
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      summary.classList.add('is-in');
+      counters.forEach((el) => {
+        const to = Number(el.dataset.certCount) || 0;
+        const start = performance.now();
+        const dur = to > 20 ? 1400 : 900;
+        const step = (now) => {
+          const p = Math.min((now - start) / dur, 1);
+          el.textContent = String(Math.round(to * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.35 });
+    io.observe(summary);
+  } else summary?.classList.add('is-in');
+
+  /* grupo da UVV: abre/fecha */
+  section.querySelectorAll('.cert-row-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(open));
+      btn.closest('.cert-row-group')?.classList.toggle('is-open', open);
+    });
+  });
+
+  /* prévia flutuante no desktop */
+  const wrap = section.querySelector('.cert-list-wrap');
+  const preview = section.querySelector('.cert-preview');
+  const previewImg = preview?.querySelector('img');
+  const fine = window.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches;
+  if (fine && wrap && preview && previewImg) {
+    let raf = 0;
+    let px = 0;
+    let py = 0;
+    const place = () => {
+      raf = 0;
+      const r = wrap.getBoundingClientRect();
+      const w = preview.offsetWidth;
+      const h = preview.offsetHeight;
+      let x = px - r.left + 28;
+      if (x + w > r.width) x = px - r.left - w - 28;
+      const y = Math.max(0, Math.min(py - r.top - h / 2, r.height - h));
+      preview.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    };
+    wrap.addEventListener('pointermove', (e) => {
+      const row = e.target.closest('.cert-row, .cert-row-group');
+      const src = row?.dataset.src || row?.closest('.cert-row-group')?.dataset.src;
+      if (!src) { preview.classList.remove('show'); return; }
+      if (previewImg.getAttribute('src') !== src) previewImg.src = src;
+      preview.classList.add('show');
+      px = e.clientX;
+      py = e.clientY;
+      if (!raf) raf = requestAnimationFrame(place);
+    });
+    wrap.addEventListener('pointerleave', () => preview.classList.remove('show'));
+  }
+
+  /* ---------- visualizador em tela cheia ---------- */
   const viewer = document.createElement('div');
   viewer.className = 'cert-viewer';
   viewer.setAttribute('role', 'dialog');
@@ -723,10 +746,7 @@ window.addEventListener('portfolio:languagechange', () => {
   viewer.setAttribute('aria-hidden', 'true');
   viewer.innerHTML = `
     <div class="cert-viewer-bar">
-      <div class="cert-viewer-heading">
-        <strong class="cert-viewer-group"></strong>
-        <span class="cert-viewer-count"></span>
-      </div>
+      <div class="cert-viewer-heading"><strong class="cert-viewer-group"></strong><span class="cert-viewer-count"></span></div>
       <button class="cert-viewer-close" type="button">&times;</button>
     </div>
     <div class="cert-viewer-track"></div>
@@ -735,11 +755,10 @@ window.addEventListener('portfolio:languagechange', () => {
     <div class="cert-viewer-dots"></div>
     <p class="cert-viewer-hint"></p>`;
   document.body.append(viewer);
-
   const track = viewer.querySelector('.cert-viewer-track');
   const dots = viewer.querySelector('.cert-viewer-dots');
   const count = viewer.querySelector('.cert-viewer-count');
-  const group = viewer.querySelector('.cert-viewer-group');
+  const heading = viewer.querySelector('.cert-viewer-group');
   const hint = viewer.querySelector('.cert-viewer-hint');
   const closeBtn = viewer.querySelector('.cert-viewer-close');
   const prevBtn = viewer.querySelector('.cert-viewer-prev');
@@ -748,35 +767,20 @@ window.addEventListener('portfolio:languagechange', () => {
   let index = 0;
   let lastFocus = null;
 
-  function itemsFromCard(card) {
-    const issuer = text(card, '.certificate-issuer');
-    const groupItems = [...card.querySelectorAll('[data-certificate-item]')];
-    if (groupItems.length) {
-      return groupItems.map((li) => ({
-        src: li.dataset.certificateItem,
-        title: text(li, ':scope > span'),
-        hours: text(li, ':scope > small'),
-        type: text(li, '[data-k="type"]'),
-        date: text(li, '[data-k="date"]'),
-        desc: text(li, '[data-k="desc"]'),
-        issuer,
-      }));
-    }
-    return [{
-      src: card.dataset.certificateImage,
-      title: text(card, '.certificate-title'),
-      hours: text(card, '.certificate-hours'),
-      type: text(card, '.certificate-type'),
-      date: text(card, '.certificate-date'),
-      desc: text(card, '.certificate-desc'),
-      issuer,
-    }];
-  }
+  const itemOf = (row) => ({
+    src: row.dataset.src,
+    title: txt(row, '.cert-row-title'),
+    issuer: txt(row, '.cert-row-issuer'),
+    type: txt(row, '.cert-row-type'),
+    date: txt(row, '.cert-row-date'),
+    hours: txt(row, '.cert-row-hours'),
+    desc: txt(row, '.cert-row-desc'),
+  });
 
   function render() {
     track.innerHTML = items.map((it, i) => `
-      <figure class="cert-viewer-slide" aria-roledescription="slide" aria-label="${i + 1} / ${items.length}">
-        <div class="cert-viewer-media"><img src="${esc(it.src)}" alt="${esc(it.title)}" draggable="false" loading="${i < 2 ? 'eager' : 'lazy'}" /></div>
+      <figure class="cert-viewer-slide" aria-label="${i + 1} / ${items.length}">
+        <div class="cert-viewer-media"><img src="${esc(it.src)}" alt="${esc(it.title)}" draggable="false" /></div>
         <figcaption class="cert-viewer-info">
           <div class="cert-viewer-meta">
             ${it.type ? `<span class="cert-viewer-chip">${esc(it.type)}</span>` : ''}
@@ -788,9 +792,7 @@ window.addEventListener('portfolio:languagechange', () => {
           ${it.desc ? `<p class="cert-viewer-desc">${esc(it.desc)}</p>` : ''}
         </figcaption>
       </figure>`).join('');
-    dots.innerHTML = items.length > 1
-      ? items.map((_, i) => `<button type="button" aria-label="${i + 1}"></button>`).join('')
-      : '';
+    dots.innerHTML = items.length > 1 ? items.map((_, i) => `<button type="button" aria-label="${i + 1}"></button>`).join('') : '';
     dots.querySelectorAll('button').forEach((b, i) => b.addEventListener('click', () => go(i)));
     viewer.classList.toggle('is-single', items.length < 2);
   }
@@ -808,86 +810,52 @@ window.addEventListener('portfolio:languagechange', () => {
     update();
   }
 
-  let scrollTimer = null;
   track.addEventListener('scroll', () => {
     const i = Math.round(track.scrollLeft / Math.max(track.clientWidth, 1));
-    if (i !== index) { index = i; update(); }
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => viewer.classList.add('swiped'), 150);
+    if (i !== index) { index = i; update(); viewer.classList.add('swiped'); }
   }, { passive: true });
 
-  function open(card, trigger) {
-    items = itemsFromCard(card);
-    if (!items.length || !items[0].src) return;
-    lastFocus = trigger || document.activeElement;
-    group.textContent = card.classList.contains('certificate-card-group') ? text(card, '.certificate-title') : uiText('Certificado');
+  function open(list, start, source, title) {
+    items = list.filter((it) => it.src);
+    if (!items.length) return;
+    lastFocus = source || document.activeElement;
+    heading.textContent = title || uiText('Certificado');
+    viewer.setAttribute('aria-label', heading.textContent);
     closeBtn.setAttribute('aria-label', uiText('Fechar certificado'));
     prevBtn.setAttribute('aria-label', uiText('Certificado anterior'));
     nextBtn.setAttribute('aria-label', uiText('Próximo certificado'));
     hint.textContent = uiText('Arraste para o lado para ver os outros');
-    viewer.setAttribute('aria-label', group.textContent);
     render();
-    viewer.classList.remove('swiped');
+    viewer.classList.remove('swiped', 'is-entering');
     viewer.classList.add('open');
     viewer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
-    go(0, false);
+    go(start || 0, false);
     closeBtn.focus({ preventScroll: true });
-    flipFrom(sourceThumb(card));
-  }
-
-  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-
-  function sourceThumb(card) {
-    return card.querySelector('.certificate-stack-item[style*="--stack: 0"]')
-      || card.querySelector('.certificate-thumb');
-  }
-
-  // animação de abertura: a miniatura "voa" até a posição final (só transform/opacity → leve)
-  function flipFrom(thumb) {
-    viewer.classList.remove('is-entering');
     void viewer.offsetWidth;
     viewer.classList.add('is-entering');
-    const target = track.querySelector('.cert-viewer-slide img');
-    if (!thumb || !target || reduceMotion?.matches || !target.animate) return;
-    const t = thumb.getBoundingClientRect();
-    if (t.width) {
-      const cx = t.left + t.width / 2;
-      const cy = t.top + t.height / 2;
-      viewer.animate(
-        [
-          { clipPath: `circle(0px at ${cx}px ${cy}px)` },
-          { clipPath: `circle(150% at ${cx}px ${cy}px)` },
-        ],
-        { duration: 520, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' }
-      );
-    }
-    const rot = parseFloat((getComputedStyle(thumb).transform.match(/matrix\(([^,]+),\s*([^,]+)/) || []).slice(1, 3)
-      .reduce((acc, v, i, arr) => (i === 1 ? Math.atan2(+arr[1], +arr[0]) * 180 / Math.PI : acc), 0)) || 0;
-    const run = () => {
-      const a = thumb.getBoundingClientRect();
-      const b = target.getBoundingClientRect();
-      if (!a.width || !b.width) return;
-      const dx = (a.left + a.width / 2) - (b.left + b.width / 2);
-      const dy = (a.top + a.height / 2) - (b.top + b.height / 2);
-      const s = a.width / b.width;
-      target.animate(
-        [
-          { transform: `translate(${dx}px, ${dy}px) scale(${s}) rotate(${rot}deg)`, opacity: 0.9 },
-          { transform: 'translate(0, 0) scale(1.03) rotate(0deg)', opacity: 1, offset: 0.75 },
-          { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: 1 },
-        ],
-        { duration: 620, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-      );
-    };
-    if (target.complete && target.naturalWidth) run();
-    else target.decode?.().then(run).catch(() => {});
+    if (reduce || !viewer.animate) return;
+    const r = source?.getBoundingClientRect?.();
+    const cx = r ? r.left + r.width / 2 : innerWidth / 2;
+    const cy = r ? r.top + r.height / 2 : innerHeight / 2;
+    viewer.animate(
+      [{ clipPath: `circle(0px at ${cx}px ${cy}px)` }, { clipPath: `circle(150% at ${cx}px ${cy}px)` }],
+      { duration: 520, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' }
+    );
+    const img = track.querySelectorAll('.cert-viewer-slide img')[index];
+    img?.animate?.(
+      [
+        { transform: 'translateY(40px) scale(0.82) rotate(-2deg)', opacity: 0 },
+        { transform: 'translateY(0) scale(1.02) rotate(0deg)', opacity: 1, offset: 0.7 },
+        { transform: 'translateY(0) scale(1) rotate(0deg)', opacity: 1 },
+      ],
+      { duration: 620, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', delay: 80, fill: 'backwards' }
+    );
   }
 
   function close() {
     if (!viewer.classList.contains('open')) return;
-    viewer.classList.remove('is-entering');
-    viewer.classList.remove('open');
+    viewer.classList.remove('open', 'is-entering');
     viewer.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
     setTimeout(() => { if (!viewer.classList.contains('open')) track.innerHTML = ''; }, 300);
@@ -897,9 +865,7 @@ window.addEventListener('portfolio:languagechange', () => {
   closeBtn.addEventListener('click', close);
   prevBtn.addEventListener('click', () => go(index - 1));
   nextBtn.addEventListener('click', () => go(index + 1));
-  viewer.addEventListener('click', (e) => {
-    if (e.target === viewer || e.target.classList?.contains('cert-viewer-slide')) close();
-  });
+  viewer.addEventListener('click', (e) => { if (e.target === viewer || e.target.classList?.contains('cert-viewer-slide')) close(); });
   window.addEventListener('keydown', (e) => {
     if (!viewer.classList.contains('open')) return;
     if (e.key === 'Escape') close();
@@ -908,36 +874,40 @@ window.addEventListener('portfolio:languagechange', () => {
   });
   window.addEventListener('resize', () => { if (viewer.classList.contains('open')) go(index, false); });
 
-  // arrastar para baixo fecha (celular)
-  let startY = null;
-  let startX = null;
-  track.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; startX = e.touches[0].clientX; }, { passive: true });
+  // arrastar para baixo fecha
+  let sy = null;
+  let sx = null;
+  track.addEventListener('touchstart', (e) => { sy = e.touches[0].clientY; sx = e.touches[0].clientX; }, { passive: true });
   track.addEventListener('touchmove', (e) => {
-    if (startY === null) return;
-    const dy = e.touches[0].clientY - startY;
-    const dx = Math.abs(e.touches[0].clientX - startX);
-    if (dy > 0 && dy > dx * 1.4) {
+    if (sy === null) return;
+    const dy = e.touches[0].clientY - sy;
+    if (dy > 0 && dy > Math.abs(e.touches[0].clientX - sx) * 1.4) {
       viewer.style.setProperty('--drag', `${Math.min(dy, 260)}px`);
       viewer.classList.add('dragging');
     }
   }, { passive: true });
   track.addEventListener('touchend', () => {
-    const drag = parseFloat(viewer.style.getPropertyValue('--drag')) || 0;
+    const d = parseFloat(viewer.style.getPropertyValue('--drag')) || 0;
     viewer.classList.remove('dragging');
     viewer.style.removeProperty('--drag');
-    startY = null;
-    if (drag > 110) close();
+    sy = null;
+    if (d > 110) close();
   });
 
-  // tocar na miniatura também abre
-  document.querySelectorAll('#certificates .certificate-media').forEach((media) => {
-    media.style.cursor = 'zoom-in';
-    media.addEventListener('click', (e) => {
-      if (e.target.closest('.certificate-view-btn')) return;
-      const card = media.closest('.certificate-card');
-      open(card, card.querySelector('.certificate-view-btn'));
+  /* abrir a partir da lista */
+  const activate = (row) => {
+    const sub = row.closest('.cert-sublist');
+    if (sub) {
+      const rows = [...sub.querySelectorAll('.cert-row-sub')];
+      open(rows.map(itemOf), rows.indexOf(row), row, txt(row.closest('.cert-row-group'), '.cert-row-toggle .cert-row-title'));
+    } else {
+      open([itemOf(row)], 0, row, uiText('Certificado'));
+    }
+  };
+  section.querySelectorAll('.cert-row[data-src]').forEach((row) => {
+    row.addEventListener('click', () => activate(row));
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(row); }
     });
   });
-
-  window.openCertificateViewer = open;
 })();
