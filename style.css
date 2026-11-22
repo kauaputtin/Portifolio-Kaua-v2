@@ -5231,3 +5231,6 @@ html:not([data-theme="dark"]) .nav-hire-button .nav-hire-arrow { color: #F08A55;
 }
 
 @media (min-width: 901px) { .cert-row { grid-template-columns: 9.75rem 6.5rem minmax(0, 1fr) 8rem 4rem 3rem; } }
+
+/* remove o traço sob "Kauã" (encostava nas letras) */
+#home .hero-title .accent::after { content: none; display: none; }
